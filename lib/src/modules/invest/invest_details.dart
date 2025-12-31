@@ -30,7 +30,7 @@ class _InvestDetailsState extends State<InvestDetails> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
       bottomNavigationBar: Container(
