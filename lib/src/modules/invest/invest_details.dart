@@ -1,10 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/constant/reusecode.dart';
+import 'package:invoicediscounting/src/modules/invest/payment_done_success.dart';
 import 'package:invoicediscounting/src/modules/invest/wallet.dart';
 
 class InvestDetails extends StatefulWidget {
-  const InvestDetails({super.key});
+  bool? investNow;
+  InvestDetails({super.key, this.investNow});
 
   @override
   State<InvestDetails> createState() => _InvestDetailsState();
@@ -19,8 +22,14 @@ class _InvestDetailsState extends State<InvestDetails> {
   bool showOpportunitySummary = false;
   bool showAboutEntities = false;
 
-   int unitCount = 1;
+  int unitCount = 1;
+  int totalUnit = 30;
+  int unitLeft = 23;
+  int pricePerUnit = 100000;
   bool isChecked = false;
+
+  int get unitLeftNow => unitLeft + unitCount;
+  int get totalAmount => unitCount * pricePerUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +45,7 @@ class _InvestDetailsState extends State<InvestDetails> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         color: Colors.white,
-        child: 
-        SizedBox(
+        child: SizedBox(
           height: 48,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -47,8 +55,18 @@ class _InvestDetailsState extends State<InvestDetails> {
               ),
             ),
             onPressed: () {
-
-               Navigator.push(context, MaterialPageRoute(builder: (context)=>AddToWallet()));
+              if (widget.investNow == true) {
+                print('jdfjdsjfj');
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PaymentDoneSuccess()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddToWallet()),
+                );
+              }
             },
             child: Text(
               'Invest Now',
@@ -56,8 +74,6 @@ class _InvestDetailsState extends State<InvestDetails> {
             ),
           ),
         ),
-
-
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
@@ -82,10 +98,6 @@ class _InvestDetailsState extends State<InvestDetails> {
       ),
     );
   }
-
-
-
-
 
   Widget _primaryCard(BuildContext context) {
     return Card(
@@ -112,7 +124,6 @@ class _InvestDetailsState extends State<InvestDetails> {
       ),
     );
   }
-
 
   Widget riskMitigationCard(BuildContext context) {
     return Card(
@@ -662,9 +673,9 @@ class _InvestDetailsState extends State<InvestDetails> {
     return Row(
       children: [
         CircleAvatar(
+          backgroundColor: whiteColor,
           radius: 22,
-          backgroundColor: Colors.white,
-          child: Image.asset('assets/images/imagetwo.png',width: 35,height: 35,),
+          child: Image.asset('assets/images/imagetwo.png'),
         ),
         const SizedBox(width: 8),
         Expanded(
@@ -691,222 +702,194 @@ class _InvestDetailsState extends State<InvestDetails> {
         ),
         const SizedBox(width: 8),
         CircleAvatar(
+          backgroundColor: whiteColor,
           radius: 22,
-          child: Image.asset('assets/images/imageone.png',width: 35,height: 35,),
+          child: Image.asset('assets/images/imageone.png'),
         ),
       ],
     );
   }
 
-  // Widget buildRow(
-  //   BuildContext context,
-  //   String title,
-  //   String value, {
-  //   IconData? icon,
-  //   bool highlight = false,
-  // }) {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 8),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Text(title, style: Theme.of(context).textTheme.bodyMedium),
-  //         Row(
-  //           children: [
-  //             Text(
-  //               value,
-  //               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-  //                 color: highlight ? Colors.green : blackColor,
-  //               ),
-  //             ),
-  //             if (icon != null) ...[
-  //               const SizedBox(width: 6),
-  //               Icon(icon, size: 14, color: Colors.grey),
-  //             ],
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-
-
   Widget secondaryCard(BuildContext context) {
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      child: Column(
-        children: [
-          buildRow(context, 'Unit Value', '₹1,00,000.00'),
-          buildRow(context, 'Coupon Rate', '12.5%'),
-          buildRow(context, 'Investment Value', '₹1,03,561.64'),
-          buildRow(context, 'Unit Price', '₹1,00,000.00'),
-          buildRow(
-            context,
-            'Accrued Interest',
-            '₹3,561.64',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Next Liquidity Event',
-            '13/11/2025',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Liquidity Event Amount',
-            '₹1,04,589.98',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Final Maturity Date',
-            '08/01/2028',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Exp. Maturity Amount',
-            '₹1,36,708.72',
-            highlight: true,
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buildRow(
-  BuildContext context,
-  String title,
-  String value, {
-  IconData? icon,
-  bool highlight = false,
-}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title, style: Theme.of(context).textTheme.bodyMedium),
-        Row(
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Column(
           children: [
-            Text(
-              value,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: highlight ? Colors.green : blackColor,
-              ),
+            buildRow(context, 'Unit Value', '₹1,00,000.00'),
+            buildRow(context, 'Coupon Rate', '12.5%'),
+            buildRow(context, 'Investment Value', '₹1,03,561.64'),
+            buildRow(context, 'Unit Price', '₹1,00,000.00'),
+            buildRow(
+              context,
+              'Accrued Interest',
+              '₹3,561.64',
+              icon: Icons.info_outline,
             ),
-            if (icon != null) ...[
-              const SizedBox(width: 6),
-              Icon(icon, size: 14, color: Colors.grey),
-            ],
+            buildRow(
+              context,
+              'Next Liquidity Event',
+              '13/11/2025',
+              icon: Icons.info_outline,
+            ),
+            buildRow(
+              context,
+              'Liquidity Event Amount',
+              '₹1,04,589.98',
+              icon: Icons.info_outline,
+            ),
+            buildRow(
+              context,
+              'Final Maturity Date',
+              '08/01/2028',
+              icon: Icons.info_outline,
+            ),
+            buildRow(
+              context,
+              'Exp. Maturity Amount',
+              '₹1,36,708.72',
+              highlight: true,
+            ),
           ],
         ),
-      ],
-    ),
-  );
-}
+      ),
+    );
+  }
 
-Widget unitCalculatorCard(BuildContext context) {
- 
-
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildRow(
+    BuildContext context,
+    String title,
+    String value, {
+    IconData? icon,
+    bool highlight = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            "No. of units",
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 12),
-
+          Text(title, style: Theme.of(context).textTheme.bodyMedium),
           Row(
             children: [
-              _unitButton(Icons.remove, () {
-                if (unitCount > 1) setState(() => unitCount--);
-              }),
-              const SizedBox(width: 12),
-
-              Container(
-                width: 80,
-                height: 42,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text("$unitCount", style: const TextStyle(fontSize: 16)),
-              ),
-
-              const SizedBox(width: 12),
-
-              _unitButton(Icons.add, () {
-                if (unitCount < 23) setState(() => unitCount++);
-              }),
-
-              const Spacer(),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  Text(
-                    "Unit Left 23/30",
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    "₹1,00,000",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 12),
-
-          Row(
-            children: [
-              Checkbox(
-                activeColor: onboardingTitleColor,
-                value: isChecked,
-                onChanged: (v) => setState(() => isChecked = v!),
-              ),
-              Expanded(
-                child: Text(
-                  'I am 18 years old and I can enter into a contract',
-                  style: Theme.of(context).textTheme.bodyMedium,
+              Text(
+                value,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: highlight ? Colors.green : blackColor,
                 ),
               ),
+              if (icon != null) ...[
+                const SizedBox(width: 6),
+                Icon(icon, size: 14, color: Colors.grey),
+              ],
             ],
           ),
         ],
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget _unitButton(IconData icon, VoidCallback onTap) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Container(
-      width: 42,
-      height: 42,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(8),
+  Widget unitCalculatorCard(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "No. of units",
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 12),
+
+            Row(
+              children: [
+                _unitButton(Icons.remove, () {
+                  if (unitCount > 1) setState(() => unitCount--);
+                }),
+                const SizedBox(width: 12),
+
+                Container(
+                  width: 80,
+                  height: 42,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    "$unitCount",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+
+                const SizedBox(width: 12),
+
+                _unitButton(Icons.add, () {
+                  if (unitCount < totalUnit) {
+                    setState(() => unitCount++);
+                  }
+                }),
+
+                const Spacer(),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '$unitLeftNow/$totalUnit',
+                      // "Unit Left 23/30",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      // "₹1,00,000",
+                      totalAmount.toString(),
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            Row(
+              children: [
+                Checkbox(
+                  activeColor: onboardingTitleColor,
+                  value: isChecked,
+                  onChanged: (v) => setState(() => isChecked = v!),
+                ),
+                Expanded(
+                  child: Text(
+                    'I am 18 years old and I can enter into a contract',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-      child: Icon(icon),
-    ),
-  );
-}
+    );
+  }
+
+  Widget _unitButton(IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade100,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(icon),
+      ),
+    );
+  }
 }
 
 class _DocChip extends StatelessWidget {

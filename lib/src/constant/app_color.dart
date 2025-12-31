@@ -11,3 +11,4 @@ Color textfieldBorder = const Color(0xffC0C0C0);
 Color boxBorder = const Color(0xff003289);
 Color greycolor = const Color(0xff6C757D);
 Color faintboxbackground = const Color(0xffF3F3F3);
+Color successText = const Color(0xff2CDA94);

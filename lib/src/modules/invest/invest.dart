@@ -190,7 +190,7 @@ class _Filter extends StatelessWidget {
   }
 }
 
-class _InvoiceCard extends StatelessWidget {
+class _InvoiceCard extends StatelessWidget { 
   String imagepathbuyer;
   String imagepatseller;
 
@@ -240,7 +240,8 @@ class _InvoiceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 6),
-                CircleAvatar(radius: 22, child: Image.asset(imagepatseller)),
+                CircleAvatar( backgroundColor: whiteColor,
+                  radius: 22, child: Image.asset(imagepatseller)),
               ],
             ),
             const SizedBox(height: 18),

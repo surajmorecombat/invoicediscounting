@@ -3,7 +3,7 @@ class InvoiceModel {
   final String seller;
   final String buyerImg;
   final String sellerImg;
-  final String category; 
+  final String category;
 
   InvoiceModel({
     required this.buyer,
