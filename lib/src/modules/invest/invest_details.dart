@@ -25,7 +25,7 @@ class _InvestDetailsState extends State<InvestDetails> {
       backgroundColor: const Color(0xFFF4F7FB),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
       bottomNavigationBar: Container(
