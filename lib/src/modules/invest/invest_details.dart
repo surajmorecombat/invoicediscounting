@@ -56,7 +56,7 @@ class _InvestDetailsState extends State<InvestDetails> {
             ),
             onPressed: () {
               if (widget.investNow == true) {
-                print('jdfjdsjfj');
+              
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PaymentDoneSuccess()),
