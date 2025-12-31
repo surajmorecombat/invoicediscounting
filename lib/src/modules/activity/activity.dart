@@ -27,7 +27,8 @@ class _ActivityState extends State<Activity> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
-        iconTheme: IconThemeData(color: blackColor),
+        automaticallyImplyLeading: false,
+        // iconTheme: IconThemeData(color: blackColor),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -48,74 +49,6 @@ class _ActivityState extends State<Activity> {
     );
   }
 
-  Widget totalEarningCard(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                'Total Earning',
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              Spacer(),
-              MiniBarChart(),
-            ],
-          ),
-
-          const SizedBox(height: 12),
-
-          Text(
-            '₹1,02045.25',
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-              color: Colors.green,
-              fontWeight: FontWeight.bold,
-            ),
-            // style: TextStyle(
-            //   color: Colors.green,
-            //   fontSize: 28,
-            //   fontWeight: FontWeight.bold,
-            // ),
-          ),
-
-          const SizedBox(height: 20),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              ValueBlock(label: 'Total Invested', value: '₹1,00,000/-'),
-              ValueBlock(label: 'Total Returns', value: '₹2045.25'),
-            ],
-          ),
-
-          const SizedBox(height: 16),
-          Divider(color: Colors.grey.shade300),
-
-          const SizedBox(height: 10),
-
-          Row(
-            children: [
-              Text('Returns', style: Theme.of(context).textTheme.bodyMedium),
-              Spacer(),
-              Text(
-                '+12.6%',
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: Colors.green),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget showTransactionCard(context) {
     return GestureDetector(
@@ -170,7 +103,10 @@ class _ActivityState extends State<Activity> {
               const SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TrainsationAll()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TrainsationAll()),
+                  );
                 },
                 child: Align(
                   alignment: Alignment.topRight,
