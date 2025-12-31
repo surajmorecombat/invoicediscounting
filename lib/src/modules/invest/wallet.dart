@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_method.dart';
 
-
 class AddToWallet extends StatefulWidget {
   const AddToWallet({super.key});
 
@@ -11,9 +10,16 @@ class AddToWallet extends StatefulWidget {
 }
 
 class _AddToWalletState extends State<AddToWallet> {
-  int selectedAmount = 5000;
+  int selectedAmount = 000000;
   int unitCount = 1;
   bool isChecked = false;
+
+  int totalUnit = 30;
+  int unitLeft = 23;
+  int pricePerUnit = 100000;
+
+  int get unitLeftNow => unitLeft + unitCount;
+  int get totalAmount => unitCount * pricePerUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +39,12 @@ class _AddToWalletState extends State<AddToWallet> {
             Expanded(
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectPaymentMethod()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SelectPaymentMethod(),
+                    ),
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                   backgroundColor: onboardingTitleColor,
@@ -83,9 +94,11 @@ class _AddToWalletState extends State<AddToWallet> {
             vertical: 16,
           ),
           child: Column(
-            children: [walletBalanceAdd(context),
-            secondaryCard(context),
-             unitCalculatorCard(context)],
+            children: [
+              walletBalanceAdd(context),
+              secondaryCard(context),
+              unitCalculatorCard(context),
+            ],
           ),
         ),
       ),
@@ -197,83 +210,84 @@ class _AddToWalletState extends State<AddToWallet> {
   }
 
   Widget secondaryCard(BuildContext context) {
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      child: Column(
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Column(
+          children: [
+            buildRow(context, 'Unit Value', '₹1,00,000.00'),
+            buildRow(context, 'Coupon Rate', '12.5%'),
+            buildRow(context, 'Investment Value', '₹1,03,561.64'),
+            buildRow(context, 'Unit Price', '₹1,00,000.00'),
+            buildRow(
+              context,
+              'Accrued Interest',
+              '₹3,561.64',
+              icon: Icons.info_outline,
+            ),
+            buildRow(
+              context,
+              'Next Liquidity Event',
+              '13/11/2025',
+              icon: Icons.info_outline,
+            ),
+            buildRow(
+              context,
+              'Liquidity Event Amount',
+              '₹1,04,589.98',
+              icon: Icons.info_outline,
+            ),
+            buildRow(
+              context,
+              'Final Maturity Date',
+              '08/01/2028',
+              icon: Icons.info_outline,
+            ),
+            buildRow(
+              context,
+              'Exp. Maturity Amount',
+              '₹1,36,708.72',
+              highlight: true,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildRow(
+    BuildContext context,
+    String title,
+    String value, {
+    IconData? icon,
+    bool highlight = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          buildRow(context, 'Unit Value', '₹1,00,000.00'),
-          buildRow(context, 'Coupon Rate', '12.5%'),
-          buildRow(context, 'Investment Value', '₹1,03,561.64'),
-          buildRow(context, 'Unit Price', '₹1,00,000.00'),
-          buildRow(
-            context,
-            'Accrued Interest',
-            '₹3,561.64',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Next Liquidity Event',
-            '13/11/2025',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Liquidity Event Amount',
-            '₹1,04,589.98',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Final Maturity Date',
-            '08/01/2028',
-            icon: Icons.info_outline,
-          ),
-          buildRow(
-            context,
-            'Exp. Maturity Amount',
-            '₹1,36,708.72',
-            highlight: true,
+          Text(title, style: Theme.of(context).textTheme.bodyMedium),
+          Row(
+            children: [
+              Text(
+                value,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: highlight ? Colors.green : blackColor,
+                ),
+              ),
+              if (icon != null) ...[
+                const SizedBox(width: 6),
+                Icon(icon, size: 14, color: Colors.grey),
+              ],
+            ],
           ),
         ],
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget buildRow(
-  BuildContext context,
-  String title,
-  String value, {
-  IconData? icon,
-  bool highlight = false,
-}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title, style: Theme.of(context).textTheme.bodyMedium),
-        Row(
-          children: [
-            Text(
-              value,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: highlight ? Colors.green : blackColor,
-              ),
-            ),
-            if (icon != null) ...[
-              const SizedBox(width: 6),
-              Icon(icon, size: 14, color: Colors.grey),
-            ],
-          ],
-        ),
-      ],
-    ),
-  );
-}
   Widget unitCalculatorCard(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -312,21 +326,25 @@ Widget buildRow(
                 const SizedBox(width: 12),
 
                 _unitButton(Icons.add, () {
-                  if (unitCount < 23) setState(() => unitCount++);
+                  if (unitCount < totalUnit) {
+                    setState(() => unitCount++);
+                  }
                 }),
 
                 const Spacer(),
 
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const [
+                  children: [
                     Text(
-                      "Unit Left 23/30",
+                      '$unitLeftNow/$totalUnit',
+                      // "Unit Left 23/30",
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                     SizedBox(height: 4),
                     Text(
-                      "₹1,00,000",
+                      // "₹1,00,000",
+                      totalAmount.toString(),
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ],
