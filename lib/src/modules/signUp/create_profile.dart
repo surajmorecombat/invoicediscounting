@@ -142,11 +142,11 @@ class _CreateProfileState extends State<CreateProfile> {
                       MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
                     );
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0A4DA2),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28),
-                    ),
+                   style: ElevatedButton.styleFrom(
+                    backgroundColor: onboardingTitleColor,
+                    foregroundColor: whiteColor,
+                    shape: const StadiumBorder(),
+                    elevation: 0,
                   ),
                   child: const Text(
                     'Continue',
