@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/modules/invest/invest_details.dart';
+import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
 import 'package:lottie/lottie.dart';
 
-class WalletSuccessCard extends StatelessWidget {
-  const WalletSuccessCard({super.key});
+class WidrawalSuccessCard extends StatelessWidget {
+  const WidrawalSuccessCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class WalletSuccessCard extends StatelessWidget {
                   ),
 
                   Text(
-                    'Added To Wallet',
+                    'Withdrawal Completed',
                     style: Theme.of(
                       context,
                     ).textTheme.displaySmall?.copyWith(color: successText),
@@ -44,7 +44,7 @@ class WalletSuccessCard extends StatelessWidget {
                   SizedBox(height: 20),
 
                   Text(
-                    ' A confirmation email has been sent to you.',
+                    'The funds have been sent to your bank account.',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -66,7 +66,7 @@ class WalletSuccessCard extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder:
-                                  (context) => InvestDetails(investNow: true),
+                                  (context) => TrainsationAll(),
                             ),
                           );
                         },

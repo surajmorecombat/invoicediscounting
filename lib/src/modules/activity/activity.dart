@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/components/total_earning_card.dart';
+import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/modules/activity/market_news_detail.dart';
@@ -40,7 +41,8 @@ class _ActivityState extends State<Activity> {
             children: [
               totalEarningCard(context),
               showTransactionCard(context),
-              walletBalanceCard(context),
+              WalletCard(),
+              // walletBalanceCard(context),
               marketNews(context),
             ],
           ),
@@ -48,7 +50,6 @@ class _ActivityState extends State<Activity> {
       ),
     );
   }
-
 
   Widget showTransactionCard(context) {
     return GestureDetector(
@@ -123,97 +124,97 @@ class _ActivityState extends State<Activity> {
     );
   }
 
-  Widget walletBalanceCard(context) {
-    return Container(
-      margin: EdgeInsets.only(top: 20),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Wallet Balance', style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 10),
+  // Widget walletBalanceCard(context) {
+  //   return Container(
+  //     margin: EdgeInsets.only(top: 20),
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: BoxDecoration(
+  //       color: whiteColor,
+  //       borderRadius: BorderRadius.circular(12),
+  //       border: Border.all(color: Colors.grey.shade200),
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text('Wallet Balance', style: Theme.of(context).textTheme.bodyLarge),
+  //         const SizedBox(height: 10),
 
-          Text(
-            '₹ 1,00,000 /-',
-            style: Theme.of(
-              context,
-            ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
-          ),
+  //         Text(
+  //           '₹ 1,00,000 /-',
+  //           style: Theme.of(
+  //             context,
+  //           ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
+  //         ),
 
-          const SizedBox(height: 6),
-          Text(
-            'Add or Withdraw funds anytime',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+  //         const SizedBox(height: 6),
+  //         Text(
+  //           'Add or Withdraw funds anytime',
+  //           style: Theme.of(context).textTheme.bodyMedium,
+  //         ),
 
-          const SizedBox(height: 18),
+  //         const SizedBox(height: 18),
 
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => BankDemeteDetails(),
-                    //   ),
-                    // );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: onboardingTitleColor,
-                    //   side: BorderSide(color: onboardingTitleColor),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    minimumSize: const Size(0, 48),
-                  ),
-                  child: Text(
-                    'Add',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelLarge?.copyWith(color: whiteColor),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 15),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => DocumentVerified(),
-                    //   ),
-                    // );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    side: BorderSide(color: onboardingTitleColor),
-                    backgroundColor: whiteColor,
-                    minimumSize: const Size(0, 48),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    'Withdraw',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: onboardingTitleColor,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               child: OutlinedButton(
+  //                 onPressed: () {
+  //                   // Navigator.push(
+  //                   //   context,
+  //                   //   MaterialPageRoute(
+  //                   //     builder: (context) => BankDemeteDetails(),
+  //                   //   ),
+  //                   // );
+  //                 },
+  //                 style: OutlinedButton.styleFrom(
+  //                   backgroundColor: onboardingTitleColor,
+  //                   //   side: BorderSide(color: onboardingTitleColor),
+  //                   shape: RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.circular(8),
+  //                   ),
+  //                   minimumSize: const Size(0, 48),
+  //                 ),
+  //                 child: Text(
+  //                   'Add',
+  //                   style: Theme.of(
+  //                     context,
+  //                   ).textTheme.labelLarge?.copyWith(color: whiteColor),
+  //                 ),
+  //               ),
+  //             ),
+  //             const SizedBox(width: 15),
+  //             Expanded(
+  //               child: ElevatedButton(
+  //                 onPressed: () {
+  //                   // Navigator.push(
+  //                   //   context,
+  //                   //   MaterialPageRoute(
+  //                   //     builder: (context) => DocumentVerified(),
+  //                   //   ),
+  //                   // );
+  //                 },
+  //                 style: ElevatedButton.styleFrom(
+  //                   side: BorderSide(color: onboardingTitleColor),
+  //                   backgroundColor: whiteColor,
+  //                   minimumSize: const Size(0, 48),
+  //                   shape: RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.circular(8),
+  //                   ),
+  //                 ),
+  //                 child: Text(
+  //                   'Withdraw',
+  //                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
+  //                     color: onboardingTitleColor,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget marketNews(context) {
     final imageList = [

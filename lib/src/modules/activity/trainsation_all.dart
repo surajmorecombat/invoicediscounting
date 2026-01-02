@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/models/transaction_model.dart';
@@ -251,73 +252,82 @@ class _TrainsationAllState extends State<TrainsationAll> {
 
   @override
   Widget build(BuildContext context) {
+       final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return MainLayout(
       ctx: 1,
       showDefaultBottom: true,
       backgroundColor: backgroundColor,
       body: SafeArea(
-        child: Column(
-          children: [
-            _TopBar(
-              onSort: () => showSort(context),
-              onType: () => showType(context),
-              onMonth: () => showMonth(context),
-            ),
-            Expanded(
-              child: ListView.builder(
+        child: Padding(
+           padding: EdgeInsets.symmetric(
+            horizontal: isTablet ? 120 : 20,
+            vertical: 16,
+          ),
+          child: Column(
+            children: [
+              WalletCard(),
+              SizedBox(height: 10,),
+              _TopBar(
+                onSort: () => showSort(context),
+                onType: () => showType(context),
+                onMonth: () => showMonth(context),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: filtered.length,
+                  itemBuilder: (_, i) => TransactionTile(t: filtered[i]),
+                ),
+              ),
+              Container(
                 padding: const EdgeInsets.all(16),
-                itemCount: filtered.length,
-                itemBuilder: (_, i) => TransactionTile(t: filtered[i]),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade200),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Need help ? ',
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
-
-                      Flexible(
-                        child: Text(
-                          '+91-9876543210',
+                decoration: BoxDecoration(
+                  color: whiteColor,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade200),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Need help ? ',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+          
+                        Flexible(
+                          child: Text(
+                            '+91-9876543210',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'contact us if you have any concern',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'contact us if you have any concern',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-
-                      SizedBox(width: 60),
-
-                      Flexible(
-                        child: Text(
-                          'contact.person@domainmail.com',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          maxLines: 2,
+          
+                        SizedBox(width: 60),
+          
+                        Flexible(
+                          child: Text(
+                            'contact.person@domainmail.com',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            maxLines: 2,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -337,24 +347,19 @@ class _TopBar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16, top: 10),
-          child: Text(
-            'Transactions',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+        Text(
+          'Transactions',
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FilterChipWidget('Sort By', onSort),
-              FilterChipWidget('Transaction Type', onType),
-              FilterChipWidget('By Month', onMonth),
-              FilterChipWidget('EMAIL STATEMENT', () {}),
-            ],
-          ),
+        SizedBox(height: 10,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FilterChipWidget('Sort By', onSort),
+            FilterChipWidget('Transaction Type', onType),
+            FilterChipWidget('By Month', onMonth),
+            FilterChipWidget('EMAIL STATEMENT', () {}),
+          ],
         ),
       ],
     );

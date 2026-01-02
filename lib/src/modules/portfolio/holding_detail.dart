@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/sell_unit_dialog.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
 class HoldingDetail extends StatefulWidget {
@@ -9,6 +12,31 @@ class HoldingDetail extends StatefulWidget {
 }
 
 class _HoldingDetailState extends State<HoldingDetail> {
+  late BuildContext rootContext;
+
+  @override
+  void didChangeDependencies() {
+    rootContext = context;
+    super.didChangeDependencies();
+  }
+
+  void _openSellDialog() {
+    showDialog(
+      context: context,
+      barrierColor: Colors.transparent,
+      barrierDismissible: true,
+      builder:
+          (_) => BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+            child: Container(
+              color: const Color(0xFF003A8F).withOpacity(.15),
+              child: const SellUnitDialog(),
+            ),
+          ),
+      // => const SellUnitDialog(),
+    );
+  }
+
   bool showParties = false;
   @override
   Widget build(BuildContext context) {
@@ -33,9 +61,11 @@ class _HoldingDetailState extends State<HoldingDetail> {
               ),
             ),
             onPressed: () {
-              //   Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => PaymentDoneSuccess()),
+              _openSellDialog();
+              // showDialog(
+
+              //   barrierColor: const Color(0xFF003A8F).withOpacity(.15),
+              //   builder: (_) => const SellUnitDialog(),
               // );
             },
             child: Text('Sell', style: Theme.of(context).textTheme.labelLarge),
