@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/models/invoicemodel.dart';
+import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
 import 'package:invoicediscounting/src/modules/invest/invest_details.dart';
+import 'package:invoicediscounting/src/modules/profile/profile.dart';
 
 class Invest extends StatefulWidget {
   const Invest({super.key});
@@ -45,9 +47,7 @@ class _InvestState extends State<Invest> {
 
   @override
   Widget build(BuildContext context) {
-    
     return MainLayout(
-      
       backgroundColor: backgroundColor,
       ctx: 0,
       showDefaultBottom: true,
@@ -102,31 +102,48 @@ class _TopBar extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.person, size: 20),
+               
+                  IconButton(onPressed: (){
+                       Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Profile(),
+                      ),
+                    );
+                  }, icon: Icon(Icons.person)),
+              // const Icon(Icons.person, size: 20),
               const SizedBox(width: 12),
               const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.account_balance_wallet_outlined,
-                      size: 20,
-                      color: onboardingTitleColor,
-                    ),
-                    SizedBox(width: 6),
-                    Text(
-                      '₹1,00,000',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TrainsationAll()),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade50,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.account_balance_wallet_outlined,
+                        size: 20,
+                        color: onboardingTitleColor,
+                      ),
+                      SizedBox(width: 6),
+                      Text(
+                        '₹1,00,000',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -190,7 +207,7 @@ class _Filter extends StatelessWidget {
   }
 }
 
-class _InvoiceCard extends StatelessWidget { 
+class _InvoiceCard extends StatelessWidget {
   String imagepathbuyer;
   String imagepatseller;
 
@@ -206,7 +223,10 @@ class _InvoiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>InvestDetails()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => InvestDetails()),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
@@ -240,8 +260,11 @@ class _InvoiceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 6),
-                CircleAvatar( backgroundColor: whiteColor,
-                  radius: 22, child: Image.asset(imagepatseller)),
+                CircleAvatar(
+                  backgroundColor: whiteColor,
+                  radius: 22,
+                  child: Image.asset(imagepatseller),
+                ),
               ],
             ),
             const SizedBox(height: 18),
@@ -264,7 +287,10 @@ class _InvoiceCard extends StatelessWidget {
                     shape: const StadiumBorder(),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>InvestDetails()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => InvestDetails()),
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -302,7 +328,7 @@ class _Metric extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith( 
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: green ? Colors.green : Colors.black,
           ),
           // style: TextStyle(
