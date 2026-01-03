@@ -1,0 +1,204 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/mainlayout.dart';
+import 'package:invoicediscounting/src/modules/invest/payment_method.dart';
+
+class WalletAdd extends StatefulWidget {
+  const WalletAdd({super.key});
+
+  @override
+  State<WalletAdd> createState() => _WalletAddState();
+}
+
+class _WalletAddState extends State<WalletAdd> {
+  final TextEditingController amountController = TextEditingController();
+
+  int selectedAmount = 000000;
+  @override
+  Widget build(BuildContext context) {
+    final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    return Scaffold(
+      backgroundColor: backgroundColor,
+
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: backgroundColor,
+        iconTheme: IconThemeData(color: blackColor),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16),
+        color: Colors.white,
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SelectPaymentMethod(),
+                    ),
+                  );
+                },
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: onboardingTitleColor,
+                  // side: BorderSide(color: onboardingTitleColor, width: 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                child: Text(
+                  "Continue",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelLarge?.copyWith(color: whiteColor),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Wallet Balance",
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+
+                const SizedBox(height: 16),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
+
+                //     SizedBox(
+                //       width: 160,
+                //       child: TextField(
+                //         controller: amountController,
+                //         keyboardType: TextInputType.number,
+                //         textAlign: TextAlign.center,
+                //         style: Theme.of(context).textTheme.displaySmall,
+                //         decoration: const InputDecoration(
+                //           hintText: "0",
+                //           border: InputBorder.none,
+                //         ),
+                //         onChanged: (value) {
+                //           setState(() {
+                //             selectedAmount =
+                //                 int.tryParse(value.replaceAll(',', '')) ?? 0;
+                //           });
+                //         },
+                //       ),
+                //     ),
+
+                //     Text(
+                //       " /-",
+                //       style: Theme.of(context).textTheme.displaySmall,
+                //     ),
+                //   ],
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
+                    Text(
+                      _format(selectedAmount),
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    Text(
+                      " /-",
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _amountChip(5000),
+                    _amountChip(10000),
+                    _amountChip(25000),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                Text(
+                  "For your security, we can accept payments only from your registered bank account. "
+                  "Any payment from a different account will be declined automatically.",
+                  // textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+
+                const SizedBox(height: 24),
+                const Divider(),
+
+                _balanceRow("Current Balance", "₹0.00"),
+                _balanceRow("New Deposit", "₹0.00"),
+                _balanceRow("New Balance", "₹0.00"),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _balanceRow(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.bodySmall),
+          Text(value, style: Theme.of(context).textTheme.bodySmall),
+        ],
+      ),
+    );
+  }
+
+  Widget _amountChip(int amount) {
+    final bool selected = selectedAmount == amount;
+
+    return GestureDetector(
+      onTap: () => setState(() => selectedAmount = amount),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        decoration: BoxDecoration(
+          color: selected ? onboardingTitleColor.withOpacity(.1) : Colors.white,
+          border: Border.all(
+            color: selected ? onboardingTitleColor : Colors.grey.shade300,
+          ),
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Text(
+          "₹${_format(amount)}",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: selected ? onboardingTitleColor : Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _format(int n) {
+    return n.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+      (m) => '${m[1]},',
+    );
+  }
+}

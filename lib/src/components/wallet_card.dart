@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/components/widrawl_success_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/wallet/wallet_add.dart';
 
 class WalletCard extends StatefulWidget {
   const WalletCard({super.key});
@@ -65,12 +66,7 @@ class _WalletCardState extends State<WalletCard> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => BankDemeteDetails(),
-                    //   ),
-                    // );
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WalletAdd()));
                   },
                   style: OutlinedButton.styleFrom(
                     backgroundColor: onboardingTitleColor,
