@@ -60,6 +60,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
 
   Widget _bankAccountCard() {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -105,6 +106,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
 
   Widget _paymentMethodCard() {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),

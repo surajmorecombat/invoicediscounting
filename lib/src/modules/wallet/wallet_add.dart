@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_method.dart';
 
 class WalletAdd extends StatefulWidget {
@@ -78,51 +76,40 @@ class _WalletAddState extends State<WalletAdd> {
 
                 const SizedBox(height: 16),
 
+               Padding(
+              padding: const EdgeInsets.only(left: 100, right: 100),
+              child: Center(
+                child: TextField(
+                  controller: amountController,
+                  keyboardType: TextInputType.number,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Amount',
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedAmount =
+                          int.tryParse(value.replaceAll(',', '')) ?? 0;
+                    });
+                  },
+                ),
+              ),
+            ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [
                 //     Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
-
-                //     SizedBox(
-                //       width: 160,
-                //       child: TextField(
-                //         controller: amountController,
-                //         keyboardType: TextInputType.number,
-                //         textAlign: TextAlign.center,
-                //         style: Theme.of(context).textTheme.displaySmall,
-                //         decoration: const InputDecoration(
-                //           hintText: "0",
-                //           border: InputBorder.none,
-                //         ),
-                //         onChanged: (value) {
-                //           setState(() {
-                //             selectedAmount =
-                //                 int.tryParse(value.replaceAll(',', '')) ?? 0;
-                //           });
-                //         },
-                //       ),
+                //     Text(
+                //       _format(selectedAmount),
+                //       style: Theme.of(context).textTheme.displaySmall,
                 //     ),
-
                 //     Text(
                 //       " /-",
                 //       style: Theme.of(context).textTheme.displaySmall,
                 //     ),
                 //   ],
                 // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
-                    Text(
-                      _format(selectedAmount),
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-                    Text(
-                      " /-",
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-                  ],
-                ),
                 const SizedBox(height: 20),
 
                 Row(
@@ -174,7 +161,12 @@ class _WalletAddState extends State<WalletAdd> {
     final bool selected = selectedAmount == amount;
 
     return GestureDetector(
-      onTap: () => setState(() => selectedAmount = amount),
+      onTap:() {
+        setState(() {
+          selectedAmount = amount;
+          amountController.text = amount.toString();
+        });
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         decoration: BoxDecoration(

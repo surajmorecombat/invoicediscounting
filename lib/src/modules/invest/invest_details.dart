@@ -100,6 +100,7 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget _primaryCard(BuildContext context) {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -127,7 +128,7 @@ class _InvestDetailsState extends State<InvestDetails> {
   Widget riskMitigationCard(BuildContext context) {
     return Card(
       color: whiteColor,
-      elevation: 3,
+      elevation: 0.7,
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -202,107 +203,7 @@ class _InvestDetailsState extends State<InvestDetails> {
                 ],
               ),
 
-              // const SizedBox(height: 20),
-              // Text(
-              //   "Frequently Asked Questions",
-              //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              //     color: blackColor,
-              //     fontWeight: FontWeight.w500,
-              //   ),
-              // ),
-
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Text(
-              //         'What is Invoice Discounting?',
-              //         style: Theme.of(
-              //           context,
-              //         ).textTheme.bodyMedium?.copyWith(color: blackColor),
-              //       ),
-              //     ),
-              //     IconButton(
-              //       onPressed: () {
-              //         setState(() {
-              //           faqOne = !faqOne;
-              //         });
-              //       },
-              //       icon: Icon(
-              //         faqOne
-              //             ? Icons.keyboard_arrow_up
-              //             : Icons.keyboard_arrow_down,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              // if (faqOne) ...[
-              //   Text(
-              //     'Invoice discounting is a financial service where a business sells its outstanding, unpaid invoices to a third-party financier (a bank or specialist firm) at a discount in exchange for an immediate cash advance [1]. This allows companies to quickly access working capital they would otherwise have to wait 30 to 90 days or more to receive from customers.',
-              //   ),
-              // ],
-
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Text(
-              //         'How are the returns generated?',
-              //         style: Theme.of(
-              //           context,
-              //         ).textTheme.bodyMedium?.copyWith(color: blackColor),
-              //       ),
-              //     ),
-              //     IconButton(
-              //       onPressed: () {
-              //         setState(() {
-              //           faqTwo = !faqTwo;
-              //         });
-              //       },
-              //       icon: Icon(
-              //         faqTwo
-              //             ? Icons.keyboard_arrow_up
-              //             : Icons.keyboard_arrow_down,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              // if (faqTwo) ...[
-              //   Text(
-              //     'Returns in invoice discounting are generated in two ways: for the business (through improved cash flow and operational efficiency) and for the financier/investor (through fees and the discount rate applied to the invoice).',
-              //   ),
-              // ],
-
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Text(
-              //         'How are the returns calculated?',
-              //         style: Theme.of(
-              //           context,
-              //         ).textTheme.bodyMedium?.copyWith(color: blackColor),
-              //       ),
-              //     ),
-              //     IconButton(
-              //       onPressed: () {
-              //         setState(() {
-              //           faqThree = !faqThree;
-              //         });
-              //       },
-              //       icon: Icon(
-              //         faqThree
-              //             ? Icons.keyboard_arrow_up
-              //             : Icons.keyboard_arrow_down,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              // if (faqThree) ...[
-              //   Text(
-              //     '''Returns in invoice discounting are primarily calculated as the difference between the full value of an invoice and the discounted amount paid upfront, often expressed as a percentage rate. This calculation is a simple arithmetic difference for the financier's nominal return, and a time-value-adjusted calculation to determine the actual annualized rate of return.''',
-              //   ),
-              // ],
+          
             ],
           ],
         ),
@@ -332,7 +233,7 @@ class _InvestDetailsState extends State<InvestDetails> {
   Widget platformTrackRecordCard(BuildContext context) {
     return Card(
       color: whiteColor,
-      elevation: 3,
+      elevation: 0.7,
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -423,36 +324,36 @@ class _InvestDetailsState extends State<InvestDetails> {
                   _DocChip("PDC"),
                 ],
               ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Text(
-                    "Documents",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: blackColor),
-                  ),
-                  const Spacer(),
-                  OutlinedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "See All",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: onboardingTitleColor,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // const SizedBox(height: 12),
+              // Row(
+              //   children: [
+              //     Text(
+              //       "Documents",
+              //       style: Theme.of(
+              //         context,
+              //       ).textTheme.bodyLarge?.copyWith(color: blackColor),
+              //     ),
+              //     const Spacer(),
+              //     OutlinedButton(
+              //       onPressed: () {},
+              //       child: Text(
+              //         "See All",
+              //         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              //           color: onboardingTitleColor,
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
-              const SizedBox(height: 12),
-              Row(
-                children: const [
-                  _DownloadButton("Due Diligence"),
-                  SizedBox(width: 12),
-                  _DownloadButton("Assured Certificate"),
-                ],
-              ),
+              // const SizedBox(height: 12),
+              // Row(
+              //   children: const [
+              //     _DownloadButton("Due Diligence"),
+              //     SizedBox(width: 12),
+              //     _DownloadButton("Assured Certificate"),
+              //   ],
+              // ),
             ],
           ],
         ),
@@ -479,7 +380,7 @@ class _InvestDetailsState extends State<InvestDetails> {
   Widget opportunitySummaryCard(BuildContext context) {
     return Card(
       color: whiteColor,
-      elevation: 3,
+      elevation: 0.7,
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -521,7 +422,14 @@ class _InvestDetailsState extends State<InvestDetails> {
             ),
 
             if (showOpportunitySummary) ...[
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
+
+              _section(
+                "About Buyer",
+                "Sampoorna Feeds Pvt Ltd is a Phagwara, Punjab-based company specializing in manufacturing and selling a range of animal feed, including poultry and cattle feed, primarily produced through contract farming.",
+              ),
+
+              const SizedBox(height: 16),
 
               _section(
                 "About Seller",
@@ -529,56 +437,16 @@ class _InvestDetailsState extends State<InvestDetails> {
               ),
 
               const SizedBox(height: 16),
-              Text(
-                "About Buyer",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: blackColor),
-              ),
-
-                Text(
-              "Sampoorna Feeds Pvt Ltd is a Phagwara, Punjab-based company specializing in manufacturing and selling a range of animal feed, including poultry and cattle feed, primarily produced through contract farming.",
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-            ),
-              Text(
-                "How it works",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: blackColor),
-              ),
-              const SizedBox(height: 4),
-              const Text(
-                "Step 1    Step 2    Step 3",
-                style: TextStyle(color: Colors.grey),
-              ),
-
-              const SizedBox(height: 16),
               _section(
-                "Receivables Assignment",
-                "NBFC assigns the right to receive payment against the distributed invoices.\n(Visual shows buyer → NBFC → seller)",
+                "About the Trustee",
+                "Beacon Trusteeship Limited is a SEBI-registered debenture trustee that provides a wide range of trustee services, including Debenture Trustee Services, Security Trustee Services, Trustee to Alternate Investment Funds (AIF), Trustee to Securitization transactions, Bond Trusteeship Services, Escrow Services, and Safekeeping.",
               ),
 
               const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(22),
-                  ),
-                  child: Text(
-                    "Know more →",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: blackColor),
-                  ),
-                ),
+
+              _section(
+                "About NBFC",
+                "Gangotree Baitar Private Limited (GBPL) is a Non Deposit-Taking NBFC registered with RBI having registration number as 05.02902. Backed by a team of qualified investment professionals, GBPL specializes in providing Invoice Discounting and Supply Chain Financing to Corporates in India.",
               ),
             ],
           ],
@@ -606,7 +474,7 @@ class _InvestDetailsState extends State<InvestDetails> {
   Widget aboutEntitiesCard(BuildContext context) {
     return Card(
       color: whiteColor,
-      elevation: 3,
+      elevation: 0.7,
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -621,7 +489,7 @@ class _InvestDetailsState extends State<InvestDetails> {
                 children: [
                   Expanded(
                     child: Text(
-                      "About Buyer",
+                      "Frequently Asked Questions",
                       style: Theme.of(
                         context,
                       ).textTheme.headlineLarge?.copyWith(color: blackColor),
@@ -636,28 +504,129 @@ class _InvestDetailsState extends State<InvestDetails> {
               ),
             ),
 
-            const SizedBox(height: 8),
-            Text(
-              "Sampoorna Feeds Pvt Ltd is a Phagwara, Punjab-based company specializing in manufacturing and selling a range of animal feed, including poultry and cattle feed, primarily produced through contract farming.",
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-            ),
+            // const SizedBox(height: 8),
+            // Text(
+            //   "Sampoorna Feeds Pvt Ltd is a Phagwara, Punjab-based company specializing in manufacturing and selling a range of animal feed, including poultry and cattle feed, primarily produced through contract farming.",
+            //   style: Theme.of(
+            //     context,
+            //   ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+            // ),
 
             if (showAboutEntities) ...[
-              const SizedBox(height: 20),
+              // const SizedBox(height: 16),
 
-              _aboutSection(
-                "About the Trustee",
-                "Beacon Trusteeship Limited is a SEBI-registered debenture trustee that provides a wide range of trustee services, including Debenture Trustee Services, Security Trustee Services, Trustee to Alternate Investment Funds (AIF), Trustee to Securitization transactions, Bond Trusteeship Services, Escrow Services, and Safekeeping.",
+              // Text(
+              //   "Frequently Asked Questions",
+              //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //     color: blackColor,
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'What is Invoice Discounting?',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        faqOne = !faqOne;
+                      });
+                    },
+                    icon: Icon(
+                      faqOne
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                    ),
+                  ),
+                ],
               ),
 
-              const SizedBox(height: 16),
+              if (faqOne) ...[
+                Text(
+                  'Invoice discounting is a financial service where a business sells its outstanding, unpaid invoices to a third-party financier (a bank or specialist firm) at a discount in exchange for an immediate cash advance [1]. This allows companies to quickly access working capital they would otherwise have to wait 30 to 90 days or more to receive from customers.',
+                ),
+              ],
 
-              _aboutSection(
-                "About NBFC",
-                "Gangotree Baitar Private Limited (GBPL) is a Non Deposit-Taking NBFC registered with RBI having registration number as 05.02902. Backed by a team of qualified investment professionals, GBPL specializes in providing Invoice Discounting and Supply Chain Financing to Corporates in India.",
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'How are the returns generated?',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        faqTwo = !faqTwo;
+                      });
+                    },
+                    icon: Icon(
+                      faqTwo
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                    ),
+                  ),
+                ],
               ),
+
+              if (faqTwo) ...[
+                Text(
+                  'Returns in invoice discounting are generated in two ways: for the business (through improved cash flow and operational efficiency) and for the financier/investor (through fees and the discount rate applied to the invoice).',
+                ),
+              ],
+
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'How are the returns calculated?',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        faqThree = !faqThree;
+                      });
+                    },
+                    icon: Icon(
+                      faqThree
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
+                    ),
+                  ),
+                ],
+              ),
+
+              if (faqThree) ...[
+                Text(
+                  '''Returns in invoice discounting are primarily calculated as the difference between the full value of an invoice and the discounted amount paid upfront, often expressed as a percentage rate. This calculation is a simple arithmetic difference for the financier's nominal return, and a time-value-adjusted calculation to determine the actual annualized rate of return.''',
+                ),
+              ],
+
+              // _aboutSection(
+              //   "About the Trustee",
+              //   "Beacon Trusteeship Limited is a SEBI-registered debenture trustee that provides a wide range of trustee services, including Debenture Trustee Services, Security Trustee Services, Trustee to Alternate Investment Funds (AIF), Trustee to Securitization transactions, Bond Trusteeship Services, Escrow Services, and Safekeeping.",
+              // ),
+
+              // const SizedBox(height: 16),
+
+              // _aboutSection(
+              //   "About NBFC",
+              //   "Gangotree Baitar Private Limited (GBPL) is a Non Deposit-Taking NBFC registered with RBI having registration number as 05.02902. Backed by a team of qualified investment professionals, GBPL specializes in providing Invoice Discounting and Supply Chain Financing to Corporates in India.",
+              // ),
             ],
           ],
         ),
@@ -724,6 +693,7 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget secondaryCard(BuildContext context) {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -803,6 +773,7 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget unitCalculatorCard(BuildContext context) {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),

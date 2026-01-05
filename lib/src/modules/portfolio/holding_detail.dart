@@ -77,7 +77,7 @@ class _HoldingDetailState extends State<HoldingDetail> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 12),
+              //    const SizedBox(height: 12),
               investedAmountCard(context),
               SizedBox(height: 12),
               investmentDetailsCard(context),
@@ -433,28 +433,28 @@ class _HoldingDetailState extends State<HoldingDetail> {
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                "Documents",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: blackColor),
-              ),
-            ],
+          Text(
+            "Documents",
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: blackColor),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            "All the document for you to read and invest for understanding the deal.",
+            style: Theme.of(context).textTheme.bodySmall,
           ),
 
           const SizedBox(height: 12),
-          Text(
-            'All the document for you to read and invest for understanding the deal.',
-          ),
-          const SizedBox(height: 12),
           Row(
             children: const [
-              _DownloadButton("Due Diligence"),
-              SizedBox(width: 12),
-              _DownloadButton("Assured Certificate"),
+              _DocChip("Invoice"),
+              SizedBox(width: 10),
+              _DocChip("Agreement"),
+              SizedBox(width: 10),
+              _DocChip("PDC"),
             ],
           ),
         ],
@@ -463,29 +463,20 @@ class _HoldingDetailState extends State<HoldingDetail> {
   }
 }
 
-class _DownloadButton extends StatelessWidget {
+class _DocChip extends StatelessWidget {
   final String text;
-  const _DownloadButton(this.text);
+  const _DocChip(this.text);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22),
-          ),
-        ),
-        onPressed: () {},
-        icon: const Icon(Icons.download, size: 16),
-        label: Text(
-          text,
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: whiteColor),
-        ),
+    return Chip(
+      label: Text(
+        text,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium?.copyWith(color: blackColor),
       ),
+      backgroundColor: Colors.grey.shade100,
     );
   }
 }

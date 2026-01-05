@@ -89,7 +89,7 @@ class _CreateProfileState extends State<CreateProfile> {
                           ),
                           Expanded(
                             child: Text(
-                              'I am 18 years old and I can enter into a contract',
+                              'I confirm that this investment aligns with my risk profile and financial capacity.',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -204,7 +204,8 @@ class _InputField extends StatelessWidget {
           controller: controller,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(
-            labelText: label,
+            hintText: label,
+         //   labelText: label,
 
             labelStyle: const TextStyle(color: Colors.grey),
 

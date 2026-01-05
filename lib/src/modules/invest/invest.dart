@@ -95,22 +95,39 @@ class _TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: whiteColor,
       padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: whiteColor,
+        border: Border.all(color: Colors.grey.shade200),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-               
-                  IconButton(onPressed: (){
-                       Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Profile(),
-                      ),
-                    );
-                  }, icon: Icon(Icons.person)),
+              // Icon(Icons.person),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Profile()),
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 20,
+                  backgroundColor: greycolor,
+                  child: Icon(Icons.person, color: whiteColor),
+                ),
+              ),
+              // IconButton(
+              //   onPressed: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => Profile()),
+              // );
+              //   },
+              //   icon: Icon(Icons.person),
+              // ),
               // const Icon(Icons.person, size: 20),
               const SizedBox(width: 12),
               const Spacer(),
@@ -170,7 +187,7 @@ class _TopBar extends StatelessWidget {
               _Filter('All Products', 'all', selected, onSelect),
               _Filter('High Yield', 'high', selected, onSelect),
               _Filter('Short Term', 'short', selected, onSelect),
-              _Filter('Available', 'available', selected, onSelect),
+              // _Filter('Available', 'available', selected, onSelect),
             ],
           ),
         ],
@@ -230,10 +247,11 @@ class _InvoiceCard extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.shade200),
         ),
         child: Column(
           children: [
@@ -298,7 +316,7 @@ class _InvoiceCard extends StatelessWidget {
                     children: [
                       Text(
                         'View Details',
-                        style: Theme.of(context).textTheme.labelLarge,
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                       SizedBox(width: 5),
                       Icon(Icons.arrow_forward, size: 12),

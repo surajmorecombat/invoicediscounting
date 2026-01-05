@@ -81,31 +81,34 @@ class HelpCentre extends StatelessWidget {
                     context,
                     'assets/icons/return.png',
                     "Returns & Taxation",
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Invest()),
-                        ),
+                    onTap: () {},
+                    // () =>
+                    //  Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => Invest()),
+                    // ),
                   ),
                   helpCategoryCard(
                     context,
                     'assets/icons/security.png',
                     "Security & Fraud",
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Invest()),
-                        ),
+                    onTap: () {},
+                    // onTap:
+                    //     () => Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => Invest()),
+                    //     ),
                   ),
                   helpCategoryCard(
                     context,
                     'assets/icons/business.png',
                     "Business Accounts",
-                    onTap:
-                        () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Invest()),
-                        ),
+                    onTap: () {},
+                    // onTap:
+                    //     () => Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => Invest()),
+                    //     ),
                   ),
                 ],
               ),

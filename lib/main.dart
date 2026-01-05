@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
             // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ).copyWith(textTheme: AppTextTheme.textTheme(context)),
-          initialRoute: '/createprofile',
+          initialRoute: '/splashScreen',
           navigatorKey: MyApp.navigatorKey,
           onGenerateRoute: appRouter.onGenerateRoute,
         );
