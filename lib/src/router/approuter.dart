@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/modules/activity/activity.dart';
+import 'package:invoicediscounting/src/modules/flash/flash_screen.dart';
 import 'package:invoicediscounting/src/modules/invest/invest.dart';
 import 'package:invoicediscounting/src/modules/portfolio/portfolio.dart';
 
@@ -10,6 +11,10 @@ import 'package:invoicediscounting/src/modules/signUp/verify_email_otp.dart';
 class AppRouter {
   Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+
+      case '/splashScreen':
+        return MaterialPageRoute(builder: (_) => const FlashScreen());
+
       case '/createprofile':
         return MaterialPageRoute(builder: (_) => const CreateProfile());
 
@@ -28,8 +33,9 @@ class AppRouter {
       case '/portfolio':
         return MaterialPageRoute(builder: (_) => Portfolio());
 
+
       default:
-        return MaterialPageRoute(builder: (_) => CreateProfile());
+        return MaterialPageRoute(builder: (_) => FlashScreen());
     }
   }
 }

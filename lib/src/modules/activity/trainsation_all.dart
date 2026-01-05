@@ -225,12 +225,18 @@ class _TrainsationAllState extends State<TrainsationAll> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
-                          child: const Text('Cancel'),
+                          child:  Text('Cancel',style: TextStyle(color: onboardingTitleColor),),
                         ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: onboardingTitleColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
                           onPressed:
                               () => Navigator.pop(
                                 context,
@@ -252,21 +258,21 @@ class _TrainsationAllState extends State<TrainsationAll> {
 
   @override
   Widget build(BuildContext context) {
-       final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return MainLayout(
-      ctx: 1,
+      ctx: 0,
       showDefaultBottom: true,
       backgroundColor: backgroundColor,
       body: SafeArea(
         child: Padding(
-           padding: EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: isTablet ? 120 : 20,
             vertical: 16,
           ),
           child: Column(
             children: [
               WalletCard(),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               _TopBar(
                 onSort: () => showSort(context),
                 onType: () => showType(context),
@@ -288,41 +294,48 @@ class _TrainsationAllState extends State<TrainsationAll> {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Need help ? ',
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-          
-                        Flexible(
-                          child: Text(
-                            '+91-9876543210',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'contact us if you have any concern',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-          
-                        SizedBox(width: 60),
-          
-                        Flexible(
-                          child: Text(
-                            'contact.person@domainmail.com',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                            maxLines: 2,
-                          ),
-                        ),
-                      ],
-                    ),
+               Row(
+  children: [
+    Expanded(
+      child: Text(
+        'Need help ?',
+        style: Theme.of(context).textTheme.headlineLarge,
+      ),
+    ),
+    const SizedBox(width: 12),
+    Flexible(
+      child: Text(
+        '+91-9876543210',
+        textAlign: TextAlign.right,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    ),
+  ],
+),
+const SizedBox(height: 10),
+Row(
+  children: [
+    Expanded(
+      child: Text(
+        'contact us if you have any concern',
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    ),
+    const SizedBox(width: 12),
+    Flexible(
+      child: Text(
+        'contact.person@domainmail.com',
+        textAlign: TextAlign.right,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    ),
+  ],
+),
+
                   ],
                 ),
               ),
@@ -347,11 +360,8 @@ class _TopBar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Transactions',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        SizedBox(height: 10,),
+        Text('Transactions', style: Theme.of(context).textTheme.bodyLarge),
+        SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -434,12 +444,18 @@ class _FilterSheetState extends State<FilterSheet> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => setState(() => selected.clear()),
-                  child: const Text('Clear'),
+                  child:  Text('Clear',style: TextStyle(color: onboardingTitleColor),),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
+                   style: ElevatedButton.styleFrom(
+                            backgroundColor: onboardingTitleColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
                   onPressed: () {
                     widget.onApply(
                       selected.isEmpty ? null : selected.join(','),

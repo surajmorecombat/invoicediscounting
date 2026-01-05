@@ -110,7 +110,7 @@ class _SellUnitDialogState extends State<SellUnitDialog> {
               "₹1,02045.25",
               style: Theme.of(
                 context,
-              ).textTheme.headlineLarge?.copyWith(color: successText),
+              ).textTheme.headlineLarge?.copyWith(color: Colors.green),
             ),
             const SizedBox(height: 20),
             Row(
@@ -404,7 +404,7 @@ class SuccessDialog extends StatelessWidget {
                     "01 unit",
                     style: Theme.of(
                       context,
-                    ).textTheme.bodyLarge?.copyWith(color: successText),
+                    ).textTheme.bodyLarge?.copyWith(color: Colors.green),
                   ),
                 ),
               ],

@@ -51,7 +51,7 @@ class _PortfolioState extends State<Portfolio> {
           padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
           child: Column(
             children: [
-              const SizedBox(height: 12),
+           //   const SizedBox(height: 12),
               totalEarningCard(context),
               const SizedBox(height: 16),
               _portfolioTabs(context),

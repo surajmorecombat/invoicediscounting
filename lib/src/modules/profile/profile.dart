@@ -136,6 +136,7 @@ class _ProfileState extends State<Profile> {
               ],
 
               pendingTile(
+                pandingStatus: true,
                 title: "Demat Details",
                 subtitle:
                     "Kindly provide your DEMAT details to enable smooth and compliant transactions.",
@@ -145,22 +146,30 @@ class _ProfileState extends State<Profile> {
               const SizedBox(height: 15),
 
               pendingTile(
+                pandingStatus: true,
                 title: "Nominee Details",
                 subtitle:
                     "Add your Nominee details to keep your account protected and future-ready.",
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>NomineeAdd()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NomineeAdd()),
+                  );
                 },
               ),
 
               const SizedBox(height: 15),
 
               pendingTile(
+                pandingStatus: false,
                 title: "Help Center",
                 subtitle:
                     "Add your Nominee details to keep your account protected and future-ready.",
                 onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HelpCentre()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HelpCentre()),
+                  );
                 },
               ),
               const SizedBox(height: 15),
@@ -249,6 +258,7 @@ class _ProfileState extends State<Profile> {
     required String title,
     required String subtitle,
     required VoidCallback onTap,
+    required bool pandingStatus,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -268,9 +278,9 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Text(
                     title,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -283,23 +293,29 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             const SizedBox(width: 8),
-            Row(
-              children: [
-                Text(
-                  "Pending",
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFF2994A),
-                  ),
-                  // style: TextStyle(
-                  //   color: Color(0xFFF2994A),
-                  //   fontWeight: FontWeight.w600,
-                  // ),
-                ),
-                SizedBox(width: 4),
-                Icon(Icons.chevron_right, size: 22, color: Color(0xFFF2994A)),
-              ],
-            ),
+            pandingStatus
+                ? Row(
+                  children: [
+                    Text(
+                      "Pending",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFFF2994A),
+                      ),
+                      // style: TextStyle(
+                      //   color: Color(0xFFF2994A),
+                      //   fontWeight: FontWeight.w600,
+                      // ),
+                    ),
+                    SizedBox(width: 4),
+                    Icon(
+                      Icons.chevron_right,
+                      size: 22,
+                      color: Color(0xFFF2994A),
+                    ),
+                  ],
+                )
+                : SizedBox.shrink(),
           ],
         ),
       ),

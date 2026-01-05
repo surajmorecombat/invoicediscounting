@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_method.dart';
 
@@ -17,9 +20,25 @@ class _AddToWalletState extends State<AddToWallet> {
   int totalUnit = 30;
   int unitLeft = 23;
   int pricePerUnit = 100000;
+  final TextEditingController amountController = TextEditingController();
 
   int get unitLeftNow => unitLeft + unitCount;
   int get totalAmount => unitCount * pricePerUnit;
+  void widrawlCardOne() {
+    showDialog(
+      context: context,
+      barrierColor: Colors.transparent,
+      barrierDismissible: true,
+      builder:
+          (_) => BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+            child: Container(
+              color: const Color(0xFF003A8F).withOpacity(.15),
+              child: WithdrawalDialog(),
+            ),
+          ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +84,7 @@ class _AddToWalletState extends State<AddToWallet> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
+                     widrawlCardOne();
                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>AddUnits()));
                 },
 
@@ -107,6 +127,7 @@ class _AddToWalletState extends State<AddToWallet> {
 
   Widget walletBalanceAdd(BuildContext context) {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -119,19 +140,38 @@ class _AddToWalletState extends State<AddToWallet> {
             ),
 
             const SizedBox(height: 16),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
-                Text(
-                  _format(selectedAmount),
-                  style: Theme.of(context).textTheme.displaySmall,
+            Padding(
+              padding: const EdgeInsets.only(left: 100, right: 100),
+              child: Center(
+                child: TextField(
+                  controller: amountController,
+                  keyboardType: TextInputType.number,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Amount',
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedAmount =
+                          int.tryParse(value.replaceAll(',', '')) ?? 0;
+                    });
+                  },
                 ),
-                Text(" /-", style: Theme.of(context).textTheme.displaySmall),
-              ],
+              ),
             ),
 
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
+            //     Text(
+            //       _format(selectedAmount),
+            //       style: Theme.of(context).textTheme.displaySmall,
+            //     ),
+            //     Text(" /-", style: Theme.of(context).textTheme.displaySmall),
+            //   ],
+            // ),
             const SizedBox(height: 20),
 
             Row(
@@ -181,7 +221,12 @@ class _AddToWalletState extends State<AddToWallet> {
     final bool selected = selectedAmount == amount;
 
     return GestureDetector(
-      onTap: () => setState(() => selectedAmount = amount),
+      onTap: () {
+        setState(() {
+          selectedAmount = amount;
+          amountController.text = amount.toString();
+        });
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         decoration: BoxDecoration(
@@ -211,6 +256,7 @@ class _AddToWalletState extends State<AddToWallet> {
 
   Widget secondaryCard(BuildContext context) {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -290,6 +336,7 @@ class _AddToWalletState extends State<AddToWallet> {
 
   Widget unitCalculatorCard(BuildContext context) {
     return Card(
+      elevation: 0.7,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(16),

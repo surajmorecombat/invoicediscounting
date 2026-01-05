@@ -49,7 +49,7 @@ class _WalletCardState extends State<WalletCard> {
             '₹ 1,00,000 /-',
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: successText,
+              color: Colors.green,
             ),
           ),
 

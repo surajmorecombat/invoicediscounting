@@ -35,7 +35,7 @@ class _ActivityState extends State<Activity> {
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isTablet ? 120 : 20,
-            vertical: 16,
+          //  vertical: 16,
           ),
           child: Column(
             children: [
