@@ -56,8 +56,7 @@ class _InvestDetailsState extends State<InvestDetails> {
             ),
             onPressed: () {
               if (widget.investNow == true) {
-              
-                  Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PaymentDoneSuccess()),
                 );
@@ -203,107 +202,107 @@ class _InvestDetailsState extends State<InvestDetails> {
                 ],
               ),
 
-              const SizedBox(height: 20),
-              Text(
-                "Frequently Asked Questions",
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: blackColor,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              // const SizedBox(height: 20),
+              // Text(
+              //   "Frequently Asked Questions",
+              //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              //     color: blackColor,
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'What is Invoice Discounting?',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        faqOne = !faqOne;
-                      });
-                    },
-                    icon: Icon(
-                      faqOne
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Text(
+              //         'What is Invoice Discounting?',
+              //         style: Theme.of(
+              //           context,
+              //         ).textTheme.bodyMedium?.copyWith(color: blackColor),
+              //       ),
+              //     ),
+              //     IconButton(
+              //       onPressed: () {
+              //         setState(() {
+              //           faqOne = !faqOne;
+              //         });
+              //       },
+              //       icon: Icon(
+              //         faqOne
+              //             ? Icons.keyboard_arrow_up
+              //             : Icons.keyboard_arrow_down,
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
-              if (faqOne) ...[
-                Text(
-                  'Invoice discounting is a financial service where a business sells its outstanding, unpaid invoices to a third-party financier (a bank or specialist firm) at a discount in exchange for an immediate cash advance [1]. This allows companies to quickly access working capital they would otherwise have to wait 30 to 90 days or more to receive from customers.',
-                ),
-              ],
+              // if (faqOne) ...[
+              //   Text(
+              //     'Invoice discounting is a financial service where a business sells its outstanding, unpaid invoices to a third-party financier (a bank or specialist firm) at a discount in exchange for an immediate cash advance [1]. This allows companies to quickly access working capital they would otherwise have to wait 30 to 90 days or more to receive from customers.',
+              //   ),
+              // ],
 
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'How are the returns generated?',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        faqTwo = !faqTwo;
-                      });
-                    },
-                    icon: Icon(
-                      faqTwo
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Text(
+              //         'How are the returns generated?',
+              //         style: Theme.of(
+              //           context,
+              //         ).textTheme.bodyMedium?.copyWith(color: blackColor),
+              //       ),
+              //     ),
+              //     IconButton(
+              //       onPressed: () {
+              //         setState(() {
+              //           faqTwo = !faqTwo;
+              //         });
+              //       },
+              //       icon: Icon(
+              //         faqTwo
+              //             ? Icons.keyboard_arrow_up
+              //             : Icons.keyboard_arrow_down,
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
-              if (faqTwo) ...[
-                Text(
-                  'Returns in invoice discounting are generated in two ways: for the business (through improved cash flow and operational efficiency) and for the financier/investor (through fees and the discount rate applied to the invoice).',
-                ),
-              ],
+              // if (faqTwo) ...[
+              //   Text(
+              //     'Returns in invoice discounting are generated in two ways: for the business (through improved cash flow and operational efficiency) and for the financier/investor (through fees and the discount rate applied to the invoice).',
+              //   ),
+              // ],
 
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'How are the returns calculated?',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        faqThree = !faqThree;
-                      });
-                    },
-                    icon: Icon(
-                      faqThree
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Text(
+              //         'How are the returns calculated?',
+              //         style: Theme.of(
+              //           context,
+              //         ).textTheme.bodyMedium?.copyWith(color: blackColor),
+              //       ),
+              //     ),
+              //     IconButton(
+              //       onPressed: () {
+              //         setState(() {
+              //           faqThree = !faqThree;
+              //         });
+              //       },
+              //       icon: Icon(
+              //         faqThree
+              //             ? Icons.keyboard_arrow_up
+              //             : Icons.keyboard_arrow_down,
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
-              if (faqThree) ...[
-                Text(
-                  '''Returns in invoice discounting are primarily calculated as the difference between the full value of an invoice and the discounted amount paid upfront, often expressed as a percentage rate. This calculation is a simple arithmetic difference for the financier's nominal return, and a time-value-adjusted calculation to determine the actual annualized rate of return.''',
-                ),
-              ],
+              // if (faqThree) ...[
+              //   Text(
+              //     '''Returns in invoice discounting are primarily calculated as the difference between the full value of an invoice and the discounted amount paid upfront, often expressed as a percentage rate. This calculation is a simple arithmetic difference for the financier's nominal return, and a time-value-adjusted calculation to determine the actual annualized rate of return.''',
+              //   ),
+              // ],
             ],
           ],
         ),
@@ -530,6 +529,19 @@ class _InvestDetailsState extends State<InvestDetails> {
               ),
 
               const SizedBox(height: 16),
+              Text(
+                "About Buyer",
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: blackColor),
+              ),
+
+                Text(
+              "Sampoorna Feeds Pvt Ltd is a Phagwara, Punjab-based company specializing in manufacturing and selling a range of animal feed, including poultry and cattle feed, primarily produced through contract farming.",
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+            ),
               Text(
                 "How it works",
                 style: Theme.of(
