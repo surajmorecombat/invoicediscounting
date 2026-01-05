@@ -152,7 +152,7 @@ class _CreateProfileState extends State<CreateProfile> {
                     'Continue',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w600,  
                       color: Colors.white,
                     ),
                   ),
