@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
 import 'package:invoicediscounting/src/modules/signUp/processing.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -270,9 +271,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             context,
                             MaterialPageRoute(
                               builder:
-                                  (context) =>
+                                  (context) =>KycAddressScreen()
                                       //EnterSecurePin()
-                                      VerificationProcessing(),
+                                     // VerificationProcessing(),
                             ),
                           );
                         },
