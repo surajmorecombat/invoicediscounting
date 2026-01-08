@@ -21,11 +21,12 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: 
+      Container(
         padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: SizedBox(
-          height: 48,
+          height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: onboardingTitleColor,
@@ -60,8 +61,9 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
 
   Widget _bankAccountCard() {
     return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+ elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -106,8 +108,9 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
 
   Widget _paymentMethodCard() {
     return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+     elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

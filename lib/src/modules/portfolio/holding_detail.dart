@@ -52,7 +52,7 @@ class _HoldingDetailState extends State<HoldingDetail> {
         padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: SizedBox(
-          height: 48,
+          height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF003A8F),

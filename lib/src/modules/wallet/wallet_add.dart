@@ -24,45 +24,77 @@ class _WalletAddState extends State<WalletAdd> {
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar:
+       Container(
         padding: const EdgeInsets.all(16),
         color: Colors.white,
-        child: Row(
-          children: [
-            Expanded(
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SelectPaymentMethod(),
-                    ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: onboardingTitleColor,
-                  // side: BorderSide(color: onboardingTitleColor, width: 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-                child: Text(
-                  "Continue",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.labelLarge?.copyWith(color: whiteColor),
-                ),
+        child: SizedBox(
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF003A8F),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
-          ],
+            onPressed: () {
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectPaymentMethod(),
+                      ),
+                    );
+            },
+              // onPressed: null,
+            child: Text(
+              'Continue',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
         ),
       ),
+      //  Container(
+      //   padding: const EdgeInsets.all(16),
+      //   color: Colors.white,
+      //   child: SizedBox(
+      //          height: 52,
+      //     child: Row(
+      //       children: [
+      //         Expanded(
+      //           child: OutlinedButton(
+      //             onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => SelectPaymentMethod(),
+                    //   ),
+                    // );
+      //             },
+      //             style: OutlinedButton.styleFrom(
+      //               backgroundColor: onboardingTitleColor,
+      //               // side: BorderSide(color: onboardingTitleColor, width: 1),
+      //               shape: RoundedRectangleBorder(
+      //                 borderRadius: BorderRadius.circular(6),
+      //               ),
+      //             ),
+      //             child: Text(
+      //               "Continue",
+      //               style: Theme.of(
+      //                 context,
+      //               ).textTheme.labelLarge?.copyWith(color: whiteColor),
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
         child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

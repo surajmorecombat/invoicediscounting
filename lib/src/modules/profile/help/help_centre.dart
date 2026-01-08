@@ -1,11 +1,94 @@
 import 'package:flutter/material.dart';
 
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/mainlayout.dart';
-import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
-import 'package:invoicediscounting/src/modules/invest/invest.dart';
-import 'package:invoicediscounting/src/modules/portfolio/portfolio.dart';
+import 'package:invoicediscounting/src/modules/profile/help/general/general.dart';
+import 'package:invoicediscounting/src/modules/profile/help/get_started/get_started.dart';
+import 'package:invoicediscounting/src/modules/profile/help/help_portfolio/help_portfolio.dart';
 
+class HelpCentre extends StatelessWidget {
+  const HelpCentre({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        elevation: 0,
+        title: Text(
+          'Help Centre',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        backgroundColor: backgroundColor,
+        iconTheme: IconThemeData(color: blackColor),
+      ),
+
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+        child: Column(
+          children:  [
+            helpCategoryCard(context, "General",ontap:() {
+              
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HelpGeneral(),
+                          ),
+                        );
+            },),
+            SizedBox(height: 16),
+            helpCategoryCard(context, "Getting started",ontap:() {
+              
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HelpGettingStarted(),
+                          ),
+                        );
+              
+            },),
+            SizedBox(height: 16),
+            helpCategoryCard(context,"Portfolio",ontap:() {
+              
+                
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HelpPortfolioFAQ(),
+                          ),
+                        );
+            },),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget helpCategoryCard(context,String title,{VoidCallback? ontap}){
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey.shade300),
+        ),
+        child: Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+/*
 class HelpCentre extends StatelessWidget {
   const HelpCentre({super.key});
 
@@ -202,3 +285,6 @@ class HelpCentre extends StatelessWidget {
     );
   }
 }
+
+
+*/

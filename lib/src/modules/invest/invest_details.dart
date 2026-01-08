@@ -46,7 +46,7 @@ class _InvestDetailsState extends State<InvestDetails> {
         padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: SizedBox(
-          height: 48,
+          height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF003A8F),
@@ -82,16 +82,17 @@ class _InvestDetailsState extends State<InvestDetails> {
         child: Column(
           children: [
             _primaryCard(context),
-            const SizedBox(height: 16),
-            secondaryCard(context),
-            const SizedBox(height: 16),
-            unitCalculatorCard(context),
+            // const SizedBox(height: 16),
+            // secondaryCard(context),
+            // const SizedBox(height: 16),
+            // unitCalculatorCard(context),
             const SizedBox(height: 16),
             riskMitigationCard(context),
 
             platformTrackRecordCard(context),
             opportunitySummaryCard(context),
             aboutEntitiesCard(context),
+            shareDealCard(context),
           ],
         ),
       ),
@@ -100,8 +101,9 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget _primaryCard(BuildContext context) {
     return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -127,10 +129,10 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget riskMitigationCard(BuildContext context) {
     return Card(
-      color: whiteColor,
-      elevation: 0.7,
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -171,40 +173,58 @@ class _InvestDetailsState extends State<InvestDetails> {
               const SizedBox(height: 16),
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  _RiskItem("5% Credit Enhancement"),
-                  SizedBox(width: 20),
-                  _RiskItem("Secured Collateral Security"),
+                  Expanded(child: _RiskItem("5%", "Credit Enhancement")),
+                  Expanded(child: _RiskItem("Secured", "Collateral Security")),
                 ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: const [
-                  _RiskItem("125% Collateral Cover"),
-                  SizedBox(width: 20),
-                  _RiskItem("Amplio Assured Built-In Insurance"),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                "Share this Deal",
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: blackColor,
-                  fontWeight: FontWeight.w500,
-                ),
               ),
               const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _shareButton("Copy Link", 'assets/icons/link.png'),
-                  _shareButton("WhatsApp", 'assets/icons/whatsapp.png'),
-                  _shareButton("Email", 'assets/icons/mail.png'),
+                children: const [
+                  Expanded(child: _RiskItem("125%", "Collateral Cover")),
+                  Expanded(
+                    child: _RiskItem("Amplio Assured", "Built-In Insurance"),
+                  ),
                 ],
               ),
-
-          
             ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget shareDealCard(BuildContext context) {
+    return Card(
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+
+      // margin: const EdgeInsets.only(bottom: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 12),
+            Text(
+              "Share this Deal",
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: blackColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _shareButton("Copy Link", 'assets/icons/link.png'),
+                _shareButton("WhatsApp", 'assets/icons/whatsapp.png'),
+                _shareButton("Email", 'assets/icons/mail.png'),
+              ],
+            ),
           ],
         ),
       ),
@@ -232,10 +252,10 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget platformTrackRecordCard(BuildContext context) {
     return Card(
-      color: whiteColor,
-      elevation: 0.7,
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -379,10 +399,10 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget opportunitySummaryCard(BuildContext context) {
     return Card(
-      color: whiteColor,
-      elevation: 0.7,
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -473,10 +493,10 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget aboutEntitiesCard(BuildContext context) {
     return Card(
-      color: whiteColor,
-      elevation: 0.7,
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -511,7 +531,6 @@ class _InvestDetailsState extends State<InvestDetails> {
             //     context,
             //   ).textTheme.bodySmall?.copyWith(color: Colors.grey),
             // ),
-
             if (showAboutEntities) ...[
               // const SizedBox(height: 16),
 
@@ -522,7 +541,6 @@ class _InvestDetailsState extends State<InvestDetails> {
               //     fontWeight: FontWeight.w500,
               //   ),
               // ),
-
               Row(
                 children: [
                   Expanded(
@@ -634,21 +652,21 @@ class _InvestDetailsState extends State<InvestDetails> {
     );
   }
 
-  Widget _aboutSection(String title, String description) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(
-            context,
-          ).textTheme.headlineLarge?.copyWith(color: blackColor),
-        ),
-        const SizedBox(height: 6),
-        Text(description, style: const TextStyle(color: Colors.grey)),
-      ],
-    );
-  }
+  // Widget _aboutSection(String title, String description) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         title,
+  //         style: Theme.of(
+  //           context,
+  //         ).textTheme.headlineLarge?.copyWith(color: blackColor),
+  //       ),
+  //       const SizedBox(height: 6),
+  //       Text(description, style: const TextStyle(color: Colors.grey)),
+  //     ],
+  //   );
+  // }
 
   Widget buyerSeller(BuildContext context) {
     return Row(
@@ -691,53 +709,53 @@ class _InvestDetailsState extends State<InvestDetails> {
     );
   }
 
-  Widget secondaryCard(BuildContext context) {
-    return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Column(
-          children: [
-            buildRow(context, 'Unit Value', '₹1,00,000.00'),
-            buildRow(context, 'Coupon Rate', '12.5%'),
-            buildRow(context, 'Investment Value', '₹1,03,561.64'),
-            buildRow(context, 'Unit Price', '₹1,00,000.00'),
-            buildRow(
-              context,
-              'Accrued Interest',
-              '₹3,561.64',
-              icon: Icons.info_outline,
-            ),
-            buildRow(
-              context,
-              'Next Liquidity Event',
-              '13/11/2025',
-              icon: Icons.info_outline,
-            ),
-            buildRow(
-              context,
-              'Liquidity Event Amount',
-              '₹1,04,589.98',
-              icon: Icons.info_outline,
-            ),
-            buildRow(
-              context,
-              'Final Maturity Date',
-              '08/01/2028',
-              icon: Icons.info_outline,
-            ),
-            buildRow(
-              context,
-              'Exp. Maturity Amount',
-              '₹1,36,708.72',
-              highlight: true,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget secondaryCard(BuildContext context) {
+  //   return Card(
+  //     elevation: 0.7,
+  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  //     child: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+  //       child: Column(
+  //         children: [
+  //           buildRow(context, 'Unit Value', '₹1,00,000.00'),
+  //           buildRow(context, 'Coupon Rate', '12.5%'),
+  //           buildRow(context, 'Investment Value', '₹1,03,561.64'),
+  //           buildRow(context, 'Unit Price', '₹1,00,000.00'),
+  //           buildRow(
+  //             context,
+  //             'Accrued Interest',
+  //             '₹3,561.64',
+  //             icon: Icons.info_outline,
+  //           ),
+  //           buildRow(
+  //             context,
+  //             'Next Liquidity Event',
+  //             '13/11/2025',
+  //             icon: Icons.info_outline,
+  //           ),
+  //           buildRow(
+  //             context,
+  //             'Liquidity Event Amount',
+  //             '₹1,04,589.98',
+  //             icon: Icons.info_outline,
+  //           ),
+  //           buildRow(
+  //             context,
+  //             'Final Maturity Date',
+  //             '08/01/2028',
+  //             icon: Icons.info_outline,
+  //           ),
+  //           buildRow(
+  //             context,
+  //             'Exp. Maturity Amount',
+  //             '₹1,36,708.72',
+  //             highlight: true,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget buildRow(
     BuildContext context,
@@ -751,13 +769,19 @@ class _InvestDetailsState extends State<InvestDetails> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: Theme.of(context).textTheme.bodyMedium),
+          Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: blackColor),
+          ),
           Row(
             children: [
               Text(
                 value,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: highlight ? Colors.green : blackColor,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               if (icon != null) ...[
@@ -771,93 +795,93 @@ class _InvestDetailsState extends State<InvestDetails> {
     );
   }
 
-  Widget unitCalculatorCard(BuildContext context) {
-    return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "No. of units",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 12),
+  // Widget unitCalculatorCard(BuildContext context) {
+  //   return Card(
+  //     elevation: 0.7,
+  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(16),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           const Text(
+  //             "No. of units",
+  //             style: TextStyle(fontWeight: FontWeight.w600),
+  //           ),
+  //           const SizedBox(height: 12),
 
-            Row(
-              children: [
-                _unitButton(Icons.remove, () {
-                  if (unitCount > 1) setState(() => unitCount--);
-                }),
-                const SizedBox(width: 12),
+  //           Row(
+  //             children: [
+  //               _unitButton(Icons.remove, () {
+  //                 if (unitCount > 1) setState(() => unitCount--);
+  //               }),
+  //               const SizedBox(width: 12),
 
-                Container(
-                  width: 80,
-                  height: 42,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    "$unitCount",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
+  //               Container(
+  //                 width: 80,
+  //                 height: 42,
+  //                 alignment: Alignment.center,
+  //                 decoration: BoxDecoration(
+  //                   border: Border.all(color: Colors.grey.shade300),
+  //                   borderRadius: BorderRadius.circular(8),
+  //                 ),
+  //                 child: Text(
+  //                   "$unitCount",
+  //                   style: const TextStyle(fontSize: 16),
+  //                 ),
+  //               ),
 
-                const SizedBox(width: 12),
+  //               const SizedBox(width: 12),
 
-                _unitButton(Icons.add, () {
-                  if (unitCount < totalUnit) {
-                    setState(() => unitCount++);
-                  }
-                }),
+  //               _unitButton(Icons.add, () {
+  //                 if (unitCount < totalUnit) {
+  //                   setState(() => unitCount++);
+  //                 }
+  //               }),
 
-                const Spacer(),
+  //               const Spacer(),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '$unitLeftNow/$totalUnit',
-                      // "Unit Left 23/30",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      // "₹1,00,000",
-                      totalAmount.toString(),
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+  //               Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.end,
+  //                 children: [
+  //                   Text(
+  //                     '$unitLeftNow/$totalUnit',
+  //                     // "Unit Left 23/30",
+  //                     style: TextStyle(fontSize: 12, color: Colors.grey),
+  //                   ),
+  //                   SizedBox(height: 4),
+  //                   Text(
+  //                     // "₹1,00,000",
+  //                     totalAmount.toString(),
+  //                     style: TextStyle(fontWeight: FontWeight.w600),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ],
+  //           ),
 
-            const SizedBox(height: 12),
+  //           const SizedBox(height: 12),
 
-            Row(
-              children: [
-                Checkbox(
-                  activeColor: onboardingTitleColor,
-                  value: isChecked,
-                  onChanged: (v) => setState(() => isChecked = v!),
-                ),
-                Expanded(
-                  child: Text(
-                    'I am 18 years old and I can enter into a contract',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  //           Row(
+  //             children: [
+  //               Checkbox(
+  //                 activeColor: onboardingTitleColor,
+  //                 value: isChecked,
+  //                 onChanged: (v) => setState(() => isChecked = v!),
+  //               ),
+  //               Expanded(
+  //                 child: Text(
+  //                   'I am 18 years old and I can enter into a contract',
+  //                   style: Theme.of(context).textTheme.bodyMedium,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _unitButton(IconData icon, VoidCallback onTap) {
     return GestureDetector(
@@ -921,19 +945,36 @@ class _DownloadButton extends StatelessWidget {
 }
 
 class _RiskItem extends StatelessWidget {
-  final String text;
-  const _RiskItem(this.text);
+  final String title;
+  final String subtitle;
+  const _RiskItem(this.title, this.subtitle);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          const Icon(Icons.info_outline, size: 14, color: Colors.grey),
-          const SizedBox(width: 6),
-          Expanded(child: Text(text, style: const TextStyle(fontSize: 13))),
-        ],
-      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: blackColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+                const SizedBox(width: 5),
+                const Icon(Icons.info_outline, size: 14, color: Colors.grey),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

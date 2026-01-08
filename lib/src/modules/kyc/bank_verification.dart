@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/kyc/review.dart';
 
 class BankVerification extends StatelessWidget {
   const BankVerification({super.key});
@@ -21,21 +22,29 @@ class BankVerification extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 52),
-            backgroundColor: onboardingTitleColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(26),
+        child: SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: onboardingTitleColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
-          ),
-          onPressed: () {},
-          child: const Text(
-            "Verify & Continue",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Review()),
+              );
+            },
+            child: const Text(
+              "Verify & Continue",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -155,7 +164,7 @@ class BankVerification extends StatelessWidget {
             onTap: onTap,
             decoration: InputDecoration(
               hintText: hint,
-
+              hintStyle: Theme.of(context).textTheme.bodySmall,
               suffixIcon:
                   icon != null ? Icon(icon, color: onboardingTitleColor) : null,
               filled: true,

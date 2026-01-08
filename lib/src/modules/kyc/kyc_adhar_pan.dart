@@ -29,23 +29,27 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 52),
-            backgroundColor: onboardingTitleColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(26),
+        child: SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: onboardingTitleColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
-          ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>BankVerification()));
-          },
-          child: const Text(
-            "Continue",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BankVerification()),
+              );
+            },
+            child: Text(
+              "Continue",
+              style: Theme.of(
+                context,
+              ).textTheme.labelLarge?.copyWith(color: whiteColor),
             ),
           ),
         ),
@@ -138,11 +142,17 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
           const SizedBox(height: 6),
           TextField(
             controller: controller,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: blackColor,
+              fontWeight: FontWeight.w500,
+            ),
             readOnly: readOnly,
             onTap: onTap,
             decoration: InputDecoration(
               hintText: hint,
+              hintStyle: Theme.of(
+                  context,
+                ).textTheme.bodySmall,
 
               suffixIcon:
                   icon != null ? Icon(icon, color: onboardingTitleColor) : null,
