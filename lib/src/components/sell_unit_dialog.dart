@@ -270,7 +270,7 @@ class _ConfirmSellDialogState extends State<ConfirmSellDialog> {
                       ),
                     ),
                     TextSpan(
-                      text: ' You will receive the payment in your ABC Pocket.',
+                      text: ' You will receive the payment in your Birbal Plus Pocket.',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
@@ -412,7 +412,7 @@ class SuccessDialog extends StatelessWidget {
 
             const SizedBox(height: 10),
             Text(
-              "The amount will be credited to your Amplio Pocket shortly.",
+              "The amount will be credited to your Birbal Pocket Pocket shortly.",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall,
             ),

@@ -135,7 +135,7 @@ class WithdrawalDialog extends StatelessWidget {
             child: Text(
               "Funds in Co. Pocket are managed by a SEBI Registered Trustee.",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
 
