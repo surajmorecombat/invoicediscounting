@@ -116,9 +116,12 @@ class _WalletAddState extends State<WalletAdd> {
                       style:
                           Theme.of(
                             context,
-                          ).textTheme.displaySmall, 
-                      decoration: const InputDecoration(
+                          ).textTheme.bodyLarge, 
+                      decoration:  InputDecoration(
                         hintText: 'Enter Amount',
+                           hintStyle: Theme.of(  
+                            context,
+                          ).textTheme.bodyLarge,
                         border: InputBorder.none,
                         isCollapsed: true,
                       ),
@@ -130,21 +133,7 @@ class _WalletAddState extends State<WalletAdd> {
                       },
                     ),
 
-                    // TextField(
-                    //   controller: amountController,
-                    //   keyboardType: TextInputType.number,
-                    //   style: Theme.of(context).textTheme.bodyLarge,
-                    //   decoration: InputDecoration(
-                    //     hintText: 'Enter Amount',
-                    //     border: InputBorder.none,
-                    //   ),
-                    //   onChanged: (value) {
-                    //     setState(() {
-                    //       selectedAmount =
-                    //           int.tryParse(value.replaceAll(',', '')) ?? 0;
-                    //     });
-                    //   },
-                    // ),
+               
                   ),
                 ),
 
