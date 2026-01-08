@@ -77,7 +77,7 @@ class _InvestmentCardsSliderState extends State<InvestmentCardsSlider> {
               width: double.infinity,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFF053C8C),
+                color: onboardingTitleColor,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(12),
                 ),
@@ -231,7 +231,7 @@ class _InvestmentCardsSliderState extends State<InvestmentCardsSlider> {
                           },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
-                              color: Colors.blue.shade900,
+                              color: onboardingTitleColor,
                               width: 1,
                             ),
                             shape: RoundedRectangleBorder(
@@ -253,7 +253,7 @@ class _InvestmentCardsSliderState extends State<InvestmentCardsSlider> {
                           },
 
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade900,
+                            backgroundColor: onboardingTitleColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
@@ -292,7 +292,7 @@ class _InvestmentCardsSliderState extends State<InvestmentCardsSlider> {
   Widget _arrowButton(IconData icon, VoidCallback onPressed) {
     return CircleAvatar(
       radius: 18,
-      backgroundColor: Colors.blue.shade900,
+      backgroundColor: onboardingTitleColor,
       child: IconButton(
         padding: EdgeInsets.zero,
         iconSize: 18,

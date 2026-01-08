@@ -132,7 +132,7 @@ class _SellUnitDialogState extends State<SellUnitDialog> {
 
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF003A8F),
+                  backgroundColor: onboardingTitleColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -306,7 +306,7 @@ class _ConfirmSellDialogState extends State<ConfirmSellDialog> {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF003A8F),
+                      backgroundColor: onboardingTitleColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -429,7 +429,7 @@ class SuccessDialog extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF003A8F),
+                  backgroundColor: onboardingTitleColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

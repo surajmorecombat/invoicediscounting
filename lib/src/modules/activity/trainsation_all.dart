@@ -17,14 +17,27 @@ class _TrainsationAllState extends State<TrainsationAll> {
   void showSort(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder:
-          (_) => FilterSheet(
-            title: 'Sort By',
-            options: ['Newest', 'Oldest'],
-            selected: sortBy,
-            onApply: (v) {
-              setState(() => sortBy = v == 'Newest' ? 'newest' : 'oldest');
-            },
+          (_) => Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: FilterSheet(
+                title: 'Sort By',
+                options: ['Newest', 'Oldest'],
+                selected: sortBy,
+                onApply: (v) {
+                  setState(() => sortBy = v == 'Newest' ? 'newest' : 'oldest');
+                },
+              ),
+            ),
           ),
     );
   }
@@ -32,21 +45,32 @@ class _TrainsationAllState extends State<TrainsationAll> {
   void showType(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder:
-          (_) => FilterSheet(
-            title: 'Transaction Type',
-            options: [
-              'Deposit',
-              'Withdrawal',
-              'Subscription',
-              'Repayment',
-              'Interest',
-              'Redemption',
-            ],
-            selected: selectedType,
-            onApply: (v) {
-              setState(() => selectedType = v?.toLowerCase());
-            },
+          (_) => Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: FilterSheet(
+                title: 'Transaction Type',
+                options: [
+                  'Deposit',
+                  'Withdrawal',
+                  'Subscription',
+                  'Repayment',
+                  'Interest',
+                  'Redemption',
+                ],
+                selected: selectedType,
+                onApply: (v) {
+                  setState(() => selectedType = v?.toLowerCase());
+                },
+              ),
+            ),
           ),
     );
   }
@@ -149,112 +173,114 @@ class _TrainsationAllState extends State<TrainsationAll> {
 
     return showModalBottomSheet<DateTime>(
       context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (_) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Select Month',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: blackColor,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
+         return StatefulBuilder(
+  builder: (context, setState) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(22), 
+        ),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Select Month',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(height: 12),
 
-                  DropdownButton<int>(
-                    value: selectedYear,
-                    style: TextStyle(color: blackColor),
-                    items: List.generate(
-                      10,
-                      (i) => DropdownMenuItem(
-                        value: DateTime.now().year - i,
-                        child: Text((DateTime.now().year - i).toString()),
-                      ),
-                    ),
-                    onChanged: (v) => setState(() => selectedYear = v!),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: 12,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 2.4,
-                        ),
-                    itemBuilder: (_, index) {
-                      final m = index + 1;
-                      final isSelected = m == selectedMonth;
-
-                      return GestureDetector(
-                        onTap: () => setState(() => selectedMonth = m),
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color:
-                                isSelected
-                                    ? onboardingTitleColor
-                                    : faintboxbackground,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            DateFormat.MMM().format(DateTime(0, m)),
-                            style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-
-                  const SizedBox(height: 14),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(color: onboardingTitleColor),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: onboardingTitleColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed:
-                              () => Navigator.pop(
-                                context,
-                                DateTime(selectedYear, selectedMonth),
-                              ),
-                          child: const Text('Apply'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+          DropdownButton<int>(
+            value: selectedYear,
+            style: TextStyle(color: blackColor),
+            items: List.generate(
+              10,
+              (i) => DropdownMenuItem(
+                value: DateTime.now().year - i,
+                child: Text((DateTime.now().year - i).toString()),
               ),
-            );
-          },
-        );
+            ),
+            onChanged: (v) => setState(() => selectedYear = v!),
+          ),
+
+          const SizedBox(height: 12),
+
+          GridView.builder(
+            shrinkWrap: true,
+            itemCount: 12,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 2.4,
+            ),
+            itemBuilder: (_, index) {
+              final m = index + 1;
+              final isSelected = m == selectedMonth;
+
+              return GestureDetector(
+                onTap: () => setState(() => selectedMonth = m),
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? onboardingTitleColor
+                        : faintboxbackground,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    DateFormat.MMM().format(DateTime(0, m)),
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : Colors.black,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          const SizedBox(height: 14),
+
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: onboardingTitleColor),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: onboardingTitleColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () => Navigator.pop(
+                    context,
+                    DateTime(selectedYear, selectedMonth),
+                  ),
+                  child: const Text('Apply'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  },
+);
+
       },
     );
   }
@@ -273,80 +299,75 @@ class _TrainsationAllState extends State<TrainsationAll> {
         ),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text('Transactions'),
-              
-              
-              ],
+            WalletCard(),
+
+            SizedBox(height: 10),
+
+            _TopBar(
+              onSort: () => showSort(context),
+              onType: () => showType(context),
+              onMonth: () => showMonth(context),
             ),
-            // WalletCard(),
-            // SizedBox(height: 10),
-            // _TopBar(
-            //   onSort: () => showSort(context),
-            //   onType: () => showType(context),
-            //   onMonth: () => showMonth(context),
-            // ),
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.all(16),
+                // padding: const EdgeInsets.all(16),
                 itemCount: filtered.length,
                 itemBuilder: (_, i) => TransactionTile(t: filtered[i]),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade200),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Need help ?',
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Flexible(
-                        child: Text(
-                          '+91-9876543210',
-                          textAlign: TextAlign.right,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'contact us if you have any concern',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Flexible(
-                        child: Text(
-                          'contact.person@domainmail.com',
-                          textAlign: TextAlign.right,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.all(16),
+            //   decoration: BoxDecoration(
+            //     color: whiteColor,
+            //     borderRadius: BorderRadius.circular(12),
+            //     border: Border.all(color: Colors.grey.shade200),
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       Row(
+            //         children: [
+            //           Expanded(
+            //             child: Text(
+            //               'Need help ?',
+            //               style: Theme.of(context).textTheme.headlineLarge,
+            //             ),
+            //           ),
+            //           const SizedBox(width: 12),
+            //           Flexible(
+            //             child: Text(
+            //               '+91-9876543210',
+            //               textAlign: TextAlign.right,
+            //               maxLines: 2,
+            //               overflow: TextOverflow.ellipsis,
+            //               style: Theme.of(context).textTheme.bodyMedium,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       const SizedBox(height: 10),
+            //       Row(
+            //         children: [
+            //           Expanded(
+            //             child: Text(
+            //               'contact us if you have any concern',
+            //               style: Theme.of(context).textTheme.bodyMedium,
+            //             ),
+            //           ),
+            //           const SizedBox(width: 12),
+            //           Flexible(
+            //             child: Text(
+            //               'contact.person@domainmail.com',
+            //               textAlign: TextAlign.right,
+            //               maxLines: 2,
+            //               overflow: TextOverflow.ellipsis,
+            //               style: Theme.of(context).textTheme.bodyMedium,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -375,7 +396,7 @@ class _TopBar extends StatelessWidget {
             FilterChipWidget('Sort By', onSort),
             FilterChipWidget('Transaction Type', onType),
             FilterChipWidget('By Month', onMonth),
-            FilterChipWidget('EMAIL STATEMENT', () {}),
+            FilterChipWidget('Email Statement', () {}),
           ],
         ),
       ],
@@ -417,67 +438,142 @@ class _FilterSheetState extends State<FilterSheet> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(widget.title, style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 12),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(widget.title, style: Theme.of(context).textTheme.bodyLarge),
+            const SizedBox(height: 12),
 
-          ...widget.options.map((e) {
-            return isMulti
-                ? CheckboxListTile(
-                  value: selected.contains(e),
-                  activeColor: onboardingTitleColor,
-                  title: Text(e, style: Theme.of(context).textTheme.bodyMedium),
-                  onChanged: (v) {
-                    setState(() {
-                      v! ? selected.add(e) : selected.remove(e);
-                    });
-                  },
-                )
-                : RadioListTile(
-                  value: e,
-                  groupValue: selected.isEmpty ? null : selected.first,
-                  activeColor: onboardingTitleColor,
-                  title: Text(e, style: Theme.of(context).textTheme.bodyMedium),
-                  onChanged: (v) => setState(() => selected = [v as String]),
-                );
-          }),
+            ...widget.options.map((e) {
+              final bool isSelected =
+                  isMulti
+                      ? selected.contains(e)
+                      : selected.isNotEmpty && selected.first == e;
 
-          const SizedBox(height: 12),
+              return _optionCard(
+                title: e,
+                selected: isSelected,
+                isMulti: isMulti,
+                onTap: () {
+                  setState(() {
+                    if (isMulti) {
+                      isSelected ? selected.remove(e) : selected.add(e);
+                    } else {
+                      selected = [e];
+                    }
+                  });
+                },
+              );
+            }),
 
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => setState(() => selected.clear()),
-                  child: Text(
-                    'Clear',
-                    style: TextStyle(color: onboardingTitleColor),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: onboardingTitleColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+            // ...widget.options.map((e) {
+            //   return isMulti
+            //       ? CheckboxListTile(
+            //         value: selected.contains(e),
+            //         activeColor: onboardingTitleColor,
+            //         title: Text(e, style: Theme.of(context).textTheme.bodyMedium),
+            //         onChanged: (v) {
+            //           setState(() {
+            //             v! ? selected.add(e) : selected.remove(e);
+            //           });
+            //         },
+            //       )
+            //       : RadioListTile(
+            //         value: e,
+            //         groupValue: selected.isEmpty ? null : selected.first,
+            //         activeColor: onboardingTitleColor,
+            //         title: Text(e, style: Theme.of(context).textTheme.bodyMedium),
+            //         onChanged: (v) => setState(() => selected = [v as String]),
+            //       );
+            // }),
+            const SizedBox(height: 12),
+
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => setState(() => selected.clear()),
+                    child: Text(
+                      'Clear',
+                      style: TextStyle(color: onboardingTitleColor),
                     ),
                   ),
-                  onPressed: () {
-                    widget.onApply(
-                      selected.isEmpty ? null : selected.join(','),
-                    );
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Apply'),
                 ),
-              ),
-            ],
+                const SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: onboardingTitleColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      widget.onApply(
+                        selected.isEmpty ? null : selected.join(','),
+                      );
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Apply'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _optionCard({
+    required String title,
+    required bool selected,
+    required VoidCallback onTap,
+    required bool isMulti,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color:
+              selected ? onboardingTitleColor.withOpacity(.06) : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: selected ? onboardingTitleColor : Colors.grey.shade300,
+            width: 1.2,
           ),
-        ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                title,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+              ),
+            ),
+
+            /// Right aligned selector
+            isMulti
+                ? Icon(
+                  selected
+                      ? Icons.check_box_rounded
+                      : Icons.check_box_outline_blank_rounded,
+                  color: selected ? onboardingTitleColor : Colors.grey,
+                )
+                : Icon(
+                  selected
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                  color: selected ? onboardingTitleColor : Colors.grey,
+                ),
+          ],
+        ),
       ),
     );
   }

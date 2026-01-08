@@ -20,7 +20,7 @@ class LoginWith extends StatelessWidget {
 
               Column(
                 children: [
-                  Image.asset('assets/images/app-icon.png', width: 140),
+                  Image.asset('assets/images/app-icon.png', width: 140,height: 140,),
                   const SizedBox(height: 10),
                   Image.asset('assets/images/app-name.png', width: 130),
                 ],

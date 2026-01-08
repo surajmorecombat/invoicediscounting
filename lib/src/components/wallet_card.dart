@@ -160,13 +160,44 @@ class WithdrawalDialog extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 12),
-                TextField(
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Amount',
-                    border: InputBorder.none,
+                 Padding(
+                  padding: const EdgeInsets.only(left: 100, right: 100),
+                  child: Center(
+                    child: TextField(
+                      // controller: amountController,
+                      keyboardType: TextInputType.number,
+                      textAlign:
+                          TextAlign.center,
+                      style:
+                          Theme.of(
+                            context,
+                          ).textTheme.bodyLarge, 
+                      decoration:  InputDecoration(
+                        hintText: 'Enter Amount',
+                        hintStyle: Theme.of(  
+                            context,
+                          ).textTheme.bodyLarge,
+                        border: InputBorder.none,
+                        isCollapsed: true,
+                      ),
+                      onChanged: (value) {
+                        // setState(() {
+                        //   selectedAmount =
+                        //       int.tryParse(value.replaceAll(',', '')) ?? 0;
+                        // });
+                      },
+                    ),
+
+               
                   ),
                 ),
+                // TextField(
+                //   style: Theme.of(context).textTheme.bodyLarge,
+                //   decoration: InputDecoration(
+                //     hintText: 'Enter Amount',
+                //     border: InputBorder.none,
+                //   ),
+                // ),
 
                 // const Text(
                 //   "Enter Amount",

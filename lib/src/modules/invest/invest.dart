@@ -52,28 +52,30 @@ class _InvestState extends State<Invest> {
       backgroundColor: backgroundColor,
       ctx: 0,
       showDefaultBottom: true,
-      body: Column(
-        children: [
-          _TopBar(
-            selected: selectedFilter,
-            onSelect: (f) => setState(() => selectedFilter = f),
-          ),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              itemCount: filteredInvoices.length,
-              itemBuilder: (_, index) {
-                final i = filteredInvoices[index];
-                return _InvoiceCard(
-                  buyer: i.buyer,
-                  seller: i.seller,
-                  imagepathbuyer: i.buyerImg,
-                  imagepatseller: i.sellerImg,
-                );
-              },
+      body: SafeArea(
+        child: Column(
+          children: [
+            _TopBar(
+              selected: selectedFilter,
+              onSelect: (f) => setState(() => selectedFilter = f),
             ),
-          ),
-        ],
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                itemCount: filteredInvoices.length,
+                itemBuilder: (_, index) {
+                  final i = filteredInvoices[index];
+                  return _InvoiceCard(
+                    buyer: i.buyer,
+                    seller: i.seller,
+                    imagepathbuyer: i.buyerImg,
+                    imagepatseller: i.sellerImg,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

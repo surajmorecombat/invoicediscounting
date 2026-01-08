@@ -49,7 +49,7 @@ class _InvestDetailsState extends State<InvestDetails> {
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF003A8F),
+              backgroundColor: onboardingTitleColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
