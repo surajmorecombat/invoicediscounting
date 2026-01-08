@@ -181,7 +181,7 @@ class _InvestDetailsState extends State<InvestDetails> {
                       'Risk Mitigation',
                       style: Theme.of(
                         context,
-                      ).textTheme.headlineLarge?.copyWith(color: blackColor),
+                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
                     ),
                   ),
                   Icon(
@@ -243,10 +243,9 @@ class _InvestDetailsState extends State<InvestDetails> {
             const SizedBox(height: 12),
             Text(
               "Share this Deal",
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: blackColor,
-                fontWeight: FontWeight.w500,
-              ),
+                style: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 12),
             Row(
@@ -302,9 +301,9 @@ class _InvestDetailsState extends State<InvestDetails> {
                   Expanded(
                     child: Text(
                       "Platform Track Record",
-                      style: Theme.of(
+                         style: Theme.of(
                         context,
-                      ).textTheme.headlineLarge?.copyWith(color: blackColor),
+                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
                     ),
                   ),
                   Icon(
@@ -451,9 +450,9 @@ class _InvestDetailsState extends State<InvestDetails> {
                   Expanded(
                     child: Text(
                       "Opportunity Summary",
-                      style: Theme.of(
+                        style: Theme.of(
                         context,
-                      ).textTheme.headlineLarge?.copyWith(color: blackColor),
+                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
                     ),
                   ),
                   Icon(
@@ -542,9 +541,9 @@ class _InvestDetailsState extends State<InvestDetails> {
                   Expanded(
                     child: Text(
                       "Frequently Asked Questions",
-                      style: Theme.of(
+                        style: Theme.of(
                         context,
-                      ).textTheme.headlineLarge?.copyWith(color: blackColor),
+                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
                     ),
                   ),
                   Icon(

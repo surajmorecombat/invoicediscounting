@@ -21,7 +21,7 @@ class _PaymentModeState extends State<PaymentMode> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
-          'Deposite to ABC Pocket',
+          'Deposite to Birbal Plus Pocket',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         elevation: 0,
