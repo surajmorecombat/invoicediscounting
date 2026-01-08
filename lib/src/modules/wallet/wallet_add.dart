@@ -24,28 +24,25 @@ class _WalletAddState extends State<WalletAdd> {
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
-      bottomNavigationBar:
-       Container(
+      bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: SizedBox(
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF003A8F),
+              backgroundColor: onboardingTitleColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
             onPressed: () {
-                Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SelectPaymentMethod(),
-                      ),
-                    );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SelectPaymentMethod()),
+              );
             },
-              // onPressed: null,
+            // onPressed: null,
             child: Text(
               'Continue',
               style: Theme.of(context).textTheme.labelLarge,
@@ -63,12 +60,12 @@ class _WalletAddState extends State<WalletAdd> {
       //         Expanded(
       //           child: OutlinedButton(
       //             onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => SelectPaymentMethod(),
-                    //   ),
-                    // );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => SelectPaymentMethod(),
+      //   ),
+      // );
       //             },
       //             style: OutlinedButton.styleFrom(
       //               backgroundColor: onboardingTitleColor,
@@ -93,8 +90,8 @@ class _WalletAddState extends State<WalletAdd> {
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
         child: Card(
           elevation: 0.1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          color: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -108,40 +105,49 @@ class _WalletAddState extends State<WalletAdd> {
 
                 const SizedBox(height: 16),
 
-               Padding(
-              padding: const EdgeInsets.only(left: 100, right: 100),
-              child: Center(
-                child: TextField(
-                  controller: amountController,
-                  keyboardType: TextInputType.number,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Amount',
-                    border: InputBorder.none,
+                Padding(
+                  padding: const EdgeInsets.only(left: 100, right: 100),
+                  child: Center(
+                    child: TextField(
+                      controller: amountController,
+                      keyboardType: TextInputType.number,
+                      textAlign:
+                          TextAlign.center,
+                      style:
+                          Theme.of(
+                            context,
+                          ).textTheme.displaySmall, 
+                      decoration: const InputDecoration(
+                        hintText: 'Enter Amount',
+                        border: InputBorder.none,
+                        isCollapsed: true,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedAmount =
+                              int.tryParse(value.replaceAll(',', '')) ?? 0;
+                        });
+                      },
+                    ),
+
+                    // TextField(
+                    //   controller: amountController,
+                    //   keyboardType: TextInputType.number,
+                    //   style: Theme.of(context).textTheme.bodyLarge,
+                    //   decoration: InputDecoration(
+                    //     hintText: 'Enter Amount',
+                    //     border: InputBorder.none,
+                    //   ),
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       selectedAmount =
+                    //           int.tryParse(value.replaceAll(',', '')) ?? 0;
+                    //     });
+                    //   },
+                    // ),
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedAmount =
-                          int.tryParse(value.replaceAll(',', '')) ?? 0;
-                    });
-                  },
                 ),
-              ),
-            ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
-                //     Text(
-                //       _format(selectedAmount),
-                //       style: Theme.of(context).textTheme.displaySmall,
-                //     ),
-                //     Text(
-                //       " /-",
-                //       style: Theme.of(context).textTheme.displaySmall,
-                //     ),
-                //   ],
-                // ),
+
                 const SizedBox(height: 20),
 
                 Row(
@@ -158,7 +164,7 @@ class _WalletAddState extends State<WalletAdd> {
                 Text(
                   "For your security, we can accept payments only from your registered bank account. "
                   "Any payment from a different account will be declined automatically.",
-                  // textAlign: TextAlign.center,
+
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
 
@@ -193,7 +199,7 @@ class _WalletAddState extends State<WalletAdd> {
     final bool selected = selectedAmount == amount;
 
     return GestureDetector(
-      onTap:() {
+      onTap: () {
         setState(() {
           selectedAmount = amount;
           amountController.text = amount.toString();

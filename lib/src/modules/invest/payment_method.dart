@@ -189,6 +189,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
             Radio(
               value: index,
               groupValue: selectedMethod,
+              activeColor: onboardingTitleColor,
               onChanged: (v) => setState(() => selectedMethod = v as int),
             ),
           ],

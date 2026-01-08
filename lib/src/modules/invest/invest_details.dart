@@ -101,19 +101,48 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget _primaryCard(BuildContext context) {
     return Card(
-      elevation: 0.1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      child: Padding(
+  elevation: 0.1,
+  color: Colors.white,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+  child: Column(
+    children: [
+
+      /// Padded content
+      Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             buyerSeller(context),
             const SizedBox(height: 12),
+          ],
+        ),
+      ),
+
+      /// FULL-WIDTH STRIP (no padding leak)
+      Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/icons/shild.png', width: 15, height: 15),
+            const SizedBox(width: 6),
             Text(
               'Regulated by RBI',
               style: Theme.of(context).textTheme.bodySmall,
             ),
+          ],
+        ),
+      ),
+
+      /// Padded content continues
+      Padding(
+        padding: const EdgeInsets.only(left: 16,right: 16),
+        child: Column(
+          children: [
             const Divider(height: 24),
             buildRow(context, 'Minimum Investment', '₹1,00,000.00'),
             buildRow(context, 'XIRR', '13.65%', highlight: true),
@@ -124,7 +153,10 @@ class _InvestDetailsState extends State<InvestDetails> {
           ],
         ),
       ),
-    );
+    ],
+  ),
+);
+
   }
 
   Widget riskMitigationCard(BuildContext context) {
@@ -237,7 +269,7 @@ class _InvestDetailsState extends State<InvestDetails> {
       label: Row(
         children: [
           Image.asset(imagePath, width: 15, height: 15),
-          SizedBox(width: 6),
+          SizedBox(width: 5),
 
           Text(
             text,
