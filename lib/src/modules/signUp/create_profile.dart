@@ -19,6 +19,11 @@ class _CreateProfileState extends State<CreateProfile> {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return Scaffold(
       backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: backgroundColor,
+        elevation: 0,
+        iconTheme: IconThemeData(color: blackColor),
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -30,111 +35,92 @@ class _CreateProfileState extends State<CreateProfile> {
               const SizedBox(height: 60),
 
               Text(
-                'Create Your Investment\nProfile',
+                'Enter your email/phone',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displaySmall,
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
 
               Text(
-                'Enter your information to create a secure and\nseamless experience.',
+                'We will send OTP to verify it’s you ',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
 
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _InputField(
-                        controller: nameController,
-                        label: 'Full Name',
-                        hint: 'Enter your full name',
-                      ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _InputField(
+                      controller: emailController,
+                      label: 'Phone number/email',
+                      hint: 'Enter your number or email',
+                      keyboardType: TextInputType.emailAddress,
+                    ),
 
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                      _InputField(
-                        controller: emailController,
-                        label: 'Email',
-                        hint: 'Enter your email',
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      // _InputField(
-                      //   controller: phoneController,
-                      //   label: 'Phone Number',
-                      //   hint: 'Enter your mobile number',
-                      //   keyboardType: TextInputType.phone,
-                      // ),
-
-                      // const SizedBox(height: 24),
-
-                      /// Checkbox
-                      Row(
-                        children: [
-                          Checkbox(
-                            activeColor: onboardingTitleColor,
-                            value: isChecked,
-                            onChanged: (value) {
-                              setState(() {
-                                isChecked = value!;
-                              });
-                            },
+                    Row(
+                      children: [
+                        Checkbox(
+                          activeColor: onboardingTitleColor,
+                          value: isChecked,
+                          onChanged: (value) {
+                            setState(() {
+                              isChecked = value!;
+                            });
+                          },
+                        ),
+                        Expanded(
+                          child: Text(
+                            'I confirm that this investment aligns with my risk profile and financial capacity.',
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                          Expanded(
-                            child: Text(
-                              'I confirm that this investment aligns with my risk profile and financial capacity.',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    /// Terms
+                    Text.rich(
+                      TextSpan(
+                        text: 'By clicking continue, you agree to our ',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
+                        ),
+                        children: const [
+                          TextSpan(
+                            text: 'Terms & Conditions',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          TextSpan(text: ' and '),
+                          TextSpan(
+                            text: 'Privacy Policy',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
+                      textAlign: TextAlign.center,
+                    ),
 
-                      const SizedBox(height: 12),
-
-                      /// Terms
-                      Text.rich(
-                        TextSpan(
-                          text: 'By clicking continue, you agree to our ',
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: Colors.grey[600]),
-                          children: const [
-                            TextSpan(
-                              text: 'Terms & Conditions',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            TextSpan(text: ' and '),
-                            TextSpan(
-                              text: 'Privacy Policy',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-
-                      const SizedBox(height: 40),
-                    ],
-                  ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
               ),
 
               /// Continue Button
               SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 52,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -142,19 +128,17 @@ class _CreateProfileState extends State<CreateProfile> {
                       MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
                     );
                   },
-                   style: ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                     backgroundColor: onboardingTitleColor,
-                    foregroundColor: whiteColor,
-                    shape: const StadiumBorder(),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    'Continue',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,  
-                      color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
+                  ),
+                  child: Text(
+                    'Continue',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.labelLarge?.copyWith(color: whiteColor),
                   ),
                 ),
               ),
@@ -194,7 +178,6 @@ class _InputField extends StatelessWidget {
                 context,
               ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
             ),
-            Icon(Icons.star, color: Colors.red, size: 8),
           ],
         ),
 
@@ -204,9 +187,12 @@ class _InputField extends StatelessWidget {
           controller: controller,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(
-            hintText: label,
-         //   labelText: label,
+            hintText: hint,
+             hintStyle: Theme.of(
+                  context,
+                ).textTheme.bodySmall,
 
+            //   labelText: label,
             labelStyle: const TextStyle(color: Colors.grey),
 
             floatingLabelStyle: TextStyle(color: onboardingTitleColor),

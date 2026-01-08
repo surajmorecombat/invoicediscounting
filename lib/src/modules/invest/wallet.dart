@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/modules/invest/payment_method.dart';
+import 'package:invoicediscounting/src/modules/wallet/wallet_add.dart';
 
 class AddToWallet extends StatefulWidget {
   const AddToWallet({super.key});
@@ -13,6 +13,7 @@ class AddToWallet extends StatefulWidget {
 }
 
 class _AddToWalletState extends State<AddToWallet> {
+  bool addwallet = false;
   int selectedAmount = 000000;
   int unitCount = 1;
   bool isChecked = false;
@@ -53,60 +54,25 @@ class _AddToWalletState extends State<AddToWallet> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         color: Colors.white,
-        child: Row(
-          children: [
-            Expanded(
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SelectPaymentMethod(),
-                    ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: onboardingTitleColor,
-                  // side: BorderSide(color: onboardingTitleColor, width: 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-                child: Text(
-                  "Add",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.labelLarge?.copyWith(color: whiteColor),
-                ),
+        child: SizedBox(
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF003A8F),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {
-                     widrawlCardOne();
-                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>AddUnits()));
-                },
-
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(color: onboardingTitleColor, width: 1),
-                  backgroundColor: whiteColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-
-                child: Text(
-                  "Withdraw",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.labelLarge?.copyWith(color: onboardingTitleColor),
-                ),
-              ),
+            // onPressed: () {},
+              onPressed: null,
+            child: Text(
+              'Continue with Payment',
+              style: Theme.of(context).textTheme.labelLarge,
             ),
-          ],
+          ),
         ),
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -114,10 +80,14 @@ class _AddToWalletState extends State<AddToWallet> {
             vertical: 16,
           ),
           child: Column(
-            children: [
-              walletBalanceAdd(context),
-              secondaryCard(context),
-              unitCalculatorCard(context),
+            children: [unitCalculatorCard(context),
+    
+             secondaryCard(context),
+         SizedBox(height: 16,),
+
+            if (addwallet) lowBalanceCard(context)
+            
+            
             ],
           ),
         ),
@@ -125,139 +95,12 @@ class _AddToWalletState extends State<AddToWallet> {
     );
   }
 
-  Widget walletBalanceAdd(BuildContext context) {
-    return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Wallet Balance",
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.only(left: 100, right: 100),
-              child: Center(
-                child: TextField(
-                  controller: amountController,
-                  keyboardType: TextInputType.number,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Amount',
-                    border: InputBorder.none,
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedAmount =
-                          int.tryParse(value.replaceAll(',', '')) ?? 0;
-                    });
-                  },
-                ),
-              ),
-            ),
-
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Text("₹ ", style: Theme.of(context).textTheme.displaySmall),
-            //     Text(
-            //       _format(selectedAmount),
-            //       style: Theme.of(context).textTheme.displaySmall,
-            //     ),
-            //     Text(" /-", style: Theme.of(context).textTheme.displaySmall),
-            //   ],
-            // ),
-            const SizedBox(height: 20),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _amountChip(5000),
-                _amountChip(10000),
-                _amountChip(25000),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            Text(
-              "For your security, we can accept payments only from your registered bank account. "
-              "Any payment from a different account will be declined automatically.",
-              // textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-
-            const SizedBox(height: 24),
-            const Divider(),
-
-            _balanceRow("Current Balance", "₹0.00"),
-            _balanceRow("New Deposit", "₹0.00"),
-            _balanceRow("New Balance", "₹0.00"),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _balanceRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: Theme.of(context).textTheme.bodySmall),
-          Text(value, style: Theme.of(context).textTheme.bodySmall),
-        ],
-      ),
-    );
-  }
-
-  Widget _amountChip(int amount) {
-    final bool selected = selectedAmount == amount;
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedAmount = amount;
-          amountController.text = amount.toString();
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-        decoration: BoxDecoration(
-          color: selected ? onboardingTitleColor.withOpacity(.1) : Colors.white,
-          border: Border.all(
-            color: selected ? onboardingTitleColor : Colors.grey.shade300,
-          ),
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: Text(
-          "₹${_format(amount)}",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: selected ? onboardingTitleColor : Colors.black,
-          ),
-        ),
-      ),
-    );
-  }
-
-  String _format(int n) {
-    return n.toString().replaceAllMapped(
-      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-      (m) => '${m[1]},',
-    );
-  }
-
   Widget secondaryCard(BuildContext context) {
     return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+     
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Column(
@@ -336,8 +179,10 @@ class _AddToWalletState extends State<AddToWallet> {
 
   Widget unitCalculatorCard(BuildContext context) {
     return Card(
-      elevation: 0.7,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+       elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        margin: const EdgeInsets.only(bottom: 16),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -374,7 +219,10 @@ class _AddToWalletState extends State<AddToWallet> {
 
                 _unitButton(Icons.add, () {
                   if (unitCount < totalUnit) {
-                    setState(() => unitCount++);
+                    setState(() {
+                      unitCount++;
+                      addwallet = true;
+                    });
                   }
                 }),
 
@@ -398,24 +246,6 @@ class _AddToWalletState extends State<AddToWallet> {
                 ),
               ],
             ),
-
-            const SizedBox(height: 12),
-
-            Row(
-              children: [
-                Checkbox(
-                  activeColor: onboardingTitleColor,
-                  value: isChecked,
-                  onChanged: (v) => setState(() => isChecked = v!),
-                ),
-                Expanded(
-                  child: Text(
-                    'I am 18 years old and I can enter into a contract',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -436,4 +266,68 @@ class _AddToWalletState extends State<AddToWallet> {
       ),
     );
   }
+
+
+  Widget lowBalanceCard(BuildContext context) {
+  return Card(
+         elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        // margin: const EdgeInsets.only(bottom: 16),
+    child: Padding(
+       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      child: Column(
+        
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+               Text("Amplio Pocket",
+                  style: Theme.of(  context).textTheme.bodyLarge),
+              Text("₹0.25",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      )),
+            ],
+          ),
+          const Divider(height: 24),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "You don't have enough balance to purchase the selected units.\n"
+                  "Please add funds to proceed.",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: Colors.red),
+                ),
+              ),
+              const SizedBox(width: 12),
+              SizedBox(
+                // height: 38,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF003A8F),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WalletAdd()));
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: Text("Add Funds"),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 }

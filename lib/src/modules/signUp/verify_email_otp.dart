@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
+import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 import 'package:invoicediscounting/src/modules/signUp/phone_verification.dart';
 
 class VerifyEmailOtp extends StatefulWidget {
@@ -74,7 +76,14 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                   ).textTheme.bodyMedium?.copyWith(color: blackColor),
                 ),
                 SizedBox(width: 5),
-                Icon(Icons.edit, size: 16, color: blackColor),
+                GestureDetector(
+                  onTap:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => CreateProfile()),
+                      ),
+                  child: Icon(Icons.edit, size: 16, color: blackColor),
+                ),
               ],
             ),
 
@@ -90,7 +99,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                   child: TextField(
                     controller: _controllers[index],
                     focusNode: _focusNodes[index],
-                    keyboardType: TextInputType.number,
+                    // keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     maxLength: 1,
                     style: Theme.of(context).textTheme.bodyLarge,
@@ -144,16 +153,18 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: onboardingTitleColor,
-                  foregroundColor: whiteColor,
-                  shape: const StadiumBorder(),
-                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 onPressed: () {
-                             Navigator.pushReplacement(
+                  Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) =>
-                    //EnterSecurePin()
-                    OtpVerificationScreen()
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              //EnterSecurePin()
+                          KycAddressScreen(),
                     ),
                   );
                 },

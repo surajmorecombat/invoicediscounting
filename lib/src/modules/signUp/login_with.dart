@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 
 class LoginWith extends StatelessWidget {
   const LoginWith({super.key});
@@ -10,120 +11,28 @@ class LoginWith extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: GestureDetector(
-          onTap: () {
-            // Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => OnboardingScreen()),
-            // );
-          },
-          child: Image.asset('assets/icons/back.png'),
-        ),
-      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 24),
           child: Column(
             children: [
-              const SizedBox(height: 32),
+              const Spacer(flex: 3),
 
-              Text(
-                'Continue Your Journey',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(),
+              Column(
+                children: [
+                  Image.asset('assets/images/app-icon.png', width: 140),
+                  const SizedBox(height: 10),
+                  Image.asset('assets/images/app-name.png', width: 130),
+                ],
               ),
 
-              const SizedBox(height: 8),
+              const Spacer(flex: 2),
 
-              Text(
-                'Login safely using your phone or email.',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-
-              const SizedBox(height: 20),
-
-              Expanded(
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/trending_up.png',
-                    width: 120,
-                    height: 120,
-                  ),
-                ),
-              ),
-
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: onboardingTitleColor,
-                    foregroundColor: whiteColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => MobileNumberScreen(),
-                    //   ),
-                    // );
-                  },
-                  icon: Image.asset(
-                    'assets/icons/phone.png',
-                    width: 20,
-                    height: 20,
-                  ),
-
-                  label: Text(
-                    'Continue with Phone',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-              ),
-
+              _googleButton(context),
               const SizedBox(height: 16),
+              _emailButton(context),
 
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: OutlinedButton.icon(
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: onboardingTitleColor,
-                    side: BorderSide(color: onboardingTitleColor),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => EmailAddressScreen(),
-                    //   ),
-                    // );
-                  },
-                  icon: Image.asset(
-                    'assets/icons/email.png',
-                    width: 20,
-                    height: 20,
-                  ),
-                  label: Text(
-                    'Continue with Email',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: onboardingTitleColor,
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               Text.rich(
                 TextSpan(
@@ -134,7 +43,7 @@ class LoginWith extends StatelessWidget {
                       text: 'Terms',
                       style: TextStyle(color: onboardingTitleColor),
                     ),
-                    TextSpan(text: ' and '),
+                    const TextSpan(text: ' and '),
                     TextSpan(
                       text: 'Privacy Policy',
                       style: TextStyle(color: onboardingTitleColor),
@@ -144,11 +53,59 @@ class LoginWith extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
 
-              const SizedBox(height: 24),
+              const Spacer(),
             ],
           ),
         ),
       ),
     );
   }
+
+  Widget _googleButton(BuildContext context) => SizedBox(
+    width: double.infinity,
+    height: 52,
+    child: OutlinedButton.icon(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginWith()),
+        );
+      },
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: onboardingTitleColor),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      icon: Image.asset('assets/icons/google.png', width: 20),
+      label: Text(
+        'Continue with Google',
+        style: Theme.of(
+          context,
+        ).textTheme.labelLarge?.copyWith(color: onboardingTitleColor),
+      ),
+    ),
+  );
+
+  Widget _emailButton(BuildContext context) => SizedBox(
+    width: double.infinity,
+    height: 52,
+    child: ElevatedButton(
+      onPressed: () {
+        //CreateProfile
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CreateProfile()),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: onboardingTitleColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child: Text(
+        'Continue with Phone/Email',
+        style: Theme.of(
+          context,
+        ).textTheme.labelLarge?.copyWith(color: whiteColor),
+      ),
+    ),
+  );
 }

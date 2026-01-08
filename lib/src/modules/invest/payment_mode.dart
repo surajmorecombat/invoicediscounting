@@ -29,7 +29,8 @@ class _PaymentModeState extends State<PaymentMode> {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       bottomNavigationBar: SafeArea(
-        child: Container(
+        child: 
+        Container(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -65,7 +66,7 @@ class _PaymentModeState extends State<PaymentMode> {
               const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
-                height: 48,
+                height: 52,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: onboardingTitleColor,

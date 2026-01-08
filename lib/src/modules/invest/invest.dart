@@ -94,103 +94,111 @@ class _TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: whiteColor,
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              // Icon(Icons.person),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Profile()),
-                  );
-                },
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: greycolor,
-                  child: Icon(Icons.person, color: whiteColor),
+    return Card(
+            elevation: 0.1,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
                 ),
-              ),
-              // IconButton(
-              //   onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Profile()),
-              // );
-              //   },
-              //   icon: Icon(Icons.person),
-              // ),
-              // const Icon(Icons.person, size: 20),
-              const SizedBox(width: 12),
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TrainsationAll()),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.account_balance_wallet_outlined,
-                        size: 20,
-                        color: onboardingTitleColor,
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        '₹1,00,000',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
+      child: Container(
+          padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: whiteColor,
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                // Icon(Icons.person),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: greycolor,
+                    child: Icon(Icons.person, color: whiteColor),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Stack(
-                children: const [
-                  Icon(Icons.notifications_none_outlined, size: 20),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: CircleAvatar(radius: 4, backgroundColor: Colors.red),
+                // IconButton(
+                //   onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Profile()),
+                // );
+                //   },
+                //   icon: Icon(Icons.person),
+                // ),
+                // const Icon(Icons.person, size: 20),
+                const SizedBox(width: 12),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TrainsationAll()),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      // color: Colors.blue.shade50,
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(color: onboardingTitleColor),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.account_balance_wallet_outlined,
+                          size: 20,
+                          color: onboardingTitleColor,
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          '₹1,00,000',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Invoice Discounting',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              _Filter('All Products', 'all', selected, onSelect),
-              _Filter('High Yield', 'high', selected, onSelect),
-              _Filter('Short Term', 'short', selected, onSelect),
-              // _Filter('Available', 'available', selected, onSelect),
-            ],
-          ),
-        ],
+                ),
+                const SizedBox(width: 10),
+                Stack(
+                  children: const [
+                    Icon(Icons.notifications_none_outlined, size: 20),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: CircleAvatar(radius: 4, backgroundColor: Colors.red),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Invoice Discounting',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                _Filter('All Products', 'all', selected, onSelect),
+                _Filter('High Yield', 'high', selected, onSelect),
+                _Filter('Short Term', 'short', selected, onSelect),
+                // _Filter('Available', 'available', selected, onSelect),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -217,7 +225,10 @@ class _Filter extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(color: isActive ? Colors.white : Colors.black),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: isActive ? Colors.white : Colors.black,
+          ),
+          // TextStyle(color: isActive ? Colors.white : Colors.black),
         ),
       ),
     );
@@ -245,87 +256,97 @@ class _InvoiceCard extends StatelessWidget {
           MaterialPageRoute(builder: (context) => InvestDetails()),
         );
       },
-      child: Container(
+      child:
+       Card(
+         elevation: 0.1,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
         margin: const EdgeInsets.only(bottom: 16),
+        // padding: const EdgeInsets.all(16),
+        // decoration: BoxDecoration(
+        //   color: Colors.white,
+        //   borderRadius: BorderRadius.circular(16),
+        //   border: Border.all(color: Colors.grey.shade200),
+        // ),
+        child: Container(
+          //  margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade200),
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: whiteColor,
-                  radius: 22,
-                  child: Image.asset(imagepathbuyer),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    buyer,
-                    style: Theme.of(context).textTheme.bodyLarge,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: whiteColor,
+                    radius: 22,
+                    child: Image.asset(imagepathbuyer),
                   ),
-                ),
-                Icon(Icons.swap_horiz, size: 35, color: blackColor),
-                Expanded(
-                  child: Text(
-                    seller,
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      buyer,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 6),
-                CircleAvatar(
-                  backgroundColor: whiteColor,
-                  radius: 22,
-                  child: Image.asset(imagepatseller),
-                ),
-              ],
-            ),
-            const SizedBox(height: 18),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                _Metric(label: 'Unit Cost', value: '₹1,00,000'),
-                _Metric(label: 'XIRR', value: '13.65%', green: true),
-                _Metric(label: 'Tenure', value: '90 Days'),
-              ],
-            ),
-            const SizedBox(height: 18),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const _Metric(label: 'Unit Left', value: '23/30'),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: onboardingTitleColor,
-                    shape: const StadiumBorder(),
+                  Icon(Icons.swap_horiz, size: 35, color: blackColor),
+                  Expanded(
+                    child: Text(
+                      seller,
+                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => InvestDetails()),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'View Details',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      SizedBox(width: 5),
-                      Icon(Icons.arrow_forward, size: 12),
-                    ],
+                  const SizedBox(width: 6),
+                  CircleAvatar(
+                    backgroundColor: whiteColor,
+                    radius: 22,
+                    child: Image.asset(imagepatseller),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(height: 18),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  _Metric(label: 'Unit Cost', value: '₹1,00,000'),
+                  _Metric(label: 'XIRR', value: '13.65%', green: true),
+                  _Metric(label: 'Tenure', value: '90 Days'),
+                ],
+              ),
+              const SizedBox(height: 18),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const _Metric(label: 'Unit Left', value: '23/30'),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: onboardingTitleColor,
+                      shape: const StadiumBorder(),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => InvestDetails()),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'View Details',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        SizedBox(width: 5),
+                        Icon(Icons.arrow_forward, size: 12),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

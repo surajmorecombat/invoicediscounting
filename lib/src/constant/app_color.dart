@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-Color backgroundColor = const Color(0xffF7FAFD);
+Color backgroundColor = const Color(0xffFAFAFA);
 Color constColor = const Color(0xff004297);
 Color borderColor = const Color(0xff898989);
-Color onboardingTitleColor = const Color(0xff2C2888);
+Color onboardingTitleColor = const Color(0xff00194E);
 Color onboardingsubTitleColor = const Color(0xff313131);
 Color blackColor = const Color(0xff000000);
 Color whiteColor = const Color(0xffffffff);
