@@ -225,7 +225,10 @@ class _TrainsationAllState extends State<TrainsationAll> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
-                          child:  Text('Cancel',style: TextStyle(color: onboardingTitleColor),),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(color: onboardingTitleColor),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -263,84 +266,88 @@ class _TrainsationAllState extends State<TrainsationAll> {
       ctx: 0,
       showDefaultBottom: true,
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: isTablet ? 120 : 20,
-            vertical: 16,
-          ),
-          child: Column(
-            children: [
-              WalletCard(),
-              SizedBox(height: 10),
-              _TopBar(
-                onSort: () => showSort(context),
-                onType: () => showType(context),
-                onMonth: () => showMonth(context),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: filtered.length,
-                  itemBuilder: (_, i) => TransactionTile(t: filtered[i]),
-                ),
-              ),
-              Container(
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: isTablet ? 120 : 20,
+          vertical: 16,
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [Text('Transactions'),
+              
+              
+              ],
+            ),
+            // WalletCard(),
+            // SizedBox(height: 10),
+            // _TopBar(
+            //   onSort: () => showSort(context),
+            //   onType: () => showType(context),
+            //   onMonth: () => showMonth(context),
+            // ),
+            Expanded(
+              child: ListView.builder(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey.shade200),
-                ),
-                child: Column(
-                  children: [
-               Row(
-  children: [
-    Expanded(
-      child: Text(
-        'Need help ?',
-        style: Theme.of(context).textTheme.headlineLarge,
-      ),
-    ),
-    const SizedBox(width: 12),
-    Flexible(
-      child: Text(
-        '+91-9876543210',
-        textAlign: TextAlign.right,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-    ),
-  ],
-),
-const SizedBox(height: 10),
-Row(
-  children: [
-    Expanded(
-      child: Text(
-        'contact us if you have any concern',
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-    ),
-    const SizedBox(width: 12),
-    Flexible(
-      child: Text(
-        'contact.person@domainmail.com',
-        textAlign: TextAlign.right,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-    ),
-  ],
-),
-
-                  ],
-                ),
+                itemCount: filtered.length,
+                itemBuilder: (_, i) => TransactionTile(t: filtered[i]),
               ),
-            ],
-          ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: whiteColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Need help ?',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Flexible(
+                        child: Text(
+                          '+91-9876543210',
+                          textAlign: TextAlign.right,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'contact us if you have any concern',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Flexible(
+                        child: Text(
+                          'contact.person@domainmail.com',
+                          textAlign: TextAlign.right,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -444,18 +451,21 @@ class _FilterSheetState extends State<FilterSheet> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () => setState(() => selected.clear()),
-                  child:  Text('Clear',style: TextStyle(color: onboardingTitleColor),),
+                  child: Text(
+                    'Clear',
+                    style: TextStyle(color: onboardingTitleColor),
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton(
-                   style: ElevatedButton.styleFrom(
-                            backgroundColor: onboardingTitleColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: onboardingTitleColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                   onPressed: () {
                     widget.onApply(
                       selected.isEmpty ? null : selected.join(','),

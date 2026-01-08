@@ -47,40 +47,33 @@ class _InvestState extends State<Invest> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return MainLayout(
       backgroundColor: backgroundColor,
       ctx: 0,
       showDefaultBottom: true,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              _TopBar(
-                selected: selectedFilter,
-                onSelect: (f) => setState(() => selectedFilter = f),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  itemCount: filteredInvoices.length,
-                  itemBuilder: (_, index) {
-                    final i = filteredInvoices[index];
-                    return _InvoiceCard(
-                      buyer: i.buyer,
-                      seller: i.seller,
-                      imagepathbuyer: i.buyerImg,
-                      imagepatseller: i.sellerImg,
-                    );
-                  },
-                ),
-              ),
-            ],
+      body: Column(
+        children: [
+          _TopBar(
+            selected: selectedFilter,
+            onSelect: (f) => setState(() => selectedFilter = f),
           ),
-        ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              itemCount: filteredInvoices.length,
+              itemBuilder: (_, index) {
+                final i = filteredInvoices[index];
+                return _InvoiceCard(
+                  buyer: i.buyer,
+                  seller: i.seller,
+                  imagepathbuyer: i.buyerImg,
+                  imagepatseller: i.sellerImg,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -95,13 +88,11 @@ class _TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-            elevation: 0.1,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Container(
-          padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: whiteColor,
           border: Border.all(color: Colors.grey.shade200),
@@ -177,7 +168,10 @@ class _TopBar extends StatelessWidget {
                     Positioned(
                       right: 0,
                       top: 0,
-                      child: CircleAvatar(radius: 4, backgroundColor: Colors.red),
+                      child: CircleAvatar(
+                        radius: 4,
+                        backgroundColor: Colors.red,
+                      ),
                     ),
                   ],
                 ),
@@ -256,13 +250,10 @@ class _InvoiceCard extends StatelessWidget {
           MaterialPageRoute(builder: (context) => InvestDetails()),
         );
       },
-      child:
-       Card(
-         elevation: 0.1,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
+      child: Card(
+        elevation: 0.1,
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         margin: const EdgeInsets.only(bottom: 16),
         // padding: const EdgeInsets.all(16),
         // decoration: BoxDecoration(
@@ -272,7 +263,7 @@ class _InvoiceCard extends StatelessWidget {
         // ),
         child: Container(
           //  margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Row(
@@ -327,7 +318,9 @@ class _InvoiceCard extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => InvestDetails()),
+                        MaterialPageRoute(
+                          builder: (context) => InvestDetails(),
+                        ),
                       );
                     },
                     child: Row(

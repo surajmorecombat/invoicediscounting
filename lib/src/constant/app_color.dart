@@ -14,3 +14,4 @@ Color faintboxbackground = const Color(0xffF3F3F3);
 Color successText = const Color(0xff2CDA94);
 Color lightGreen = const Color(0xffF0FDF4);
 Color pinkLight = const Color(0xffFEDBDB);
+Color lightblue = const Color(0xffF2F6FF);
