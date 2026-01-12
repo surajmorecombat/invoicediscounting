@@ -35,22 +35,25 @@ class _ReviewState extends State<Review> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             infoCard(context, 'Personal Information', [
-              infoRow(context, 'Full Name:', 'VICKY RATHOD SINGH'),
+              infoRow(context, 'First Name:', 'VICKY'),
+              infoRow(context, 'Last Name:', 'Rathod'),
 
               infoRow(context, 'Date of Birth :', '25-12-1997'),
             ]),
 
-            infoCard(context, 'Contact Details', [
-              infoRow(context, 'Aadhar Number', '9876 6541 3214'),
-              infoRow(context, 'PAN Number', 'ABCDS9855L'),
-            ]),
-
-            infoCard(context, 'Address Information', [
+                infoCard(context, 'Address Information', [
               const Text(
                 'Flat 204, Tranquil Heights, Gangapur Road, Near Sula Junction, Nashik, Nashik 422111 MAHARASHTRA 422111',
                 style: TextStyle(color: Colors.black54),
               ),
             ]),
+
+            infoCard(context, 'Documents Details', [
+              infoRow(context, 'Aadhar Number', '9876 6541 3214'),
+              infoRow(context, 'PAN Number', 'ABCDS9855L'),
+            ]),
+
+        
 
             infoCard(context, 'Bank Details', [
               infoRow(context, 'Bank A/c Number', 'HDFC BANK'),
@@ -62,29 +65,33 @@ class _ReviewState extends State<Review> {
             //   'You can edit before submitting',
             //   style: Theme.of(context).textTheme.bodyMedium,
             // ),
-
             Spacer(),
 
             Text('Consent', style: Theme.of(context).textTheme.bodyLarge),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Checkbox(
-                  value: isChecked,
-                  activeColor: onboardingTitleColor,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: const VisualDensity(
-                    horizontal: -4,
-                    vertical: 0,
+                Transform.scale(
+                  scale: 0.75,
+                  child: Checkbox(
+                    value: isChecked,
+                    activeColor: onboardingTitleColor,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: const VisualDensity(
+                      horizontal: -4,
+                      vertical: 0,
+                    ),
+                    onChanged: (v) => setState(() => isChecked = v!),
                   ),
-                  onChanged: (v) => setState(() => isChecked = v!),
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: Text(
                       'I confirm that the details provided are correct',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
                     ),
                   ),
                 ),
@@ -93,22 +100,27 @@ class _ReviewState extends State<Review> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Checkbox(
-                  value: isCheckedOne,
-                  activeColor: onboardingTitleColor,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: const VisualDensity(
-                    horizontal: -4,
-                   vertical: 0,
+                Transform.scale(
+                  scale: 0.75,
+                  child: Checkbox(
+                    value: isCheckedOne,
+                    activeColor: onboardingTitleColor,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: const VisualDensity(
+                      horizontal: -4,
+                      vertical: 0,
+                    ),
+                    onChanged: (v) => setState(() => isCheckedOne = v!),
                   ),
-                  onChanged: (v) => setState(() => isCheckedOne = v!),
                 ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: Text(
                       'I agree to the KYC and regulatory terms',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: blackColor),
                     ),
                   ),
                 ),

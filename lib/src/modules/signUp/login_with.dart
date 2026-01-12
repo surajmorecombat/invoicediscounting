@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
+import 'package:invoicediscounting/src/modules/signUp/sign_up.dart';
 
 class LoginWith extends StatelessWidget {
   const LoginWith({super.key});
@@ -20,7 +21,11 @@ class LoginWith extends StatelessWidget {
 
               Column(
                 children: [
-                  Image.asset('assets/images/app-icon.png', width: 140,height: 140,),
+                  Image.asset(
+                    'assets/images/app-icon.png',
+                    width: 140,
+                    height: 140,
+                  ),
                   const SizedBox(height: 10),
                   Image.asset('assets/images/app-name.png', width: 130),
                 ],
@@ -32,7 +37,28 @@ class LoginWith extends StatelessWidget {
               const SizedBox(height: 16),
               _emailButton(context),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
+                },
+                child: Text.rich(
+                  TextSpan(
+                    text: '''Don't have account ?  ''',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    children: [
+                      TextSpan(
+                        text: 'Sign Up',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: onboardingTitleColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+                   const SizedBox(height: 20),
 
               Text.rich(
                 TextSpan(
@@ -66,10 +92,10 @@ class LoginWith extends StatelessWidget {
     height: 52,
     child: OutlinedButton.icon(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginWith()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const LoginWith()),
+        // );
       },
       style: OutlinedButton.styleFrom(
         side: BorderSide(color: onboardingTitleColor),
@@ -91,7 +117,7 @@ class LoginWith extends StatelessWidget {
     child: ElevatedButton(
       onPressed: () {
         //CreateProfile
-         Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const CreateProfile()),
         );

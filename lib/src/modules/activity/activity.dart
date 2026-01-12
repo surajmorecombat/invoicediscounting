@@ -1,11 +1,12 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:invoicediscounting/src/components/total_earning_card.dart';
 import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/modules/activity/market_news_detail.dart';
 import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
+import 'package:invoicediscounting/src/modules/profile/profile.dart';
 
 class Activity extends StatefulWidget {
   const Activity({super.key});
@@ -25,11 +26,78 @@ class _ActivityState extends State<Activity> {
       showDefaultBottom: true,
       ctx: 1,
 
-      appBar: AppBar(
+      appBar:
+   AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
-        automaticallyImplyLeading: false,
-        // iconTheme: IconThemeData(color: blackColor),
+        centerTitle: false,
+        leadingWidth: 52,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => Profile()),
+              );
+            },
+            child: CircleAvatar(
+              radius: 34,
+              child: Image.asset('assets/icons/profile.png'),
+            ),
+
+  
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => TrainsationAll()),
+                );
+              },
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: onboardingTitleColor),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.account_balance_wallet_outlined,
+                        size: 20,
+                        color: onboardingTitleColor,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '₹1,00,000',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Notification Bell
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: SvgPicture.asset('assets/icons/bell.svg',width: 20,height: 20,),
+      
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -39,6 +107,7 @@ class _ActivityState extends State<Activity> {
           ),
           child: Column(
             children: [
+              SizedBox(height: 10,),
               totalEarningCard(context),
               showTransactionCard(context),
               WalletCard(),

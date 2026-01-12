@@ -24,15 +24,43 @@ class _CreateProfileState extends State<CreateProfile> {
         elevation: 0,
         iconTheme: IconThemeData(color: blackColor),
       ),
+         bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16),
+        color: Colors.white,
+        child: SizedBox(
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: onboardingTitleColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: () {
+        
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
+                );
+      
+            },
+            child: Text(
+              'Submit',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isTablet ? 120 : 24,
-            vertical: 20,
+     
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 60),
+              // const SizedBox(height: 60),
 
               Text(
                 'Enter your email/phone',
@@ -50,100 +78,50 @@ class _CreateProfileState extends State<CreateProfile> {
 
               const SizedBox(height: 20),
 
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _InputField(
-                      controller: emailController,
-                      label: 'Phone number/email',
-                      hint: 'Enter your number or email',
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    Row(
-                      children: [
-                        Checkbox(
-                          activeColor: onboardingTitleColor,
-                          value: isChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
-                          },
-                        ),
-                        Expanded(
-                          child: Text(
-                            'I confirm that this investment aligns with my risk profile and financial capacity.',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    /// Terms
-                    Text.rich(
-                      TextSpan(
-                        text: 'By clicking continue, you agree to our ',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                        children: const [
-                          TextSpan(
-                            text: 'Terms & Conditions',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          TextSpan(text: ' and '),
-                          TextSpan(
-                            text: 'Privacy Policy',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-
-                    const SizedBox(height: 40),
-                  ],
-                ),
+              _InputField(
+                controller: emailController,
+                label: 'Phone number/email',
+                hint: 'Enter your number or email',
+                keyboardType: TextInputType.emailAddress,
               ),
 
-              /// Continue Button
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: onboardingTitleColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    'Continue',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelLarge?.copyWith(color: whiteColor),
-                  ),
-                ),
+              Spacer(
+
               ),
 
-              const SizedBox(height: 24),
+                Text(
+                'We only support indian numbers at the moment',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+
+              // /// Continue Button
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: 52,
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
+              //       );
+              //     },
+              //     style: ElevatedButton.styleFrom(
+              //       backgroundColor: onboardingTitleColor,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //     ),
+              //     child: Text(
+              //       'Continue',
+              //       style: Theme.of(
+              //         context,
+              //       ).textTheme.labelLarge?.copyWith(color: whiteColor),
+              //     ),
+              //   ),
+              // ),
+
+              // const SizedBox(height: 24),
             ],
           ),
         ),

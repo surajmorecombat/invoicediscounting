@@ -69,12 +69,12 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
             _field("State", "Enter state", context),
             _field("City", "Enter city", context),
             const SizedBox(height: 24),
-            const Text(
-              "Upload PAN",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 10),
-            _uploadBlock("", context),
+            // const Text(
+            //   "Upload PAN",
+            //   style: TextStyle(fontWeight: FontWeight.w600),
+            // ),
+            // const SizedBox(height: 10),
+            _uploadBlock("Upload PAN", context),
             _field("Name as per PAN", "Full Name", context),
             _field("PAN Number*", "ABCD1234F", context),
             _field(
@@ -120,17 +120,35 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                label,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
-              ),
-              Icon(Icons.star, color: Colors.red, size: 8),
-            ],
+               RichText(
+            text: TextSpan(
+              text: label,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              children: [
+                TextSpan(
+                  text: '*',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
+          // Row(
+          //   children: [
+          //     Text(
+          //       label,
+          //       style: Theme.of(
+          //         context,
+          //       ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+          //     ),
+          //     Icon(Icons.star, color: Colors.red, size: 8),
+          //   ],
+          // ),
 
           const SizedBox(height: 8),
           // Text(
@@ -150,9 +168,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
             onTap: onTap,
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: Theme.of(
-                  context,
-                ).textTheme.bodySmall,
+              hintStyle: Theme.of(context).textTheme.bodySmall,
 
               suffixIcon:
                   icon != null ? Icon(icon, color: onboardingTitleColor) : null,
@@ -174,18 +190,36 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title.isNotEmpty)
-          Row(
-            children: [
-              Text(
-                title,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
-              ),
-              Icon(Icons.star, color: Colors.red, size: 8),
-            ],
+          RichText(
+            text: TextSpan(
+              text: title,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              children: [
+                TextSpan(
+                  text: '*',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
 
+        // Row(
+        //   children: [
+        //     Text(
+        //       title,
+        // style: Theme.of(
+        //   context,
+        // ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+        //     ),
+        //     Icon(Icons.star, color: Colors.red, size: 8),
+        //   ],
+        // ),
         const SizedBox(height: 8),
         //   Text(
         //     title,

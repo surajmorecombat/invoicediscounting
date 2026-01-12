@@ -66,7 +66,10 @@ class _WalletCardState extends State<WalletCard> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WalletAdd()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WalletAdd()),
+                    );
                   },
                   style: OutlinedButton.styleFrom(
                     backgroundColor: onboardingTitleColor,
@@ -160,35 +163,34 @@ class WithdrawalDialog extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 12),
-                 Padding(
-                  padding: const EdgeInsets.only(left: 100, right: 100),
+                Padding(
+                  padding: const EdgeInsets.only(left: 80, right: 80),
                   child: Center(
-                    child: TextField(
-                      // controller: amountController,
-                      keyboardType: TextInputType.number,
-                      textAlign:
-                          TextAlign.center,
-                      style:
-                          Theme.of(
-                            context,
-                          ).textTheme.bodyLarge, 
-                      decoration:  InputDecoration(
-                        hintText: 'Enter Amount',
-                        hintStyle: Theme.of(  
-                            context,
-                          ).textTheme.bodyLarge,
-                        border: InputBorder.none,
-                        isCollapsed: true,
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: greycolor),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      onChanged: (value) {
-                        // setState(() {
-                        //   selectedAmount =
-                        //       int.tryParse(value.replaceAll(',', '')) ?? 0;
-                        // });
-                      },
+                      child: TextField(
+                        // controller: amountController,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Amount',
+                          hintStyle: Theme.of(context).textTheme.bodyLarge,
+                          border: InputBorder.none,
+                          isCollapsed: true,
+                        ),
+                        onChanged: (value) {
+                          // setState(() {
+                          //   selectedAmount =
+                          //       int.tryParse(value.replaceAll(',', '')) ?? 0;
+                          // });
+                        },
+                      ),
                     ),
-
-               
                   ),
                 ),
                 // TextField(

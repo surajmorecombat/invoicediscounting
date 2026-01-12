@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:invoicediscounting/src/components/holding_card.dart';
 import 'package:invoicediscounting/src/components/total_earning_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
+import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
 import 'package:invoicediscounting/src/modules/portfolio/holding_detail.dart';
+import 'package:invoicediscounting/src/modules/profile/profile.dart'
+    show Profile;
 
 class Portfolio extends StatefulWidget {
   const Portfolio({super.key});
@@ -46,12 +50,83 @@ class _PortfolioState extends State<Portfolio> {
         backgroundColor: backgroundColor,
         showDefaultBottom: true,
         ctx: 2,
-        appBar: AppBar(elevation: 0, backgroundColor: backgroundColor),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          centerTitle: false,
+          leadingWidth: 52,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 12),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => Profile()),
+                );
+              },
+              child: CircleAvatar(
+                radius: 34,
+                child: Image.asset('assets/icons/profile.png'),
+              ),
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => TrainsationAll()),
+                  );
+                },
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(color: onboardingTitleColor),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.account_balance_wallet_outlined,
+                          size: 20,
+                          color: onboardingTitleColor,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          '₹1,00,000',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            // Notification Bell
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: SvgPicture.asset(
+                'assets/icons/bell.svg',
+                width: 20,
+                height: 20,
+              ),
+            ),
+          ],
+        ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
           child: Column(
             children: [
-           //   const SizedBox(height: 12),
+              const SizedBox(height: 10),
               totalEarningCard(context),
               const SizedBox(height: 16),
               _portfolioTabs(context),
@@ -144,43 +219,51 @@ class _PortfolioState extends State<Portfolio> {
     );
   }
 
- Widget _closedInvestmentCard(BuildContext context) {
-  return SingleChildScrollView(
-    child: Align(
-      alignment: Alignment.topCenter,
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min, 
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _topRow(context),
-              const SizedBox(height: 12),
-              Text(
-                "₹5045.12",
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  color: Colors.green,
-                  fontWeight: FontWeight.w600,
+  Widget _closedInvestmentCard(BuildContext context) {
+    return SingleChildScrollView(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _topRow(context),
+                const SizedBox(height: 12),
+                Text(
+                  "₹5045.12",
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: Colors.green,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text("Total Returns", style: Theme.of(context).textTheme.bodyMedium),
-              const Divider(height: 30),
-              const Text("-"),
-              Text("Total Earnings", style: Theme.of(context).textTheme.bodyMedium),
-              const SizedBox(height: 14),
-              const Text("-"),
-              Text("Realized IRR%", style: Theme.of(context).textTheme.bodyMedium),
-            ],
+                const SizedBox(height: 6),
+                Text(
+                  "Total Returns",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const Divider(height: 30),
+                const Text("-"),
+                Text(
+                  "Total Earnings",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 14),
+                const Text("-"),
+                Text(
+                  "Realized IRR%",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget _topRow(BuildContext context) {
     return Align(
@@ -209,7 +292,10 @@ class _PortfolioState extends State<Portfolio> {
   Widget holdingCard(InvestmentCardData data) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>HoldingDetail()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HoldingDetail()),
+        );
       },
       child: Card(
         elevation: 1.5,
@@ -241,9 +327,9 @@ class _PortfolioState extends State<Portfolio> {
                   const Icon(Icons.arrow_forward_ios, size: 16),
                 ],
               ),
-      
+
               const SizedBox(height: 18),
-      
+
               _row("Invested", data.invested),
               _row("Realised IRR", "-"),
               _row(

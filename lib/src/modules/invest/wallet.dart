@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/birbal_assuresheet.dart';
 import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/invest/payment_done_success.dart';
 import 'package:invoicediscounting/src/modules/wallet/wallet_add.dart';
 
 class AddToWallet extends StatefulWidget {
@@ -41,34 +43,73 @@ class _AddToWalletState extends State<AddToWallet> {
     );
   }
 
+  void showAmpliAssuredSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => const BirbalAssuresheet(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        title: Text('Invest Now', style: Theme.of(context).textTheme.bodyLarge),
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: blackColor),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.white,
-        child: SizedBox(
-          height: 52,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: onboardingTitleColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 8,
+                offset: Offset(0, -2),
               ),
-            ),
-            // onPressed: () {},
-            onPressed: null,
-            child: Text(
-              'Continue with Payment',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              termsCheckbox(context, agree, (v) {
+                setState(() => agree = v);
+              }),
+
+              const SizedBox(height: 12),
+
+              SizedBox(
+                height: 52,
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed:
+                      agree
+                          ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentDoneSuccess(),
+                              ),
+                            );
+                          }
+                          : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: onboardingTitleColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text("Continue with Payment"),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -91,9 +132,9 @@ class _AddToWalletState extends State<AddToWallet> {
 
               if (addwallet) lowBalanceCard(context),
 
-              termsCheckbox(context, agree, (v) {
-                setState(() => agree = v);
-              }),
+              // termsCheckbox(context, agree, (v) {
+              //   setState(() => agree = v);
+              // }),
             ],
           ),
         ),
@@ -114,7 +155,7 @@ class _AddToWalletState extends State<AddToWallet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Invested Value',
+              'Investment Value',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: 10),
@@ -386,49 +427,54 @@ class _AddToWalletState extends State<AddToWallet> {
   }
 
   Widget coveredByCard(BuildContext context) {
-    return Card(
-      elevation: 0.1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            /// Left section
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Covered by",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 4),
-                Image.asset("assets/images/birbal-full.png", height: 30),
-                const SizedBox(width: 6),
-              ],
-            ),
-
-            const Spacer(),
-
-            /// Right section
-            GestureDetector(
-              onTap: () {},
-              child: Row(
+    return GestureDetector(
+      onTap: () {
+        showAmpliAssuredSheet(context);
+      },
+      child: Card(
+        elevation: 0.1,
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        margin: const EdgeInsets.only(bottom: 16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              /// Left section
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "View Details",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    "Covered by",
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  const SizedBox(width: 4),
-                  const Icon(Icons.chevron_right, size: 18),
+                  const SizedBox(height: 4),
+                  Image.asset("assets/images/birbal-full.png", height: 30),
+                  const SizedBox(width: 6),
                 ],
               ),
-            ),
-          ],
+
+              const Spacer(),
+
+              /// Right section
+              GestureDetector(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    Text(
+                      "View Details",
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.chevron_right, size: 18),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -448,7 +494,7 @@ class _AddToWalletState extends State<AddToWallet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Bibalplus pocket",
+                  "Birbalplus pocket",
                   style: Theme.of(
                     context,
                   ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -475,7 +521,7 @@ class _AddToWalletState extends State<AddToWallet> {
                 ),
                 const SizedBox(width: 12),
                 SizedBox(
-                  // height: 38,
+                  height: 48,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: onboardingTitleColor,
@@ -512,7 +558,7 @@ class _AddToWalletState extends State<AddToWallet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Transform.scale(
-          scale: 1.2,
+          scale: 1.0,
           child: Checkbox(
             value: value,
             activeColor: onboardingTitleColor,
@@ -533,17 +579,17 @@ class _AddToWalletState extends State<AddToWallet> {
                 const TextSpan(text: "I agree to the "),
                 TextSpan(
                   text: "Terms and Conditions",
-                  style: const TextStyle(color: Colors.blue),
+                  style: TextStyle(color: onboardingTitleColor),
                 ),
                 const TextSpan(text: ", "),
                 TextSpan(
                   text: "Terms of Use",
-                  style: const TextStyle(color: Colors.blue),
+                  style: TextStyle(color: onboardingTitleColor),
                 ),
                 const TextSpan(text: " and have read and understood the "),
                 TextSpan(
                   text: "Privacy Policy",
-                  style: const TextStyle(color: Colors.blue),
+                  style: TextStyle(color: onboardingTitleColor),
                 ),
               ],
             ),

@@ -57,97 +57,102 @@ class Profile extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
-          child: Column(
-            children: [
-              _profileHeader(context),
-              SizedBox(height: 15),
-
-              Card(
-                elevation: 0.1,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Column(
-                  children: [
-                    _menuItem(
-                      Icons.account_balance,
-                      "Bank Details",
-                      context,
-                      () {
-                        Navigator.push(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+              child: Column(
+                children: [
+                  _profileHeader(context),
+                  SizedBox(height: 15),
+            
+                  Card(
+                    elevation: 0.1,
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Column(
+                      children: [
+                        _menuItem(
+                          Icons.account_balance,
+                          "Bank Details",
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => BankDetails(),
-                          ),
-                        );
-                      },
-                    ),
-                    _menuItem(
-                      Icons.person_outline,
-                      "Demat Details",
-                      context,
-                      () {
-                        Navigator.push(
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BankDetails(),
+                              ),
+                            );
+                          },
+                        ),
+                        _menuItem(
+                          Icons.person_outline,
+                          "Demat Details",
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => DematDetails(),
-                          ),
-                        );
-                      },
-                    ),
-                    _menuItem(
-                      Icons.info_outline,
-                      "Nominee Details",
-                      context,
-                      () {
-                        Navigator.push(
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DematDetails(),
+                              ),
+                            );
+                          },
+                        ),
+                        _menuItem(
+                          Icons.info_outline,
+                          "Nominee Details",
                           context,
-                          MaterialPageRoute(builder: (context) => NomineeAdd()),
-                        );
-                      },
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => NomineeAdd()),
+                            );
+                          },
+                        ),
+                        _menuItem(
+                          Icons.notifications_none,
+                          "Notification",
+                          context,
+                          () {},
+                        ),
+                        _menuItem(Icons.help_outline, "Help", context, () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HelpCentre()),
+                          );
+                        }),
+                        _menuItem(Icons.info_outline, "About app", context, () {}),
+                      ],
                     ),
-                    _menuItem(
-                      Icons.notifications_none,
-                      "Notification",
-                      context,
-                      () {},
-                    ),
-                    _menuItem(Icons.help_outline, "Help", context, () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HelpCentre()),
-                      );
-                    }),
-                    _menuItem(Icons.info_outline, "About app", context, () {}),
-                  ],
-                ),
+                  ),
+            
+                  SizedBox(height: 15),
+                 
+            
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                  //   child: OutlinedButton(
+                  //     style: OutlinedButton.styleFrom(
+                  //       minimumSize: const Size.fromHeight(50),
+                  //       side: const BorderSide(color: Color(0xFF003A8F)),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //       ),
+                  //     ),
+                  //     onPressed: () {},
+                  //     child: const Text(
+                  //       "Logout",
+                  //       style: TextStyle(color: Color(0xFF003A8F)),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
-
-              SizedBox(height: 15),
-              _supportCard(context),
-
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20),
-              //   child: OutlinedButton(
-              //     style: OutlinedButton.styleFrom(
-              //       minimumSize: const Size.fromHeight(50),
-              //       side: const BorderSide(color: Color(0xFF003A8F)),
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(10),
-              //       ),
-              //     ),
-              //     onPressed: () {},
-              //     child: const Text(
-              //       "Logout",
-              //       style: TextStyle(color: Color(0xFF003A8F)),
-              //     ),
-              //   ),
-              // ),
-            ],
-          ),
+            ),
+             _supportCard(context),
+          ],
         ),
       ),
     );
@@ -244,13 +249,16 @@ class Profile extends StatelessWidget {
   }
 
   Widget _supportCard(context) {
-    return Card(
-      elevation: 0.1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    return Container(
+  width: double.infinity,
+        // padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+        ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const CircleAvatar(
               backgroundImage: NetworkImage("https://i.pravatar.cc/100"),
@@ -260,9 +268,14 @@ class Profile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text('Relationship Manager', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: blackColor,
+                      fontWeight: FontWeight.w500,
+                    ),),
+                  SizedBox(height: 5,),
                   Text(
-                    "Shradha Kapoor",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    "Shradha Singh",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: blackColor,
                       fontWeight: FontWeight.w500,
                     ),

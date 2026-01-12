@@ -127,7 +127,7 @@ class _SellUnitDialogState extends State<SellUnitDialog> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              // height: 48,
+             height: 48,
               width: double.infinity,
 
               child: ElevatedButton(
@@ -287,37 +287,43 @@ class _ConfirmSellDialogState extends State<ConfirmSellDialog> {
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    height: 48,
+                    child: OutlinedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: onboardingTitleColor,
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        "Cancel",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: onboardingTitleColor,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: onboardingTitleColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    height: 48,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: onboardingTitleColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      openSuccessDialog();
-                    },
-                    child: Text(
-                      "Confirm & Sell",
-                      style: Theme.of(context).textTheme.labelLarge,
+                      onPressed: () {
+                        Navigator.pop(context);
+                        openSuccessDialog();
+                      },
+                      child: Text(
+                        "Confirm & Sell",
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
                     ),
                   ),
                 ),
@@ -426,6 +432,7 @@ class SuccessDialog extends StatelessWidget {
             const SizedBox(height: 22),
 
             SizedBox(
+               height: 48,
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

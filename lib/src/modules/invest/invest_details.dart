@@ -14,7 +14,7 @@ class InvestDetails extends StatefulWidget {
 }
 
 class _InvestDetailsState extends State<InvestDetails> {
-  bool showRiskSection = false;
+  bool showRiskSection = true;
   bool faqOne = false;
   bool faqTwo = false;
   bool faqThree = false;
@@ -38,6 +38,10 @@ class _InvestDetailsState extends State<InvestDetails> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        title: Text(
+          'Investment Details',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
         elevation: 0,
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
@@ -77,15 +81,12 @@ class _InvestDetailsState extends State<InvestDetails> {
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: isTablet ? 120 : 20,
-          vertical: 16,
+          // vertical: 16,
         ),
         child: Column(
           children: [
             _primaryCard(context),
-            // const SizedBox(height: 16),
-            // secondaryCard(context),
-            // const SizedBox(height: 16),
-            // unitCalculatorCard(context),
+
             const SizedBox(height: 16),
             riskMitigationCard(context),
 
@@ -101,62 +102,57 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   Widget _primaryCard(BuildContext context) {
     return Card(
-  elevation: 0.1,
-  color: Colors.white,
-  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-  child: Column(
-    children: [
-
-      /// Padded content
-      Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            buyerSeller(context),
-            const SizedBox(height: 12),
-          ],
-        ),
-      ),
-
-      /// FULL-WIDTH STRIP (no padding leak)
-      Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/icons/shild.png', width: 15, height: 15),
-            const SizedBox(width: 6),
-            Text(
-              'Regulated by RBI',
-              style: Theme.of(context).textTheme.bodySmall,
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        children: [
+          /// Padded content
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [buyerSeller(context), const SizedBox(height: 12)],
             ),
-          ],
-        ),
-      ),
+          ),
 
-      /// Padded content continues
-      Padding(
-        padding: const EdgeInsets.only(left: 16,right: 16),
-        child: Column(
-          children: [
-            const Divider(height: 24),
-            buildRow(context, 'Minimum Investment', '₹1,00,000.00'),
-            buildRow(context, 'XIRR', '13.65%', highlight: true),
-            buildRow(context, 'Unit Left', '23/30'),
-            buildRow(context, 'Tenure', '90 Days'),
-            buildRow(context, 'Type of Interest', 'Compound'),
-            buildRow(context, 'Recourse', 'Seller'),
-          ],
-        ),
-      ),
-    ],
-  ),
-);
+          /// FULL-WIDTH STRIP (no padding leak)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            decoration: BoxDecoration(color: Colors.grey.shade200),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/icons/shild.png', width: 15, height: 15),
+                const SizedBox(width: 6),
+                Text(
+                  'Regulated by RBI',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
 
+          /// Padded content continues
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Column(
+              children: [
+                // const Divider(height: 24),
+                buildRow(context, 'Minimum Investment', '₹1,00,000.00'),
+                buildRow(context, 'XIRR', '13.65%', highlight: true),
+                buildRow(context, 'Unit Left', '23/30'),
+                buildRow(context, 'Tenure', '90 Days'),
+                buildRow(context, 'Type of Interest', 'Compound'),
+                buildRow(context, 'Recourse', 'Seller'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget riskMitigationCard(BuildContext context) {
@@ -179,9 +175,10 @@ class _InvestDetailsState extends State<InvestDetails> {
                   Expanded(
                     child: Text(
                       'Risk Mitigation',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: blackColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Icon(
@@ -234,7 +231,7 @@ class _InvestDetailsState extends State<InvestDetails> {
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
 
-      // margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -243,9 +240,10 @@ class _InvestDetailsState extends State<InvestDetails> {
             const SizedBox(height: 12),
             Text(
               "Share this Deal",
-                style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: blackColor,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(height: 12),
             Row(
@@ -301,9 +299,10 @@ class _InvestDetailsState extends State<InvestDetails> {
                   Expanded(
                     child: Text(
                       "Platform Track Record",
-                         style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: blackColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Icon(
@@ -337,15 +336,23 @@ class _InvestDetailsState extends State<InvestDetails> {
               const SizedBox(height: 14),
 
               Row(
-                children: const [
+                children: [
                   Text(
                     "100%",
-                    style: TextStyle(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Colors.green,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
                     ),
+                    // style: TextStyle(
+                    //   color: Colors.green,
+                    //   fontWeight: FontWeight.w600,
+                    // ),
                   ),
                   SizedBox(width: 6),
+                ],
+              ),
+              Row(
+                children: [
                   Text("On-time Repayment"),
                   SizedBox(width: 6),
                   Icon(Icons.info_outline, size: 14, color: Colors.grey),
@@ -375,36 +382,6 @@ class _InvestDetailsState extends State<InvestDetails> {
                   _DocChip("PDC"),
                 ],
               ),
-              // const SizedBox(height: 12),
-              // Row(
-              //   children: [
-              //     Text(
-              //       "Documents",
-              //       style: Theme.of(
-              //         context,
-              //       ).textTheme.bodyLarge?.copyWith(color: blackColor),
-              //     ),
-              //     const Spacer(),
-              //     OutlinedButton(
-              //       onPressed: () {},
-              //       child: Text(
-              //         "See All",
-              //         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              //           color: onboardingTitleColor,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              // const SizedBox(height: 12),
-              // Row(
-              //   children: const [
-              //     _DownloadButton("Due Diligence"),
-              //     SizedBox(width: 12),
-              //     _DownloadButton("Assured Certificate"),
-              //   ],
-              // ),
             ],
           ],
         ),
@@ -419,9 +396,10 @@ class _InvestDetailsState extends State<InvestDetails> {
       children: [
         Text(
           value,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyLarge?.copyWith(color: blackColor),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: blackColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
       ],
@@ -450,9 +428,10 @@ class _InvestDetailsState extends State<InvestDetails> {
                   Expanded(
                     child: Text(
                       "Opportunity Summary",
-                        style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: blackColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Icon(
@@ -541,9 +520,10 @@ class _InvestDetailsState extends State<InvestDetails> {
                   Expanded(
                     child: Text(
                       "Frequently Asked Questions",
-                        style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: blackColor,fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: blackColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Icon(
@@ -711,8 +691,8 @@ class _InvestDetailsState extends State<InvestDetails> {
         Expanded(
           child: Text(
             'Flipkart\nBuyer',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: 18,
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              // fontSize: 18,
               color: blackColor,
               fontWeight: FontWeight.bold,
             ),
@@ -723,8 +703,8 @@ class _InvestDetailsState extends State<InvestDetails> {
           child: Text(
             'Wheeley\nSeller',
             textAlign: TextAlign.end,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: 18,
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              // fontSize: 18,
               color: blackColor,
               fontWeight: FontWeight.bold,
             ),
@@ -812,7 +792,8 @@ class _InvestDetailsState extends State<InvestDetails> {
                 value,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: highlight ? Colors.green : blackColor,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
                 ),
               ),
               if (icon != null) ...[
@@ -937,11 +918,19 @@ class _DocChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
-      label: Text(
-        text,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(color: blackColor),
+      label: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.download, size: 17),
+          SizedBox(width: 5),
+          Text(
+            text,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: blackColor),
+          ),
+        ],
       ),
       backgroundColor: Colors.grey.shade100,
     );
@@ -990,9 +979,9 @@ class _RiskItem extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: blackColor,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 5),

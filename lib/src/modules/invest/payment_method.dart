@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/invest/neft_payment.dart'
+    show PayOfflineScreen;
 import 'package:invoicediscounting/src/modules/invest/payment_mode.dart';
 
 class SelectPaymentMethod extends StatefulWidget {
@@ -17,12 +19,15 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        title: Text(
+          'Make a Payment',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      bottomNavigationBar: 
-      Container(
+      bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: SizedBox(
@@ -35,7 +40,18 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
               ),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentMode()));
+              if (selectedMethod == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PaymentMode()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PayOfflineScreen()),
+                );
+              }
+              //
             },
             child: Text(
               "Continue with Payment",
@@ -47,7 +63,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
             _bankAccountCard(),
@@ -61,7 +77,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
 
   Widget _bankAccountCard() {
     return Card(
- elevation: 0.1,
+      elevation: 0.1,
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Padding(
@@ -82,7 +98,13 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
               ],
             ),
             const SizedBox(height: 12),
-            Text("HDFC Bank", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: blackColor, fontWeight: FontWeight.w500)),
+            Text(
+              "HDFC Bank",
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: blackColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             const SizedBox(height: 8),
             Row(
               children: const [
@@ -93,13 +115,14 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
               ],
             ),
             const SizedBox(height: 8),
-             Text(
-              "IFSC",
-               style: Theme.of(
-                context,
-              ).textTheme.bodySmall
+            Text("IFSC", style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              "HDFC0009999",
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: blackColor,
+                fontWeight: FontWeight.normal,
+              ),
             ),
-             Text("HDFC0009999", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: blackColor, fontWeight: FontWeight.normal)),
           ],
         ),
       ),
@@ -108,7 +131,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
 
   Widget _paymentMethodCard() {
     return Card(
-     elevation: 0.1,
+      elevation: 0.1,
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: Padding(
@@ -116,9 +139,9 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(
+            Text(
               "Select Payment Method",
-             style: Theme.of(context).textTheme.bodyMedium
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 12),
             _methodTile(
@@ -151,7 +174,7 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           border: Border.all(
-            color: selected ? onboardingTitleColor: Colors.grey.shade300,
+            color: selected ? onboardingTitleColor : Colors.grey.shade300,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -163,7 +186,10 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                 children: [
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: blackColor, fontWeight: FontWeight.normal)
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: blackColor,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   Container(
@@ -177,9 +203,9 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
                     ),
                     child: Text(
                       tag,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
-                        color: Color(0xFF003A8F),
+                        color: onboardingTitleColor,
                       ),
                     ),
                   ),
@@ -210,7 +236,13 @@ class _bankInfo extends StatelessWidget {
       children: [
         Text(title, style: Theme.of(context).textTheme.bodySmall),
         const SizedBox(height: 2),
-        Text(value,  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: blackColor, fontWeight: FontWeight.normal)),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: blackColor,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
       ],
     );
   }

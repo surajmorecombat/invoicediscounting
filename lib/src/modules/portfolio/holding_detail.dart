@@ -44,6 +44,10 @@ class _HoldingDetailState extends State<HoldingDetail> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        title: Text(
+          'Holding Detail',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
         elevation: 0,
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
@@ -195,7 +199,7 @@ class _HoldingDetailState extends State<HoldingDetail> {
 
           _detailRow(
             context,
-            leftValue: "-",
+            leftValue: "1",
             leftLabel: "Number of Units",
             rightValue: "Compound",
             rightLabel: "Type of Interest",
@@ -470,11 +474,19 @@ class _DocChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
-      label: Text(
-        text,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(color: blackColor),
+      label: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.download, size: 17),
+          SizedBox(width: 5),
+          Text(
+            text,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: blackColor),
+          ),
+        ],
       ),
       backgroundColor: Colors.grey.shade100,
     );

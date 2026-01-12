@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/models/invoicemodel.dart';
@@ -52,57 +53,81 @@ class _InvestState extends State<Invest> {
       backgroundColor: backgroundColor,
       ctx: 0,
       showDefaultBottom: true,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _TopBar(
-              selected: selectedFilter,
-              onSelect: (f) => setState(() => selectedFilter = f),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: backgroundColor,
+        centerTitle: false,
+        leadingWidth: 52,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => Profile()),
+              );
+            },
+            child: CircleAvatar(
+              radius: 34,
+              child: Image.asset('assets/icons/profile.png'),
             ),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                itemCount: filteredInvoices.length,
-                itemBuilder: (_, index) {
-                  final i = filteredInvoices[index];
-                  return _InvoiceCard(
-                    buyer: i.buyer,
-                    seller: i.seller,
-                    imagepathbuyer: i.buyerImg,
-                    imagepatseller: i.sellerImg,
-                  );
-                },
+
+  
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => TrainsationAll()),
+                );
+              },
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: onboardingTitleColor),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.account_balance_wallet_outlined,
+                        size: 20,
+                        color: onboardingTitleColor,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '₹1,00,000',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+
+          // Notification Bell
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: SvgPicture.asset('assets/icons/bell.svg',width: 20,height: 20,),
+      
+          ),
+        ],
       ),
-    );
-  }
-}
 
-class _TopBar extends StatelessWidget {
-  final String selected;
-  final Function(String) onSelect;
-
-  const _TopBar({required this.selected, required this.onSelect});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0.1,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: whiteColor,
-          border: Border.all(color: Colors.grey.shade200),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      /*
+  Row(
               children: [
                 // Icon(Icons.person),
                 GestureDetector(
@@ -179,6 +204,139 @@ class _TopBar extends StatelessWidget {
                 ),
               ],
             ),
+      */
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            _TopBar(
+              selected: selectedFilter,
+              onSelect: (f) => setState(() => selectedFilter = f),
+            ),
+            SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 14,
+                ),
+                itemCount: filteredInvoices.length,
+                itemBuilder: (_, index) {
+                  final i = filteredInvoices[index];
+                  return _InvoiceCard(
+                    buyer: i.buyer,
+                    seller: i.seller,
+                    imagepathbuyer: i.buyerImg,
+                    imagepatseller: i.sellerImg,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TopBar extends StatelessWidget {
+  final String selected;
+  final Function(String) onSelect;
+
+  const _TopBar({required this.selected, required this.onSelect});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0.1,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: whiteColor,
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Row(
+            //   children: [
+            //     // Icon(Icons.person),
+            //     GestureDetector(
+            //       onTap: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(builder: (context) => Profile()),
+            //         );
+            //       },
+            //       child: CircleAvatar(
+            //         radius: 20,
+            //         backgroundColor: greycolor,
+            //         child: Icon(Icons.person, color: whiteColor),
+            //       ),
+            //     ),
+            //     // IconButton(
+            //     //   onPressed: () {
+            //     // Navigator.push(
+            //     //   context,
+            //     //   MaterialPageRoute(builder: (context) => Profile()),
+            //     // );
+            //     //   },
+            //     //   icon: Icon(Icons.person),
+            //     // ),
+            //     // const Icon(Icons.person, size: 20),
+            //     const SizedBox(width: 12),
+            //     const Spacer(),
+            //     GestureDetector(
+            //       onTap: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(builder: (context) => TrainsationAll()),
+            //         );
+            //       },
+            //       child: Container(
+            //         padding: const EdgeInsets.symmetric(
+            //           horizontal: 14,
+            //           vertical: 6,
+            //         ),
+            //         decoration: BoxDecoration(
+            //           // color: Colors.blue.shade50,
+            //           borderRadius: BorderRadius.circular(30),
+            //           border: Border.all(color: onboardingTitleColor),
+            //         ),
+            //         child: Row(
+            //           children: [
+            //             Icon(
+            //               Icons.account_balance_wallet_outlined,
+            //               size: 20,
+            //               color: onboardingTitleColor,
+            //             ),
+            //             SizedBox(width: 6),
+            //             Text(
+            //               '₹1,00,000',
+            //               style: Theme.of(context).textTheme.bodyMedium,
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 10),
+            //     Stack(
+            //       children: const [
+            //         Icon(Icons.notifications_none_outlined, size: 20),
+            //         Positioned(
+            //           right: 0,
+            //           top: 0,
+            //           child: CircleAvatar(
+            //             radius: 4,
+            //             backgroundColor: Colors.red,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
             const SizedBox(height: 12),
             Text(
               'Invoice Discounting',

@@ -78,18 +78,36 @@ class BankVerification extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (title.isNotEmpty)
-          Row(
-            children: [
-              Text(
-                title,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
-              ),
-              Icon(Icons.star, color: Colors.red, size: 8),
-            ],
+        // if (title.isNotEmpty)
+         RichText(
+            text: TextSpan(
+              text: title,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              children: [
+                TextSpan(
+                  text: '*',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
+          // Row(
+          //   children: [
+          //     Text(
+          //       title,
+          //       style: Theme.of(
+          //         context,
+          //       ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+          //     ),
+          //     Icon(Icons.star, color: Colors.red, size: 8),
+          //   ],
+          // ),
 
         const SizedBox(height: 8),
         //   Text(
@@ -137,17 +155,35 @@ class BankVerification extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                label,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
-              ),
-              Icon(Icons.star, color: Colors.red, size: 8),
-            ],
+           RichText(
+            text: TextSpan(
+              text: label,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              children: [
+                TextSpan(
+                  text: '*',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
           ),
+          // Row(
+          //   children: [
+          //     Text(
+          //       label,
+          //       style: Theme.of(
+          //         context,
+          //       ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+          //     ),
+          //     Icon(Icons.star, color: Colors.red, size: 8),
+          //   ],
+          // ),
 
           const SizedBox(height: 8),
           // Text(

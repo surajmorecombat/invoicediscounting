@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
@@ -102,8 +103,8 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                     // keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     maxLength: 1,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     style: Theme.of(context).textTheme.bodyLarge,
-
                     decoration: InputDecoration(
                       counterText: '',
                       border: OutlineInputBorder(
@@ -164,7 +165,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                       builder:
                           (context) =>
                               //EnterSecurePin()
-                          KycAddressScreen(),
+                              KycAddressScreen(),
                     ),
                   );
                 },
