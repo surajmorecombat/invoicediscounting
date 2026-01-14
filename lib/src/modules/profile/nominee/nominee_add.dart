@@ -170,7 +170,8 @@ String? nomineeRelation;
       
       hintText: "Nominee Relation",
       textStyle: Theme.of(context).textTheme.bodySmall,
-      inputDecorationTheme: const InputDecorationTheme(
+      inputDecorationTheme:  InputDecorationTheme(
+        suffixIconColor: onboardingTitleColor,
         border: InputBorder.none,
         isDense: true,
         contentPadding: EdgeInsets.symmetric( vertical: 12),

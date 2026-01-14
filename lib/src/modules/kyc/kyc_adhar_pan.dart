@@ -63,8 +63,8 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _uploadBlock("Upload Aadhar Card (both side)", context),
-            _field("Aadhar Number ", "Enter Aadhar Number", context),
-            _field("Address Line ", "Enter your full address", context),
+            _field("Aadhar Number", "Enter Aadhar Number", context),
+            _field("Address Line", "Enter your full address", context),
             _field("Pincode", "Enter pincode", context),
             _field("State", "Enter state", context),
             _field("City", "Enter city", context),
@@ -76,7 +76,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
             // const SizedBox(height: 10),
             _uploadBlock("Upload PAN", context),
             _field("Name as per PAN", "Full Name", context),
-            _field("PAN Number*", "ABCD1234F", context),
+            _field("PAN Number", "ABCD1234F", context),
             _field(
               "DOB",
               "DD/MM/YYYY",
