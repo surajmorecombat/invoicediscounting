@@ -154,17 +154,24 @@ class _AddToWalletState extends State<AddToWallet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Investment Value',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Investment Value',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                //  SizedBox(width: 10),
             Text(
               '₹1,03,561.64',
               style: Theme.of(
                 context,
               ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
+              ],
+            ),
+            SizedBox(height: 10,),
+           
             buildRow(context, 'Unit Value', '₹1,00,000.00'),
             // buildRow(context, 'Coupon Rate', '12.5%'),
             // buildRow(context, 'Investment Value', '₹1,03,561.64'),

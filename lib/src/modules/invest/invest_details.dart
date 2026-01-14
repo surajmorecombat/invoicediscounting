@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_done_success.dart';
 import 'package:invoicediscounting/src/modules/invest/wallet.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 
 class InvestDetails extends StatefulWidget {
   bool? investNow;
@@ -204,17 +205,47 @@ class _InvestDetailsState extends State<InvestDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Expanded(child: _RiskItem("5%", "Credit Enhancement")),
-                  Expanded(child: _RiskItem("Secured", "Collateral Security")),
+                  Expanded(
+                    child: _RiskItem(
+                      "5%",
+                      "Credit Enhancement",
+                      tooltip:
+                          "Interest is credited to your bank account every month.",
+                      tooltipWidth: 200,
+                    ),
+                  ),
+                  Expanded(
+                    child: _RiskItem(
+                      "Secured",
+                      "Collateral Security",
+                      tooltip:
+                          "Interest is credited to your bank account every month.",
+                      tooltipWidth: 200,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Expanded(child: _RiskItem("125%", "Collateral Cover")),
                   Expanded(
-                    child: _RiskItem("Amplio Assured", "Built-In Insurance"),
+                    child: _RiskItem(
+                      "125%",
+                      "Collateral Cover",
+                      tooltip:
+                          "Interest is credited to your bank account every month.",
+                      tooltipWidth: 200,
+                    ),
+                  ),
+                  Expanded(
+                    child: _RiskItem(
+                      "Amplio Assured",
+                      "Built-In Insurance",
+                      tooltip:
+                          "Interest is credited to your bank account every month.",
+                      tooltipWidth: 200,
+                    ),
                   ),
                 ],
               ),
@@ -964,10 +995,36 @@ class _DownloadButton extends StatelessWidget {
   }
 }
 
-class _RiskItem extends StatelessWidget {
+class _RiskItem extends StatefulWidget {
   final String title;
   final String subtitle;
-  const _RiskItem(this.title, this.subtitle);
+  final String tooltip;
+  final double tooltipWidth;
+  const _RiskItem(
+    this.title,
+    this.subtitle, {
+    required this.tooltip,
+    this.tooltipWidth = 220,
+  });
+
+  @override
+  State<_RiskItem> createState() => _RiskItemState();
+}
+
+class _RiskItemState extends State<_RiskItem> {
+  late final SuperTooltipController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = SuperTooltipController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -978,7 +1035,7 @@ class _RiskItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              title,
+              widget.title,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: blackColor,
                 fontWeight: FontWeight.bold,
@@ -987,9 +1044,28 @@ class _RiskItem extends StatelessWidget {
             const SizedBox(height: 5),
             Row(
               children: [
-                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  widget.subtitle,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 const SizedBox(width: 5),
-                const Icon(Icons.info_outline, size: 14, color: Colors.grey),
+                GestureDetector(
+                  onTap: () => _controller.showTooltip(),
+                  child: SuperTooltip(
+                    controller: _controller,
+                    showBarrier: true,
+                    backgroundColor: const Color(0xff2f2d2f),
+                    popupDirection: TooltipDirection.down,
+                    content: SizedBox(
+                      width: widget.tooltipWidth,
+                      child: Text(
+                        widget.tooltip,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    child: const Icon(Icons.info_outline, size: 16),
+                  ),
+                ),
               ],
             ),
           ],
