@@ -7,6 +7,7 @@ import 'package:invoicediscounting/src/modules/profile/help/help_centre.dart';
 
 import 'package:invoicediscounting/src/modules/profile/nominee/nominee_add.dart';
 import 'package:invoicediscounting/src/modules/profile/profile/profile_edit.dart';
+import 'package:invoicediscounting/src/modules/signUp/login_with.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -30,10 +31,10 @@ class Profile extends StatelessWidget {
           height: 52,
           child: ElevatedButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginWith()),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: whiteColor,
