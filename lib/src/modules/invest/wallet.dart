@@ -6,6 +6,7 @@ import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_done_success.dart';
 import 'package:invoicediscounting/src/modules/wallet/wallet_add.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 
 class AddToWallet extends StatefulWidget {
   const AddToWallet({super.key});
@@ -24,6 +25,19 @@ class _AddToWalletState extends State<AddToWallet> {
   int unitLeft = 23;
   int pricePerUnit = 100000;
   final TextEditingController amountController = TextEditingController();
+  late final SuperTooltipController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = SuperTooltipController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   int get unitLeftNow => unitLeft + unitCount;
   int get totalAmount => unitCount * pricePerUnit;
@@ -162,16 +176,16 @@ class _AddToWalletState extends State<AddToWallet> {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 //  SizedBox(width: 10),
-            Text(
-              '₹1,03,561.64',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
+                Text(
+                  '₹1,03,561.64',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ],
             ),
-            SizedBox(height: 10,),
-           
+            SizedBox(height: 10),
+
             buildRow(context, 'Unit Value', '₹1,00,000.00'),
             // buildRow(context, 'Coupon Rate', '12.5%'),
             // buildRow(context, 'Investment Value', '₹1,03,561.64'),
@@ -180,6 +194,8 @@ class _AddToWalletState extends State<AddToWallet> {
               context,
               'Accrued Interest',
               '₹3,561.64',
+              tooltip: "Interest is credited to your bank account every month.",
+              tooltipWidth: 200,
               icon: Icons.info_outline,
             ),
             // buildRow(
@@ -229,18 +245,24 @@ class _AddToWalletState extends State<AddToWallet> {
               'Next Liquidity Event',
               '13/11/2025',
               icon: Icons.info_outline,
+                 tooltip: "Interest is credited to your bank account every month.",
+              tooltipWidth: 200,
             ),
             buildRow(
               context,
               'Liquidity Event Amount',
               '₹1,04,589.98',
               icon: Icons.info_outline,
+                 tooltip: "Interest is credited to your bank account every month.",
+              tooltipWidth: 200,
             ),
             buildRow(
               context,
               'Final Maturity Date',
               '08/01/2028',
               icon: Icons.info_outline,
+                 tooltip: "Interest is credited to your bank account every month.",
+              tooltipWidth: 200,
             ),
             buildRow(
               context,
@@ -248,6 +270,8 @@ class _AddToWalletState extends State<AddToWallet> {
               '₹1,36,708.72',
               highlight: true,
               icon: Icons.info_outline,
+                 tooltip: "Interest is credited to your bank account every month.",
+              tooltipWidth: 200,
             ),
           ],
         ),
@@ -261,9 +285,11 @@ class _AddToWalletState extends State<AddToWallet> {
     String value, {
     IconData? icon,
     bool highlight = false,
+    String? tooltip,
+    double tooltipWidth = 200,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -272,7 +298,25 @@ class _AddToWalletState extends State<AddToWallet> {
               Text(title, style: Theme.of(context).textTheme.bodyMedium),
               if (icon != null) ...[
                 const SizedBox(width: 6),
-                Icon(icon, size: 14, color: Colors.grey),
+                if (tooltip != null ) ...[
+                
+
+                  SuperTooltip(
+                    popupDirection: TooltipDirection.down,
+                    backgroundColor: const Color(0xff2f2d2f),
+                    content: SizedBox(
+                      width: tooltipWidth,
+                      child: Text(
+                        tooltip,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    child: const Icon(Icons.info_outline, size: 16),
+                  ),
+                ],
               ],
             ],
           ),

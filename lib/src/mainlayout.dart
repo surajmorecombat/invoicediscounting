@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
-
 class MainLayout extends StatefulWidget {
   final Widget? bottomNavigationBar;
   final Widget? body;
@@ -121,6 +120,12 @@ class _MainLayoutState extends State<MainLayout> {
                           Navigator.pushNamed(context, '/portfolio');
                         }
                         break;
+
+                      case 3:
+                        if (widget.ctx != 3) {
+                          Navigator.pushNamed(context, '/chat');
+                        }
+                        break;
                     }
                   },
                   items: <BottomNavigationBarItem>[
@@ -163,6 +168,20 @@ class _MainLayoutState extends State<MainLayout> {
                         width: 24,
                       ),
                       label: 'Portfolio',
+                    ),
+
+                      BottomNavigationBarItem(
+                      icon: Image.asset(
+                        'assets/icons/chat-light.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                      activeIcon: Image.asset(
+                        'assets/icons/chat-dark.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                      label: 'ask',
                     ),
                   ],
                 ),

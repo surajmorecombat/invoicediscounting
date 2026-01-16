@@ -109,25 +109,44 @@ class _WalletAddState extends State<WalletAdd> {
                   padding: const EdgeInsets.only(left: 80, right: 80),
                   child: Center(
                     child: Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(border: Border.all(color: greycolor),borderRadius: BorderRadius.circular(8)),
+                      // padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: greycolor),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: TextField(
                         controller: amountController,
                         keyboardType: TextInputType.number,
-                        textAlign:
-                            TextAlign.center,
-                        style:
-                            Theme.of(
-                              context,
-                            ).textTheme.bodyLarge, 
-                        decoration:  InputDecoration(
+
+                        textAlignVertical: TextAlignVertical.center,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.currency_rupee,
+                            size: 15,
+                            color: blackColor,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(vertical: 12),
                           hintText: 'Enter Amount',
-                             hintStyle: Theme.of(  
-                              context,
-                            ).textTheme.bodyLarge,
+                          hintStyle: Theme.of(context).textTheme.bodyMedium,
                           border: InputBorder.none,
                           isCollapsed: true,
                         ),
+
+                        // decoration: InputDecoration(
+
+                        //   prefix: Text(
+                        //     '₹',
+                        //     style: Theme.of(context).textTheme.bodyLarge!
+                        //         .copyWith(color: blackColor),
+                        //   ),
+                        //   hintText: 'Enter Amount',
+                        //   hintStyle: Theme.of(context).textTheme.bodyMedium,
+                        //   border: InputBorder.none,
+                        //   contentPadding: const EdgeInsets.symmetric(
+                        //     vertical: 12,
+                        //   ),
+                        // ),
                         onChanged: (value) {
                           setState(() {
                             selectedAmount =
@@ -136,8 +155,6 @@ class _WalletAddState extends State<WalletAdd> {
                         },
                       ),
                     ),
-
-               
                   ),
                 ),
 
