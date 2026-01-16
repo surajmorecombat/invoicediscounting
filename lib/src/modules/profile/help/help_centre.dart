@@ -4,6 +4,7 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/profile/help/general/general.dart';
 import 'package:invoicediscounting/src/modules/profile/help/get_started/get_started.dart';
 import 'package:invoicediscounting/src/modules/profile/help/help_portfolio/help_portfolio.dart';
+import 'package:invoicediscounting/src/modules/profile/help/return_taxation/return_taxation.dart';
 
 class HelpCentre extends StatelessWidget {
   const HelpCentre({super.key});
@@ -26,45 +27,58 @@ class HelpCentre extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
         child: Column(
-          children:  [
-            helpCategoryCard(context, "General",ontap:() {
-              
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HelpGeneral(),
-                          ),
-                        );
-            },),
+          children: [
+            helpCategoryCard(
+              context,
+              "General",
+              ontap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HelpGeneral()),
+                );
+              },
+            ),
             SizedBox(height: 16),
-            helpCategoryCard(context, "Getting started",ontap:() {
-              
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HelpGettingStarted(),
-                          ),
-                        );
-              
-            },),
+            helpCategoryCard(
+              context,
+              "Getting started",
+              ontap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HelpGettingStarted()),
+                );
+              },
+            ),
             SizedBox(height: 16),
-            helpCategoryCard(context,"Portfolio",ontap:() {
-              
-                
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HelpPortfolioFAQ(),
-                          ),
-                        );
-            },),
+            helpCategoryCard(
+              context,
+              "Portfolio",
+              ontap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HelpPortfolioFAQ()),
+                );
+              },
+            ),
+
+            SizedBox(height: 16),
+            helpCategoryCard(
+              context,
+              "Returns & Taxation",
+              ontap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReturnTaxation()),
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget helpCategoryCard(context,String title,{VoidCallback? ontap}){
+  Widget helpCategoryCard(context, String title, {VoidCallback? ontap}) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
@@ -85,8 +99,6 @@ class HelpCentre extends StatelessWidget {
     );
   }
 }
-
-
 
 /*
 class HelpCentre extends StatelessWidget {

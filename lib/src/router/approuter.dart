@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/modules/activity/activity.dart';
+import 'package:invoicediscounting/src/modules/chat/birbal_chat.dart';
 import 'package:invoicediscounting/src/modules/flash/flash_screen.dart';
 import 'package:invoicediscounting/src/modules/invest/invest.dart';
 import 'package:invoicediscounting/src/modules/portfolio/portfolio.dart';
@@ -32,6 +33,9 @@ class AppRouter {
 
       case '/portfolio':
         return MaterialPageRoute(builder: (_) => Portfolio());
+
+       case '/chat':
+        return MaterialPageRoute(builder: (_) => BirbalChat());
 
 
       default:

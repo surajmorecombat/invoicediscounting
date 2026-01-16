@@ -49,12 +49,13 @@ class BirbalAssuresheet extends StatelessWidget {
                       text:
                           'Earn attractive returns with enhanced capital protection.',
                     ),
-                    SizedBox(height: 15),
+                    Divider(height: 32),
+                  
                     _AssuredRow(
                       text:
                           'Your principal and returns are protected through insurance coverage.',
                     ),
-                    SizedBox(height: 15),
+                    Divider(height: 32),
                     _AssuredRow(
                       text:
                           'In the event of buyer default, losses are reimbursed by the insurer.',
