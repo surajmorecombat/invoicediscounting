@@ -67,6 +67,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/app/birbal.png"
+  remove_alpha_ios: true
 flutter:
 
   # The following line ensures that the Material Icons font is
