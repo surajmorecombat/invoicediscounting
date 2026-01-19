@@ -90,7 +90,7 @@ class _CreateProfileState extends State<CreateProfile> {
               ),
 
                 Text(
-                'We only support indian numbers at the moment',
+                'We only support Indian numbers at the moment',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),

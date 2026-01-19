@@ -20,9 +20,44 @@ class _NomineeAddState extends State<NomineeAdd> {
   final TextEditingController contactController = TextEditingController();
 
   bool isEditing = false;
- 
+   DateTime? selectedDate;
+     final TextEditingController dateController = TextEditingController();
 
 String? nomineeRelation;
+
+  Future<void> _selectDOB(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: onboardingTitleColor,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: onboardingTitleColor,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        selectedDate = picked;
+        dateController.text =
+            '${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +102,15 @@ String? nomineeRelation;
 
               const SizedBox(height: 15),
 
-              inputField(
-                context,
-                'DOB',
-                TextInputType.text,
-                nomineeDobController,
-                isEditing: isEditing,
-              ),
+              // inputField(d
+              //   context,
+              //   'DOB',
+              //   TextInputType.text,
+              //   nomineeDobController,
+              //   isEditing: isEditing,
+              // ),
+
+              buildDateInput(context, isEditing: isEditing, ),
 
               const SizedBox(height: 15),
 
@@ -87,7 +124,7 @@ String? nomineeRelation;
 
               const SizedBox(height: 15),
 
-          nomineeRelationDropdown(context),
+          nomineeRelationDropdown(context, isEditing: isEditing, ),
 
 
               // inputField(context, 'Nominee Relation', TextInputType.name,
@@ -155,8 +192,43 @@ String? nomineeRelation;
       ),
     );
   }
+ Widget buildDateInput(context,{bool isEditing = false, }  ) {
+    return TextField(
+      readOnly: true,
+      controller: dateController,
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: isEditing ? blackColor : Colors.grey,
+          ),
+      decoration: InputDecoration(
+        hintText: 'DD-MM-YYYY',
+        hintStyle: Theme.of(context).textTheme.bodySmall,
+        suffixIcon: Icon(
+          Icons.calendar_today,
+          size: 20,
+          color: onboardingTitleColor,
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        labelStyle: const TextStyle(color: Colors.grey),
 
- Widget nomineeRelationDropdown(BuildContext context) {
+        floatingLabelStyle: TextStyle(color: onboardingTitleColor),
+
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
+        ),
+      ),
+      onTap: () {
+        _selectDOB(context);
+        FocusScope.of(context).unfocus();
+      },
+    );
+  }
+ Widget nomineeRelationDropdown(BuildContext context,{bool isEditing = false, }) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
     decoration: BoxDecoration(

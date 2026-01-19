@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/constant/input_fields.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
@@ -23,6 +26,7 @@ class _ProfileState extends State<ProfileEdit> {
   final TextEditingController addressController = TextEditingController(
     text: 'nashik',
   );
+    File? profileFile;
 
   bool onOffValye = true;
   bool isEditing = false;
@@ -199,12 +203,13 @@ class _ProfileState extends State<ProfileEdit> {
               border: Border.all(color: Colors.grey.shade300, width: 1.5),
             ),
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileEdit()),
-                );
-              },
+              onTap: () => showSourceSheet(false),
+              // () {
+              //   // Navigator.push(
+              //   //   context,
+              //   //   MaterialPageRoute(builder: (context) => ProfileEdit()),
+              //   // );
+              // },
               child: CircleAvatar(
                 radius: 13,
                 backgroundColor: whiteColor,
@@ -218,7 +223,56 @@ class _ProfileState extends State<ProfileEdit> {
 
     //  CircleAvatar(radius: 50, backgroundColor: Colors.grey);
   }
+  void showSourceSheet(bool isPan) {
+    showModalBottomSheet(
+      context: context,
+      builder:
+          (_) => SafeArea(
+            child: Wrap(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.camera_alt, size: 20, color: blackColor),
+                  title: Text(
+                    "Camera",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    pickDocument(ImageSource.camera);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.photo, size: 20, color: blackColor),
+                  title: Text(
+                    "Gallery",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    pickDocument(ImageSource.gallery);
+                  },
+                ),
+              ],
+            ),
+          ),
+    );
+  }
 
+    Future<void> pickDocument(ImageSource source) async {
+    final picker = ImagePicker();
+    final XFile? picked = await picker.pickImage(
+      source: source,
+      imageQuality: 30,
+    );
+
+    if (picked != null) {
+      setState(() {
+      
+          profileFile = File(picked.path);
+        
+      });
+    }
+  }
   // Widget verifiedBankField() {
   //   return TextField(
   //     controller: bankController,

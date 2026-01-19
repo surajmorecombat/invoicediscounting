@@ -6,6 +6,7 @@ import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_done_success.dart';
 import 'package:invoicediscounting/src/modules/wallet/wallet_add.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:super_tooltip/super_tooltip.dart';
 
 class AddToWallet extends StatefulWidget {
@@ -26,6 +27,11 @@ class _AddToWalletState extends State<AddToWallet> {
   int pricePerUnit = 100000;
   final TextEditingController amountController = TextEditingController();
   late final SuperTooltipController _controller;
+  TextEditingController unitController = TextEditingController();
+  bool isEditingUnit = false;
+
+
+  final FocusNode _unitFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -245,7 +251,7 @@ class _AddToWalletState extends State<AddToWallet> {
               'Next Liquidity Event',
               '13/11/2025',
               icon: Icons.info_outline,
-                 tooltip: "Interest is credited to your bank account every month.",
+              tooltip: "Interest is credited to your bank account every month.",
               tooltipWidth: 200,
             ),
             buildRow(
@@ -253,7 +259,7 @@ class _AddToWalletState extends State<AddToWallet> {
               'Liquidity Event Amount',
               '₹1,04,589.98',
               icon: Icons.info_outline,
-                 tooltip: "Interest is credited to your bank account every month.",
+              tooltip: "Interest is credited to your bank account every month.",
               tooltipWidth: 200,
             ),
             buildRow(
@@ -261,7 +267,7 @@ class _AddToWalletState extends State<AddToWallet> {
               'Final Maturity Date',
               '08/01/2028',
               icon: Icons.info_outline,
-                 tooltip: "Interest is credited to your bank account every month.",
+              tooltip: "Interest is credited to your bank account every month.",
               tooltipWidth: 200,
             ),
             buildRow(
@@ -270,7 +276,7 @@ class _AddToWalletState extends State<AddToWallet> {
               '₹1,36,708.72',
               highlight: true,
               icon: Icons.info_outline,
-                 tooltip: "Interest is credited to your bank account every month.",
+              tooltip: "Interest is credited to your bank account every month.",
               tooltipWidth: 200,
             ),
           ],
@@ -298,9 +304,7 @@ class _AddToWalletState extends State<AddToWallet> {
               Text(title, style: Theme.of(context).textTheme.bodyMedium),
               if (icon != null) ...[
                 const SizedBox(width: 6),
-                if (tooltip != null ) ...[
-                
-
+                if (tooltip != null) ...[
                   SuperTooltip(
                     popupDirection: TooltipDirection.down,
                     backgroundColor: const Color(0xff2f2d2f),
@@ -360,11 +364,108 @@ class _AddToWalletState extends State<AddToWallet> {
 
                 const SizedBox(width: 50),
 
+                // Column(
+                //   children: [
+
+                //     Text(
+                //       unitCount.toString().padLeft(2, '0'),
+                //       style: Theme.of(context).textTheme.displaySmall,
+                //     ),
+
+                //     Text("Unit", style: Theme.of(context).textTheme.bodySmall),
+                //   ],
+                // ),
                 Column(
                   children: [
-                    Text(
-                      unitCount.toString().padLeft(2, '0'),
-                      style: Theme.of(context).textTheme.displaySmall,
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isEditingUnit = true;
+                          unitController.text = unitCount.toString();
+                        });
+
+                        // open keyboard
+                        Future.delayed(const Duration(milliseconds: 50), () {
+                          FocusScope.of(context).requestFocus(_unitFocusNode);
+                          unitController.selection = TextSelection(
+                            baseOffset: 0,
+                            extentOffset: unitController.text.length,
+                          );
+                        });
+                      },
+                      child:
+                          isEditingUnit
+                              ? SizedBox(
+                                width: 60,
+                                child: KeyboardActions(
+                                  config: KeyboardActionsConfig(
+                        keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
+                        actions: [
+                          KeyboardActionsItem(
+                            focusNode: _unitFocusNode,
+                            toolbarButtons: [
+                              (node) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: GestureDetector(
+                                    onTap: () => node.unfocus(),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 18,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            onboardingTitleColor, // your brand color
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(
+                                              0.12,
+                                            ),
+                                            blurRadius: 6,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Text(
+                                        "Done",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ],
+                          ),
+                        ],
+                      ),
+                                  child: TextField(
+                                    controller: unitController,
+                                    focusNode: _unitFocusNode,
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.displaySmall,
+                                    decoration: const InputDecoration(
+                                      isCollapsed: true,
+                                      border: InputBorder.none,
+                                    ),
+                                    onSubmitted: _applyUnitValue,
+                                    onEditingComplete: () {
+                                      _applyUnitValue(unitController.text);
+                                    },
+                                  ),
+                                ),
+                              )
+                              : Text(
+                                unitCount.toString().padLeft(2, '0'),
+                                style: Theme.of(context).textTheme.displaySmall,
+                              ),
                     ),
                     Text("Unit", style: Theme.of(context).textTheme.bodySmall),
                   ],
@@ -409,6 +510,23 @@ class _AddToWalletState extends State<AddToWallet> {
         ),
       ),
     );
+  }
+
+  void _applyUnitValue(String value) {
+    final parsed = int.tryParse(value);
+
+    if (parsed != null && parsed > 0 && parsed <= totalUnit) {
+      setState(() {
+        unitCount = parsed;
+        addwallet = true;
+      });
+    }
+
+    setState(() {
+      isEditingUnit = false;
+    });
+
+    _unitFocusNode.unfocus();
   }
 
   Widget _unitIconButton(

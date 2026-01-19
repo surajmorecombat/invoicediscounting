@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/components/widrawl_success_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/wallet/wallet_add.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class WalletCard extends StatefulWidget {
   const WalletCard({super.key});
@@ -122,6 +123,7 @@ class WithdrawalDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FocusNode widrawlamountFocusNode = FocusNode();
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 24),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -130,7 +132,7 @@ class WithdrawalDialog extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            
             decoration: const BoxDecoration(
               color: Color(0xFFEAEAEA),
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -143,7 +145,7 @@ class WithdrawalDialog extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+            padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -155,70 +157,49 @@ class WithdrawalDialog extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 6),
-
+                // const SizedBox(height: 6),
                 Text(
                   "Withdrawal",
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
 
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 80, right: 80),
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greycolor),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: TextField(
-                        // controller: amountController,
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                                 decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.currency_rupee,
-                            size: 15,
-                            color: blackColor,
-                          ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 12),
-                          hintText: 'Enter Amount',
-                          hintStyle: Theme.of(context).textTheme.bodyMedium,
-                          border: InputBorder.none,
-                          isCollapsed: true,
+                  child: Container(
+                    height: 48,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: greycolor),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextField(
+                      // controller: amountController,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.currency_rupee,
+                          size: 15,
+                          color: blackColor,
                         ),
-                        // decoration: InputDecoration(
-                        //   hintText: 'Enter Amount',
-                        //   hintStyle: Theme.of(context).textTheme.bodyLarge,
-                        //   border: InputBorder.none,
-                        //   isCollapsed: true,
-                        // ),
-                        onChanged: (value) {
-                          // setState(() {
-                          //   selectedAmount =
-                          //       int.tryParse(value.replaceAll(',', '')) ?? 0;
-                          // });
-                        },
+                        border: InputBorder.none,
+                        isCollapsed: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 14,
+                        ),
+                        hintText: 'Enter Amount',
+                        hintStyle: Theme.of(context).textTheme.bodySmall,
                       ),
+                                        
+                      onChanged: (value) {
+                                       
+                      },
                     ),
                   ),
                 ),
-                // TextField(
-                //   style: Theme.of(context).textTheme.bodyLarge,
-                //   decoration: InputDecoration(
-                //     hintText: 'Enter Amount',
-                //     border: InputBorder.none,
-                //   ),
-                // ),
-
-                // const Text(
-                //   "Enter Amount",
-                //   style: TextStyle(fontWeight: FontWeight.w500),
-                // ),
-                // Container(height: 2, width: 100, color: Colors.black),
-                const SizedBox(height: 18),
+             
+                const SizedBox(height: 14),
 
                 Text(
                   "Credit to your bank account may take up to 48 hours",
@@ -226,7 +207,7 @@ class WithdrawalDialog extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
 
                 // Bank Details
                 Row(
@@ -247,7 +228,7 @@ class WithdrawalDialog extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -260,16 +241,17 @@ class WithdrawalDialog extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 14),
+                const SizedBox(height: 15),
 
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: _WField(label: "IFSC Code", value: "HDFC00002548"),
                 ),
 
-                const SizedBox(height: 28),
+                const SizedBox(height: 15),
 
                 SizedBox(
+                  height: 48,
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(

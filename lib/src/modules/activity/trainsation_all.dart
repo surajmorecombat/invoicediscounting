@@ -199,7 +199,7 @@ class _TrainsationAllState extends State<TrainsationAll> {
             value: selectedYear,
             style: TextStyle(color: blackColor),
             items: List.generate(
-              10,
+              15,
               (i) => DropdownMenuItem(
                 value: DateTime.now().year - i,
                 child: Text((DateTime.now().year - i).toString()),
@@ -249,28 +249,34 @@ class _TrainsationAllState extends State<TrainsationAll> {
           Row(
             children: [
               Expanded(
-                child: OutlinedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(color: onboardingTitleColor),
+                child: SizedBox(
+                  height: 48,
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: onboardingTitleColor),
+                    ),
                   ),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: onboardingTitleColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                     height: 48,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: onboardingTitleColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
+                    onPressed: () => Navigator.pop(
+                      context,
+                      DateTime(selectedYear, selectedMonth),
+                    ),
+                    child: const Text('Apply'),
                   ),
-                  onPressed: () => Navigator.pop(
-                    context,
-                    DateTime(selectedYear, selectedMonth),
-                  ),
-                  child: const Text('Apply'),
                 ),
               ),
             ],
@@ -493,30 +499,36 @@ class _FilterSheetState extends State<FilterSheet> {
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => setState(() => selected.clear()),
-                    child: Text(
-                      'Clear',
-                      style: TextStyle(color: onboardingTitleColor),
+                  child: SizedBox(
+                    height: 48,
+                    child: OutlinedButton(
+                      onPressed: () => setState(() => selected.clear()),
+                      child: Text(
+                        'Clear',
+                        style: TextStyle(color: onboardingTitleColor),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: onboardingTitleColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    height: 48,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: onboardingTitleColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
+                      onPressed: () {
+                        widget.onApply(
+                          selected.isEmpty ? null : selected.join(','),
+                        );
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Apply'),
                     ),
-                    onPressed: () {
-                      widget.onApply(
-                        selected.isEmpty ? null : selected.join(','),
-                      );
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Apply'),
                   ),
                 ),
               ],

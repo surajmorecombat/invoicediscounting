@@ -4,6 +4,7 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 import 'package:invoicediscounting/src/modules/signUp/phone_verification.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class VerifyEmailOtp extends StatefulWidget {
   const VerifyEmailOtp({super.key});
@@ -13,6 +14,7 @@ class VerifyEmailOtp extends StatefulWidget {
 }
 
 class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
+    final FocusNode amountFocusNode = FocusNode();
   final List<TextEditingController> _controllers = List.generate(
     6,
     (_) => TextEditingController(),
@@ -54,16 +56,16 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: isTablet ? 120 : 24,
-          vertical: 100,
+          // vertical: 100,
         ),
         child: Column(
           children: [
             const SizedBox(height: 24),
-
+        
             Text('Verify OTP', style: Theme.of(context).textTheme.displaySmall),
-
+        
             const SizedBox(height: 6),
-
+        
             // style: Theme.of(context).textTheme.bodyLarge,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +73,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                 Text(
                   '''we have sent OTP to abc@gmail.com''',
                   textAlign: TextAlign.center,
-
+        
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: blackColor),
@@ -87,9 +89,9 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                 ),
               ],
             ),
-
+        
             const SizedBox(height: 32),
-
+        
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
@@ -100,7 +102,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                   child: TextField(
                     controller: _controllers[index],
                     focusNode: _focusNodes[index],
-                    // keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     maxLength: 1,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -124,9 +126,9 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                 ),
               ),
             ),
-
+        
             const SizedBox(height: 24),
-
+        
             Center(
               child: Text.rich(
                 TextSpan(
@@ -147,7 +149,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
               ),
             ),
             const SizedBox(height: 24),
-
+        
             SizedBox(
               width: double.infinity,
               height: 52,
@@ -175,7 +177,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                 ),
               ),
             ),
-
+        
             const SizedBox(height: 24),
           ],
         ),

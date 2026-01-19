@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_method.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class WalletAdd extends StatefulWidget {
   const WalletAdd({super.key});
@@ -13,6 +14,8 @@ class _WalletAddState extends State<WalletAdd> {
   final TextEditingController amountController = TextEditingController();
 
   int selectedAmount = 000000;
+  final FocusNode amountFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
@@ -107,17 +110,66 @@ class _WalletAddState extends State<WalletAdd> {
 
                 Padding(
                   padding: const EdgeInsets.only(left: 80, right: 80),
-                  child: Center(
-                    child: Container(
-                      // padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greycolor),
-                        borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    height: 48, 
+                    decoration: BoxDecoration(
+                      border: Border.all(color: greycolor),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: KeyboardActions(
+                      config: KeyboardActionsConfig(
+                        keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
+                        actions: [
+                          KeyboardActionsItem(
+                            focusNode: amountFocusNode,
+                            toolbarButtons: [
+                              (node) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: GestureDetector(
+                                    onTap: () => node.unfocus(),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 18,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            onboardingTitleColor, // your brand color
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(
+                                              0.12,
+                                            ),
+                                            blurRadius: 6,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Text(
+                                        "Done",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ],
+                          ),
+                        ],
                       ),
                       child: TextField(
                         controller: amountController,
-                        keyboardType: TextInputType.number,
-
+                        focusNode: amountFocusNode,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: false,
+                          signed: false,
+                        ),
                         textAlignVertical: TextAlignVertical.center,
                         style: Theme.of(context).textTheme.bodyLarge,
                         decoration: InputDecoration(
@@ -126,27 +178,14 @@ class _WalletAddState extends State<WalletAdd> {
                             size: 15,
                             color: blackColor,
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 12),
                           hintText: 'Enter Amount',
-                          hintStyle: Theme.of(context).textTheme.bodyMedium,
+                          hintStyle: Theme.of(context).textTheme.bodySmall,
                           border: InputBorder.none,
                           isCollapsed: true,
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 14,
+                          ),
                         ),
-
-                        // decoration: InputDecoration(
-
-                        //   prefix: Text(
-                        //     '₹',
-                        //     style: Theme.of(context).textTheme.bodyLarge!
-                        //         .copyWith(color: blackColor),
-                        //   ),
-                        //   hintText: 'Enter Amount',
-                        //   hintStyle: Theme.of(context).textTheme.bodyMedium,
-                        //   border: InputBorder.none,
-                        //   contentPadding: const EdgeInsets.symmetric(
-                        //     vertical: 12,
-                        //   ),
-                        // ),
                         onChanged: (value) {
                           setState(() {
                             selectedAmount =

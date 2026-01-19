@@ -1,0 +1,48 @@
+PODS:
+  - Flutter (1.0.0)
+  - image_picker_ios (0.0.1):
+    - Flutter
+  - package_info_plus (0.4.5):
+    - Flutter
+  - permission_handler_apple (9.3.0):
+    - Flutter
+  - Sentry/HybridSDK (8.56.2)
+  - sentry_flutter (9.10.0):
+    - Flutter
+    - FlutterMacOS
+    - Sentry/HybridSDK (= 8.56.2)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Sentry
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  sentry_flutter:
+    :path: ".symlinks/plugins/sentry_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
+  Sentry: b53951377b78e21a734f5dc8318e333dbfc682d7
+  sentry_flutter: bbcc012a946214d9baba4567feac162ea87700fa
+
+PODFILE CHECKSUM: 251cb053df7158f337c0712f2ab29f4e0fa474ce
+
+COCOAPODS: 1.16.2
