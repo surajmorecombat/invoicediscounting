@@ -17,7 +17,6 @@ class BankVerification extends StatefulWidget {
 }
 
 class _BankVerificationState extends State<BankVerification> {
-
   final FocusNode accountNumberFocusNode = FocusNode();
   final FocusNode accountHolderFocusNode = FocusNode();
   final FocusNode ifscFocusNode = FocusNode();
@@ -79,53 +78,54 @@ class _BankVerificationState extends State<BankVerification> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: isTablet ? 120 : 24,
-            vertical: 20,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _uploadBlock("Upload  Passbook/Check", context, true, panFile),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Center(
-                  child: Text(
-                    'Or',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: greycolor),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isTablet ? 120 : 24,
+              vertical: 20,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _uploadBlock("Upload  Passbook/Check", context, true, panFile),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Center(
+                    child: Text(
+                      'Or',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.copyWith(color: greycolor),
+                    ),
                   ),
                 ),
-              ),
-              _field(
-                "Account Number",
-                "Enter your bank account number",
-                TextInputType.number,
-                accountNumberFocusNode,
-                context,
-             
-              ),
-              _field(
-                "Account Holder Name",
-                "Enter your full name",
-
-                TextInputType.text,
-                accountHolderFocusNode,
-                context,
-              ),
-
-              accountTypeDropdown(context),
-              _field(
-                "IFSC Code",
-                "Enter IFSC Code",
-                TextInputType.text,
-                ifscFocusNode,
-                context,
-              ),
-            ],
+                _field(
+                  "Account Number",
+                  "Enter your bank account number",
+                  TextInputType.number,
+                  accountNumberFocusNode,
+                  context,
+                ),
+                _field(
+                  "Account Holder Name",
+                  "Enter your full name",
+        
+                  TextInputType.text,
+                  accountHolderFocusNode,
+                  context,
+                ),
+        
+                accountTypeDropdown(context),
+                _field(
+                  "IFSC Code",
+                  "Enter IFSC Code",
+                  TextInputType.text,
+                  ifscFocusNode,
+                  context,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -294,104 +294,98 @@ class _BankVerificationState extends State<BankVerification> {
           ),
     );
   }
-Widget _field(
-  String label,
-  String hint,
-  TextInputType inputType,
-  FocusNode? focusNode,
-  BuildContext context, {
-  TextEditingController? controller,
-  VoidCallback? onTap,
-}) {
-  final bool isNumeric =
-      inputType == TextInputType.number ||
-      inputType == TextInputType.phone;
 
-  final textField = TextField(
-    controller: controller,
-    focusNode: focusNode,
-    keyboardType: inputType,
-    readOnly: onTap != null, // ✅ for date picker fields
-    onTap: onTap,
-    style: Theme.of(context).textTheme.bodyLarge,
-    decoration: InputDecoration(
-      hintText: hint,
-      hintStyle: Theme.of(context).textTheme.bodySmall,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Colors.grey),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
-      ),
-    ),
-  );
+  Widget _field(
+    String label,
+    String hint,
+    TextInputType inputType,
+    FocusNode? focusNode,
+    BuildContext context, {
+    TextEditingController? controller,
+    VoidCallback? onTap,
+  }) {
+    final bool isNumeric =
+        inputType == TextInputType.number || inputType == TextInputType.phone;
 
-  return Padding(
-    padding: const EdgeInsets.only(top: 14),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-          text: TextSpan(
-            text: label,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(fontWeight: FontWeight.w500),
-            children: const [
-              TextSpan(
-                text: '*',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+    final textField = TextField(
+      controller: controller,
+      focusNode: focusNode,
+      keyboardType: inputType,
+      readOnly: onTap != null, // ✅ for date picker fields
+      onTap: onTap,
+      style: Theme.of(context).textTheme.bodyLarge,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: Theme.of(context).textTheme.bodySmall,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.grey),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
+        ),
+      ),
+    );
 
-        const SizedBox(height: 8),
-
-        // ✅ ONLY numeric fields get KeyboardActions
-        if (isNumeric && focusNode != null)
-          SizedBox(
-            height: 48, // 🔑 REQUIRED
-            child: KeyboardActions(
-              config: KeyboardActionsConfig(
-                keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
-                actions: [
-                  KeyboardActionsItem(
-                    focusNode: focusNode,
-                    toolbarButtons: [
-                      (node) => styledDoneButton(node),
-                    ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            text: TextSpan(
+              text: label,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              children: const [
+                TextSpan(
+                  text: '*',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              ),
-              child: textField,
+                ),
+              ],
             ),
-          )
-        else
-          textField,
-      ],
-    ),
-  );
-}
+          ),
 
+          const SizedBox(height: 8),
+
+          // ✅ ONLY numeric fields get KeyboardActions
+          if (isNumeric && focusNode != null)
+            SizedBox(
+              height: 60,
+              child: KeyboardActions(
+                config: KeyboardActionsConfig(
+                  keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
+                  actions: [
+                    KeyboardActionsItem(
+                      focusNode: focusNode,
+                      toolbarButtons: [(node) => styledDoneButton(node)],
+                    ),
+                  ],
+                ),
+                child: textField,
+              ),
+            )
+          else
+            textField,
+        ],
+      ),
+    );
+  }
 
   Widget accountTypeDropdown(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 14),
       child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-             RichText(
+          RichText(
             text: TextSpan(
               text: 'Account Type',
               style: Theme.of(
@@ -410,7 +404,7 @@ Widget _field(
             ),
           ),
 
-        SizedBox(height: 8),
+          SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
@@ -420,9 +414,9 @@ Widget _field(
             child: DropdownMenu<String>(
               requestFocusOnTap: true,
               enableSearch: false,
-          
+
               expandedInsets: EdgeInsets.zero,
-          
+
               hintText: "Account Type",
               textStyle: Theme.of(context).textTheme.bodyLarge,
               inputDecorationTheme: InputDecorationTheme(

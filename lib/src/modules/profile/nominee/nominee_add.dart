@@ -112,7 +112,7 @@ String? nomineeRelation;
 
               buildDateInput(context, isEditing: isEditing, ),
 
-              const SizedBox(height: 15),
+              // const SizedBox(height: 15),
 
               inputField(
                 context,
@@ -129,7 +129,7 @@ String? nomineeRelation;
 
               // inputField(context, 'Nominee Relation', TextInputType.name,
               //     nomineeRelationController, isEditing: isEditing),
-              const SizedBox(height: 15),
+              // const SizedBox(height: 15),
 
               inputField(
                 context,
@@ -230,7 +230,7 @@ String? nomineeRelation;
   }
  Widget nomineeRelationDropdown(BuildContext context,{bool isEditing = false, }) {
   return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+    padding: const EdgeInsets.symmetric(horizontal: 12,),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8),
       border: Border.all(color: Colors.grey),

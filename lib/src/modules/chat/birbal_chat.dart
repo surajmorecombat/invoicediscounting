@@ -15,6 +15,8 @@ class BirbalChat extends StatefulWidget {
 
 class _BirbalChatState extends State<BirbalChat> {
   final TextEditingController controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
   final List<ChatMessage> messages = [
     // ChatMessage(
     //   text:
@@ -34,16 +36,24 @@ class _BirbalChatState extends State<BirbalChat> {
     if (text.trim().isEmpty) return;
 
     setState(() {
-      // USER message
       messages.add(ChatMessage(text: text, type: MessageType.user));
-
-      // BOT reply (mock for now)
       messages.add(
         ChatMessage(text: _mockBotReply(text), type: MessageType.bot),
       );
     });
 
     controller.clear();
+
+    // ✅ AUTO-SCROLL TO BOTTOM
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   @override
@@ -52,6 +62,8 @@ class _BirbalChatState extends State<BirbalChat> {
 
     return Scaffold(
       backgroundColor: backgroundColor,
+      resizeToAvoidBottomInset: false,
+
       // ctx: 3,
       appBar: AppBar(
         title: Text(
@@ -62,29 +74,39 @@ class _BirbalChatState extends State<BirbalChat> {
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
-      bottomNavigationBar: _inputBar(),
 
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              const SizedBox(height: 12),
-
-              // Suggestions + Header
-              // if (messages.length <= 1)
-              _suggestionChips(context),
-
-              const SizedBox(height: 16),
-
-              // Chat messages (NOT scrollable itself)
-              _chatList(),
-
-              const SizedBox(height: 80), // space for input bar
-            ],
+      // bottomNavigationBar: _inputBar(),
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: const EdgeInsets.only(bottom: 140),
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  const SizedBox(height: 12),
+                  _suggestionChips(context),
+                  const SizedBox(height: 16),
+                  _chatList(),
+                ],
+              ),
+            ),
           ),
-        ),
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: AnimatedPadding(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOut,
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: _inputBar(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -130,15 +152,17 @@ class _BirbalChatState extends State<BirbalChat> {
 
                 SizedBox(width: 2),
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-
+                    // border: Border.all(color: Colors.grey.shade300),
+                    color: onboardingTitleColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     'Your on-demand investment query assistant',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(color: whiteColor),
                   ),
                 ),
               ],
@@ -221,9 +245,7 @@ class _BirbalChatState extends State<BirbalChat> {
                 isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
               // Avatar
-              isUser
-                  ? _userAvatar()
-                  : _botAvatar(),
+              isUser ? _userAvatar() : _botAvatar(),
 
               // Bubble
               _messageBubble(msg, isUser),
@@ -260,48 +282,46 @@ class _BirbalChatState extends State<BirbalChat> {
   }
 
   Widget _inputBar() {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: TextField(
-          controller: controller,
-          style: Theme.of(context).textTheme.bodyLarge,
-          textInputAction: TextInputAction.send,
-          onSubmitted: sendMessage,
-
-          decoration: InputDecoration(
-            fillColor: whiteColor,
-            hintText: 'Type your query here...',
-            hintStyle: Theme.of(context).textTheme.bodyMedium,
-
-            suffixIcon: IconButton(
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-              onPressed: () => sendMessage(controller.text),
-              icon: Image.asset('assets/icons/send.png', width: 25, height: 25),
-            ),
-
-            suffixIconConstraints: const BoxConstraints(
-              minWidth: 36,
-              minHeight: 36,
-            ),
-
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 18,
-              horizontal: 12,
-            ),
-
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: greyFaintcolor),
-            ),
-
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: TextField(
+        controller: controller,
+        style: Theme.of(context).textTheme.bodyLarge,
+        textInputAction: TextInputAction.send,
+        onSubmitted: sendMessage,
+    
+        decoration: InputDecoration(
+          fillColor: whiteColor,
+          hintText: 'Type your query here...',
+          hintStyle: Theme.of(context).textTheme.bodyMedium,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+            onPressed: () => sendMessage(controller.text),
+            icon: Image.asset('assets/icons/send.png', width: 25, height: 25),
+          ),
+    
+          suffixIconConstraints: const BoxConstraints(
+            minWidth: 36,
+            minHeight: 36,
+          ),
+    
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 18,
+            horizontal: 12,
+          ),
+    
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+    
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: greyFaintcolor),
+          ),
+    
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
           ),
         ),
       ),

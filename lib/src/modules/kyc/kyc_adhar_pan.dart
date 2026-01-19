@@ -71,7 +71,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      // resizeToAvoidBottomInset: true,
       backgroundColor: whiteColor,
       appBar: AppBar(
         backgroundColor: whiteColor,
@@ -111,15 +111,10 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          controller: scrollController,
-
+          // controller: scrollController,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              isTablet ? 120 : 16,
-              0,
-              isTablet ? 120 : 16,
-              MediaQuery.of(context).viewInsets.bottom + 24, // 🔑 KEY LINE
-            ),
+             padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+            
             child: Column(
               children: [
                 // Text(
@@ -128,18 +123,18 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                 //   style: Theme.of(context).textTheme.displaySmall
                 //       ?.copyWith(color: onboardingTitleColor),
                 // ),
-
+        
                 // const SizedBox(height: 10),
                 Text(
                   'Complete KYC in just a few steps to access full \n investment opportunities',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-
+        
                 const SizedBox(height: 30),
-
+        
                 buildRow("PAN Details", buildUploadBox(true, panFile)),
-
+        
                 Center(
                   child: Text(
                     'Or',
@@ -149,7 +144,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                   ),
                 ),
                 SizedBox(height: 10),
-
+        
                 buildRow(
                   'PAN number',
                   buildInput(
@@ -229,8 +224,11 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
         inputType == TextInputType.number || inputType == TextInputType.phone;
 
     final textField = TextField(
+      // controller: controller,
       focusNode: focusNode,
       keyboardType: inputType,
+      // readOnly: onTap != null, // ✅ for date picker fields
+      // onTap: onTap,
       style: Theme.of(context).textTheme.bodyLarge,
       decoration: InputDecoration(
         hintText: hint,
@@ -246,12 +244,10 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
         ),
       ),
     );
-
-    // Non-numeric → no KeyboardActions
     if (!isNumeric || focusNode == null) return textField;
 
     return SizedBox(
-      height: 48,
+    height: 60,
       child: KeyboardActions(
         config: KeyboardActionsConfig(
           keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
@@ -267,34 +263,6 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
     );
   }
 
-  // Widget buildInput(String hint, context,TextInputType inputType) {
-  //   return TextField(
-  //     keyboardType: inputType,
-  //     style: Theme.of(context).textTheme.bodyLarge,
-  //     decoration: InputDecoration(
-  //       hintText: hint,
-  //       hintStyle: Theme.of(context).textTheme.bodySmall,
-  //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-  //       // contentPadding: const EdgeInsets.symmetric(
-  //       //   vertical: 14,
-  //       //   horizontal: 12,
-  //       // ),
-  //       labelStyle: const TextStyle(color: Colors.grey),
-
-  //       floatingLabelStyle: TextStyle(color: onboardingTitleColor),
-
-  //       enabledBorder: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(8),
-  //         borderSide: const BorderSide(color: Colors.grey),
-  //       ),
-
-  //       focusedBorder: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(8),
-  //         borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget buildDateInput(context) {
     return TextField(

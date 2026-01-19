@@ -16,6 +16,10 @@ class MarketNewsDetail extends StatelessWidget {
         elevation: 0,
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
+        title: Text(
+          'News',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
