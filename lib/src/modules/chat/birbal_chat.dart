@@ -14,8 +14,9 @@ class BirbalChat extends StatefulWidget {
 }
 
 class _BirbalChatState extends State<BirbalChat> {
-  final TextEditingController controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  bool suggestiondisable = false;
 
   final List<ChatMessage> messages = [
     // ChatMessage(
@@ -61,17 +62,17 @@ class _BirbalChatState extends State<BirbalChat> {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
 
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: whiteColor,
       resizeToAvoidBottomInset: false,
 
       // ctx: 3,
       appBar: AppBar(
         title: Text(
-          'Birbalplus AI assistant',
-          style: Theme.of(context).textTheme.bodyLarge,
+          'Bond AI assistant',
+        style: Theme.of(context).textTheme.headlineMedium,
         ),
         elevation: 0,
-        backgroundColor: backgroundColor,
+        backgroundColor: whiteColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
 
@@ -87,7 +88,7 @@ class _BirbalChatState extends State<BirbalChat> {
               child: Column(
                 children: [
                   const SizedBox(height: 12),
-                  _suggestionChips(context),
+                  if (!suggestiondisable) _suggestionChips(context),
                   const SizedBox(height: 16),
                   _chatList(),
                 ],
@@ -128,54 +129,59 @@ class _BirbalChatState extends State<BirbalChat> {
 
         return Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
+            // Row(
+            //   children: [
+            //     Container(
+            //       padding: const EdgeInsets.all(6),
+            //       decoration: BoxDecoration(
+            //         border: Border.all(color: Colors.grey.shade300),
 
-                    // color: isUser ? onboardingTitleColor : Colors.grey.shade100,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(0),
-                      topRight: Radius.circular(12),
-                      bottomLeft: Radius.circular(12),
-                      bottomRight: Radius.circular(12),
-                    ),
-                  ),
-                  child: Image.asset(
-                    'assets/icons/chat-dark.png',
-                    width: 25,
-                    height: 25,
-                  ),
-                ),
+            //         // color: isUser ? onboardingTitleColor : Colors.grey.shade100,
+            //         borderRadius: BorderRadius.only(
+            //           topLeft: Radius.circular(0),
+            //           topRight: Radius.circular(12),
+            //           bottomLeft: Radius.circular(12),
+            //           bottomRight: Radius.circular(12),
+            //         ),
+            //       ),
+            //       child: Image.asset(
+            //         'assets/icons/bond.png',
+            //         width: 25,
+            //         height: 25,
+            //       ),
+            //     ),
 
-                SizedBox(width: 2),
-                Container(
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    // border: Border.all(color: Colors.grey.shade300),
-                    color: onboardingTitleColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    'Your on-demand investment query assistant',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: whiteColor),
-                  ),
-                ),
-              ],
-            ),
+            //     SizedBox(width: 2),
+            //     Container(
+            //       padding: EdgeInsets.all(12),
+            //       decoration: BoxDecoration(
+            //         // border: Border.all(color: Colors.grey.shade300),
+            //         color: onboardingTitleColor,
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //       child: Text(
+            //         'Your on-demand investment query assistant',
+            //         style: Theme.of(
+            //           context,
+            //         ).textTheme.bodyMedium?.copyWith(color: whiteColor),
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
-            SizedBox(height: 5),
+            // SizedBox(height: 5),
             Wrap(
               spacing: 12,
               runSpacing: 12,
               children:
                   suggestions.map((text) {
                     return GestureDetector(
-                      onTap: () => sendMessage(text),
+                      onTap: () {
+                        sendMessage(text);
+                        setState(() {
+                          suggestiondisable = true;
+                        });
+                      },
                       child: Container(
                         width: itemWidth,
                         padding: const EdgeInsets.symmetric(
@@ -289,36 +295,36 @@ class _BirbalChatState extends State<BirbalChat> {
         style: Theme.of(context).textTheme.bodyLarge,
         textInputAction: TextInputAction.send,
         onSubmitted: sendMessage,
-    
+
         decoration: InputDecoration(
           fillColor: whiteColor,
           hintText: 'Type your query here...',
           hintStyle: Theme.of(context).textTheme.bodyMedium,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixIcon: IconButton(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(right: 10),
             constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
             onPressed: () => sendMessage(controller.text),
             icon: Image.asset('assets/icons/send.png', width: 25, height: 25),
           ),
-    
+
           suffixIconConstraints: const BoxConstraints(
             minWidth: 36,
             minHeight: 36,
           ),
-    
+
           contentPadding: const EdgeInsets.symmetric(
             vertical: 18,
-            horizontal: 12,
+            horizontal: 16,
           ),
-    
+
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-    
+
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: greyFaintcolor),
           ),
-    
+
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
@@ -328,3 +334,11 @@ class _BirbalChatState extends State<BirbalChat> {
     );
   }
 }
+
+
+
+
+
+
+
+// chat-dark.png
