@@ -72,9 +72,9 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
 
     return Scaffold(
       // resizeToAvoidBottomInset: true,
-      backgroundColor: whiteColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: whiteColor,
+        backgroundColor: backgroundColor,
         elevation: 0,
 
         iconTheme: IconThemeData(color: blackColor),
