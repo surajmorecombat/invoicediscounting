@@ -25,7 +25,7 @@ class HelpCentre extends StatelessWidget {
       ),
 
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
         child: Column(
           children: [
             helpCategoryCard(
@@ -120,7 +120,7 @@ class HelpCentre extends StatelessWidget {
       ctx: 0,
       showDefaultBottom: false,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

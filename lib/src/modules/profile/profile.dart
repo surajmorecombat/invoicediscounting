@@ -61,7 +61,7 @@ class Profile extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+              padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
               child: Column(
                 children: [
                   _profileHeader(context),
@@ -354,7 +354,7 @@ class _ProfileState extends State<Profile> {
       ctx: 0,
       showDefaultBottom: true,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
         child: SingleChildScrollView(
           child: Column(
             children: [

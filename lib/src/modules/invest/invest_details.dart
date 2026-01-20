@@ -79,7 +79,7 @@ class _InvestDetailsState extends State<InvestDetails> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: isTablet ? 120 : 20,
+          horizontal: isTablet ? 120 : 16,
           // vertical: 16,
         ),
         child: Column(

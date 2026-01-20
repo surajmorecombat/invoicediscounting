@@ -18,7 +18,7 @@ class HelpGettingStarted extends StatelessWidget {
         iconTheme: IconThemeData(color: blackColor),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
         child: Column(
           children: const [
             FAQCard(

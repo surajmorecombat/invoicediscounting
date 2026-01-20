@@ -86,7 +86,7 @@ String? nomineeRelation;
       ),
 
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+        padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
         child: SingleChildScrollView(
           child: Column(
             children: [

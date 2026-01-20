@@ -80,7 +80,7 @@ class _BirbalChatState extends State<BirbalChat> {
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+            padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
             child: SingleChildScrollView(
               controller: _scrollController,
               padding: const EdgeInsets.only(bottom: 140),

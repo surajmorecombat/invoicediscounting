@@ -113,7 +113,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
         child: SingleChildScrollView(
           // controller: scrollController,
           child: Padding(
-             padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+             padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
             
             child: Column(
               children: [

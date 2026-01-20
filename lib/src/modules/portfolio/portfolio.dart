@@ -123,7 +123,7 @@ class _PortfolioState extends State<Portfolio> {
           ],
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 20),
+          padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
           child: Column(
             children: [
               const SizedBox(height: 10),

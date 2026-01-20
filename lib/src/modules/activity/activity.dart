@@ -104,7 +104,7 @@ class _ActivityState extends State<Activity> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: isTablet ? 120 : 20,
+            horizontal: isTablet ? 120 : 16,
             //  vertical: 16,
           ),
           child: Column(
