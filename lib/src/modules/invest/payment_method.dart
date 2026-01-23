@@ -19,9 +19,10 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Make a Payment',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         elevation: 0,
         backgroundColor: Colors.white,

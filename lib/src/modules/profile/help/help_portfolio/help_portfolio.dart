@@ -12,8 +12,9 @@ class HelpPortfolioFAQ extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
-        title: Text("Portfolio", style: Theme.of(context).textTheme.bodyLarge),
+        title: Text("Portfolio", style: Theme.of(context).textTheme.headlineMedium),
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),

@@ -111,7 +111,7 @@ class _WalletAddState extends State<WalletAdd> {
                 Padding(
                   padding: const EdgeInsets.only(left: 80, right: 80),
                   child: Container(
-                    height: 48, 
+                    height: 48,
                     decoration: BoxDecoration(
                       border: Border.all(color: greycolor),
                       borderRadius: BorderRadius.circular(8),
@@ -164,6 +164,7 @@ class _WalletAddState extends State<WalletAdd> {
                         ],
                       ),
                       child: TextField(
+                         cursorColor: onboardingTitleColor,
                         controller: amountController,
                         focusNode: amountFocusNode,
                         keyboardType: const TextInputType.numberWithOptions(

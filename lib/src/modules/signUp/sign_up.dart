@@ -14,12 +14,13 @@ class SignUp extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: backgroundColor,
         elevation: 0,
         iconTheme: IconThemeData(color: blackColor),
         title: Text(
           'Create Profile',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
 
@@ -113,6 +114,7 @@ class _InputField extends StatelessWidget {
         const SizedBox(height: 8),
 
         TextField(
+           cursorColor: onboardingTitleColor,
           controller: controller,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(

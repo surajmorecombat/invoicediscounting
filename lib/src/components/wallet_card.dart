@@ -131,8 +131,9 @@ class WithdrawalDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
+            padding: EdgeInsets.all(8),
             width: double.infinity,
-            
+
             decoration: const BoxDecoration(
               color: Color(0xFFEAEAEA),
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -145,7 +146,7 @@ class WithdrawalDialog extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
+            padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -173,15 +174,25 @@ class WithdrawalDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: TextField(
+                      
+                      cursorColor: onboardingTitleColor,
                       // controller: amountController,
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.currency_rupee,
-                          size: 15,
-                          color: blackColor,
+                        
+                        prefixIcon: Padding(
+                           padding: EdgeInsets.only(left: 15),
+                          child: Icon(
+                            Icons.currency_rupee,
+                            size: 15,
+                            color: blackColor,
+                          ),
+                        ),
+                        prefixIconConstraints: const BoxConstraints(
+                          minWidth: 0,
+                          minHeight: 20,
                         ),
                         border: InputBorder.none,
                         isCollapsed: true,
@@ -191,14 +202,12 @@ class WithdrawalDialog extends StatelessWidget {
                         hintText: 'Enter Amount',
                         hintStyle: Theme.of(context).textTheme.bodySmall,
                       ),
-                                        
-                      onChanged: (value) {
-                                       
-                      },
+
+                      onChanged: (value) {},
                     ),
                   ),
                 ),
-             
+
                 const SizedBox(height: 14),
 
                 Text(

@@ -39,7 +39,7 @@ class _BankVerificationState extends State<BankVerification> {
         centerTitle: true,
         title: Text(
           "Bank Account Verification",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       bottomNavigationBar: Padding(
@@ -67,13 +67,9 @@ class _BankVerificationState extends State<BankVerification> {
                 ),
               );
             },
-            child: const Text(
+            child:  Text(
               "Verify & Continue",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+                style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
         ),
@@ -83,17 +79,17 @@ class _BankVerificationState extends State<BankVerification> {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isTablet ? 120 : 24,
-              vertical: 20,
+            //  vertical: 20,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _uploadBlock("Upload  Passbook/Check", context, true, panFile),
+                _uploadBlock("Upload  Passbook/Cheque", context, true, panFile),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Center(
                     child: Text(
-                      'Or',
+                      'OR',
                       style: Theme.of(
                         context,
                       ).textTheme.bodyLarge?.copyWith(color: greycolor),
@@ -124,6 +120,7 @@ class _BankVerificationState extends State<BankVerification> {
                   ifscFocusNode,
                   context,
                 ),
+                
               ],
             ),
           ),
@@ -308,6 +305,7 @@ class _BankVerificationState extends State<BankVerification> {
         inputType == TextInputType.number || inputType == TextInputType.phone;
 
     final textField = TextField(
+       cursorColor: onboardingTitleColor,
       controller: controller,
       focusNode: focusNode,
       keyboardType: inputType,
@@ -330,7 +328,7 @@ class _BankVerificationState extends State<BankVerification> {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(top: 14),
+      padding: const EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -412,14 +410,16 @@ class _BankVerificationState extends State<BankVerification> {
               border: Border.all(color: Colors.grey),
             ),
             child: DropdownMenu<String>(
-              requestFocusOnTap: true,
+              requestFocusOnTap: false,
               enableSearch: false,
 
               expandedInsets: EdgeInsets.zero,
 
               hintText: "Account Type",
+              
               textStyle: Theme.of(context).textTheme.bodyLarge,
               inputDecorationTheme: InputDecorationTheme(
+                 hintStyle: Theme.of(context).textTheme.bodySmall,
                 suffixIconColor: onboardingTitleColor,
                 border: InputBorder.none,
                 isDense: true,

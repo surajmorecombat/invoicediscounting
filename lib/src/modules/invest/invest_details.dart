@@ -26,9 +26,15 @@ class _InvestDetailsState extends State<InvestDetails> {
   int unitLeft = 23;
   int pricePerUnit = 100000;
   bool isChecked = false;
+  final SuperTooltipController _tooltipController = SuperTooltipController();
 
   int get unitLeftNow => unitLeft + unitCount;
   int get totalAmount => unitCount * pricePerUnit;
+  @override
+  void dispose() {
+    _tooltipController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +43,10 @@ class _InvestDetailsState extends State<InvestDetails> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Investment Details',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         elevation: 0,
         backgroundColor: backgroundColor,
@@ -142,6 +149,7 @@ class _InvestDetailsState extends State<InvestDetails> {
                 // const Divider(height: 24),
                 buildRow(context, 'Minimum Investment', '₹1,00,000.00'),
                 buildRow(context, 'XIRR', '13.65%', highlight: true),
+                buildRow(context, 'Coupon Rate', '12.5%', highlight: true),
                 buildRow(context, 'Unit Left', '23/30'),
                 buildRow(context, 'Tenure', '90 Days'),
                 buildRow(context, 'Type of Interest', 'Compound'),
@@ -382,9 +390,31 @@ class _InvestDetailsState extends State<InvestDetails> {
               ),
               Row(
                 children: [
-                  Text("On-time Repayment"),
-                  SizedBox(width: 6),
-                  Icon(Icons.info_outline, size: 14, color: Colors.grey),
+                  const Text("On-time Repayment"),
+                  const SizedBox(width: 6),
+                  SuperTooltip(
+                    controller: _tooltipController,
+                    showBarrier: true,
+                    backgroundColor: const Color(0xff2f2d2f),
+                    popupDirection: TooltipDirection.down,
+                    content: SizedBox(
+                      width: 220,
+                      child: Text(
+                        'Interest is credited to your bank account every month.',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        _tooltipController.showTooltip();
+                      },
+                      child: const Icon(
+                        Icons.info_outline,
+                        size: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
                 ],
               ),
 

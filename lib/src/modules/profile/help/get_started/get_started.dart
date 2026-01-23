@@ -12,8 +12,9 @@ class HelpGettingStarted extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
-        title: Text("Getting started", style: Theme.of(context).textTheme.bodyLarge),
+        title: Text("Getting started", style: Theme.of(context).textTheme.headlineMedium),
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),

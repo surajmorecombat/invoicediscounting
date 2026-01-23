@@ -13,12 +13,13 @@ class MarketNewsDetail extends StatelessWidget {
       showDefaultBottom: true,
       ctx: 1,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
         title: Text(
           'News',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       body: Padding(

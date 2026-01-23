@@ -41,7 +41,10 @@ class LoginWith extends StatelessWidget {
 
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUp()),
+                  );
                 },
                 child: Text.rich(
                   TextSpan(
@@ -58,27 +61,27 @@ class LoginWith extends StatelessWidget {
                   ),
                 ),
               ),
-                   const SizedBox(height: 20),
 
-              Text.rich(
-                TextSpan(
-                  text: 'By continuing, you agree to our ',
-                  style: Theme.of(context).textTheme.bodySmall,
-                  children: [
-                    TextSpan(
-                      text: 'Terms',
-                      style: TextStyle(color: onboardingTitleColor),
-                    ),
-                    const TextSpan(text: ' and '),
-                    TextSpan(
-                      text: 'Privacy Policy',
-                      style: TextStyle(color: onboardingTitleColor),
-                    ),
-                  ],
-                ),
-                textAlign: TextAlign.center,
-              ),
+              //      const SizedBox(height: 20),
 
+              // Text.rich(
+              //   TextSpan(
+              //     text: 'By continuing, you agree to our ',
+              //     style: Theme.of(context).textTheme.bodySmall,
+              //     children: [
+              //       TextSpan(
+              //         text: 'Terms',
+              //         style: TextStyle(color: onboardingTitleColor),
+              //       ),
+              //       const TextSpan(text: ' and '),
+              //       TextSpan(
+              //         text: 'Privacy Policy',
+              //         style: TextStyle(color: onboardingTitleColor),
+              //       ),
+              //     ],
+              //   ),
+              //   textAlign: TextAlign.center,
+              // ),
               const Spacer(),
             ],
           ),

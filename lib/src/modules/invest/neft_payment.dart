@@ -11,9 +11,10 @@ class PayOfflineScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Pay Offline',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         elevation: 0,
         backgroundColor: backgroundColor,
@@ -67,17 +68,17 @@ class PayOfflineScreen extends StatelessWidget {
                 color: const Color(0xFFF1F3E9),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child:  Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Please pay only via the bank account linked to your Amplio account. Any transfer from other bank accounts shall be rejected automatically.",
-                       style: Theme.of(context).textTheme.bodySmall,
+                    "Please pay only via the bank account linked to your Birbal Plus account. Any transfer from other bank accounts shall be rejected automatically.",
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: 6),
                   Text(
-                    "Please be informed that payments might take 1–2 days to be processed. This means you won’t be able to invest immediately.",
-                       style: Theme.of(context).textTheme.bodySmall,
+                    "Please be informed that payments might take 1-2 days to be processed. This means you won't be able to invest immediately.",
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),

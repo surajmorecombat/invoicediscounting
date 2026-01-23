@@ -26,7 +26,7 @@ class _ReviewState extends State<Review> {
         centerTitle: true,
         title: Text(
           "Review & Submit",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       body: Padding(

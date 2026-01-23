@@ -77,7 +77,8 @@ class _AddToWalletState extends State<AddToWallet> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Invest Now', style: Theme.of(context).textTheme.bodyLarge),
+        centerTitle: true,
+        title: Text('Invest Now', style: Theme.of(context).textTheme.headlineMedium),
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: blackColor),
@@ -455,6 +456,7 @@ class _AddToWalletState extends State<AddToWallet> {
                                     ],
                                   ),
                                   child: TextField(
+                                     cursorColor: onboardingTitleColor,
                                     controller: unitController,
                                     focusNode: _unitFocusNode,
                                     keyboardType: TextInputType.number,
@@ -675,7 +677,7 @@ class _AddToWalletState extends State<AddToWallet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Birbalplus pocket",
+                  "My Pocket",
                   style: Theme.of(
                     context,
                   ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),

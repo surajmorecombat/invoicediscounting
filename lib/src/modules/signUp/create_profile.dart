@@ -71,7 +71,7 @@ class _CreateProfileState extends State<CreateProfile> {
               const SizedBox(height: 10),
 
               Text(
-                'We will send OTP to verify it’s you ',
+                '''We will send OTP to verify it's you''',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -162,6 +162,7 @@ class _InputField extends StatelessWidget {
         const SizedBox(height: 8),
 
         TextField(
+           cursorColor: onboardingTitleColor,
           controller: controller,
           style: Theme.of(context).textTheme.bodyLarge,
           decoration: InputDecoration(

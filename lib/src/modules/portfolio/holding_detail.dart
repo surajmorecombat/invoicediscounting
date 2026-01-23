@@ -44,9 +44,10 @@ class _HoldingDetailState extends State<HoldingDetail> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Holding Detail',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         elevation: 0,
         backgroundColor: backgroundColor,

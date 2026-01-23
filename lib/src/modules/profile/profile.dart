@@ -18,8 +18,9 @@ class Profile extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
-        title: Text('Profile', style: Theme.of(context).textTheme.bodyLarge),
+        title: Text('Profile', style: Theme.of(context).textTheme.headlineMedium),
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),

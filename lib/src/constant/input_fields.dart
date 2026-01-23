@@ -16,6 +16,7 @@ Widget inputField(
       keyboardType == TextInputType.phone;
 
   final textField = TextField(
+     cursorColor: onboardingTitleColor,
     controller: controller,
     focusNode: focusNode,
 

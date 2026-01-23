@@ -81,7 +81,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
         centerTitle: true,
         title: Text(
           "Personal KYC & Address Details",
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
       bottomNavigationBar: Container(
@@ -113,8 +113,8 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
         child: SingleChildScrollView(
           // controller: scrollController,
           child: Padding(
-             padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
-            
+            padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
+
             child: Column(
               children: [
                 // Text(
@@ -123,30 +123,30 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                 //   style: Theme.of(context).textTheme.displaySmall
                 //       ?.copyWith(color: onboardingTitleColor),
                 // ),
-        
+
                 // const SizedBox(height: 10),
                 Text(
                   'Complete KYC in just a few steps to access full \n investment opportunities',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-        
+
                 const SizedBox(height: 30),
-        
+
                 buildRow("PAN Details", buildUploadBox(true, panFile)),
-        
+
                 Center(
                   child: Text(
-                    'Or',
+                    'OR',
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(color: greycolor),
                   ),
                 ),
                 SizedBox(height: 10),
-        
+
                 buildRow(
-                  'PAN number',
+                  'PAN Number',
                   buildInput(
                     'Your PAN Number',
                     context,
@@ -155,11 +155,11 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                   ),
                 ),
                 SizedBox(height: 10),
-                buildRow('Birth date', buildDateInput(context)),
+                buildRow('Birth Date', buildDateInput(context)),
                 buildRow("Aadhaar Details", buildUploadBox(false, aadhaarFile)),
                 Center(
                   child: Text(
-                    'Or',
+                    'OR',
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(color: greycolor),
@@ -167,7 +167,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                 ),
                 SizedBox(height: 10),
                 buildRow(
-                  'Aadhar number',
+                  'Aadhar Number',
                   buildInput(
                     'Your Aadhar Number',
                     context,
@@ -179,11 +179,53 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                 buildRow(
                   'Address',
                   buildInput(
-                    'Enter address',
+                    'Enter Address',
                     context,
                     TextInputType.text,
                     addressFocusNode,
                   ),
+                ),
+
+                const SizedBox(height: 15),
+
+                Row(
+                  children: [
+                    Checkbox(
+                      activeColor: onboardingTitleColor,
+                      value: isConcentChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isConcentChecked = value!;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'I authorize  ',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            TextSpan(
+                              text: 'BirbalPlus  ',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+
+                            TextSpan(
+                              text:
+                                  'to fetch and update my KYC records with KRAs as required by SEBI regulations.',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Text(
+                      //   'I authorize mynameisbond to fetch and update my KYC records with KRAs as required by SEBI regulations.',
+                      //   style: Theme.of(context).textTheme.bodySmall,
+                      // ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -224,6 +266,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
         inputType == TextInputType.number || inputType == TextInputType.phone;
 
     final textField = TextField(
+       cursorColor: onboardingTitleColor,
       // controller: controller,
       focusNode: focusNode,
       keyboardType: inputType,
@@ -247,7 +290,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
     if (!isNumeric || focusNode == null) return textField;
 
     return SizedBox(
-    height: 60,
+      height: 60,
       child: KeyboardActions(
         config: KeyboardActionsConfig(
           keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
@@ -263,9 +306,9 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
     );
   }
 
-
   Widget buildDateInput(context) {
     return TextField(
+       cursorColor: onboardingTitleColor,
       readOnly: true,
       controller: dateController,
       style: Theme.of(context).textTheme.bodyLarge,
@@ -320,7 +363,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
               ),
               child: Center(
                 child: Text(
-                  file == null ? "Select file" : "Change file",
+                  file == null ? "Select File" : "Change File",
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: blueDark),
@@ -330,7 +373,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                file == null ? "Drop files here to upload" : "File selected ✓",
+                file == null ? "Drop files here to upload" : "File sSlected ✓",
                 style: Theme.of(
                   context,
                 ).textTheme.bodySmall?.copyWith(color: onboardingTitleColor),

@@ -462,7 +462,9 @@ class _InvoiceCard extends StatelessWidget {
                 children: const [
                   _Metric(label: 'Unit Cost', value: '₹1,00,000'),
                   _Metric(label: 'XIRR', value: '13.65%', green: true),
+                   _Metric(label: 'Coupon Rate', value: '12.5%', green: true),
                   _Metric(label: 'Tenure', value: '90 Days'),
+                 
                 ],
               ),
               const SizedBox(height: 18),

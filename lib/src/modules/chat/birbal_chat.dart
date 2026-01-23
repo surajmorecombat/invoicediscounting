@@ -14,7 +14,7 @@ class BirbalChat extends StatefulWidget {
 }
 
 class _BirbalChatState extends State<BirbalChat> {
-    final TextEditingController controller = TextEditingController();
+  final TextEditingController controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   bool suggestiondisable = false;
 
@@ -67,9 +67,10 @@ class _BirbalChatState extends State<BirbalChat> {
 
       // ctx: 3,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
-          'Bond AI assistant',
-        style: Theme.of(context).textTheme.headlineMedium,
+          'Birbal Plus AI assistant',
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         elevation: 0,
         backgroundColor: whiteColor,
@@ -291,6 +292,7 @@ class _BirbalChatState extends State<BirbalChat> {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: TextField(
+         cursorColor: onboardingTitleColor,
         controller: controller,
         style: Theme.of(context).textTheme.bodyLarge,
         textInputAction: TextInputAction.send,

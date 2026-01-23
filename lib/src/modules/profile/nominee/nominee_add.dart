@@ -20,10 +20,10 @@ class _NomineeAddState extends State<NomineeAdd> {
   final TextEditingController contactController = TextEditingController();
 
   bool isEditing = false;
-   DateTime? selectedDate;
-     final TextEditingController dateController = TextEditingController();
+  DateTime? selectedDate;
+  final TextEditingController dateController = TextEditingController();
 
-String? nomineeRelation;
+  String? nomineeRelation;
 
   Future<void> _selectDOB(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -66,10 +66,11 @@ String? nomineeRelation;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         title: Text(
           'Nominee Details',
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
@@ -109,11 +110,9 @@ String? nomineeRelation;
               //   nomineeDobController,
               //   isEditing: isEditing,
               // ),
-
-              buildDateInput(context, isEditing: isEditing, ),
+              buildDateInput(context, isEditing: isEditing),
 
               // const SizedBox(height: 15),
-
               inputField(
                 context,
                 'Guardian Name',
@@ -124,13 +123,11 @@ String? nomineeRelation;
 
               const SizedBox(height: 15),
 
-          nomineeRelationDropdown(context, isEditing: isEditing, ),
-
+              nomineeRelationDropdown(context, isEditing: isEditing),
 
               // inputField(context, 'Nominee Relation', TextInputType.name,
               //     nomineeRelationController, isEditing: isEditing),
               // const SizedBox(height: 15),
-
               inputField(
                 context,
                 'Contact',
@@ -141,64 +138,65 @@ String? nomineeRelation;
 
               const SizedBox(height: 20),
 
-                // SizedBox(
-                //   width: double.infinity,
-                //   height: 52,
-                //   child: ElevatedButton(
-                //     onPressed: () {
-                //       setState(() => isEditing = false);
-                //     },
-                //     child: const Text("Save"),
-                //   ),
-                // ),
-
-                 Container(
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: ElevatedButton(
-                      onPressed:
-                          isEditing
-                              ? () {
-                                setState(() {
-                                  isEditing = false;
-                                });
-                              }
-                              : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: onboardingTitleColor,
-                        foregroundColor: whiteColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        elevation: 0,
-                        minimumSize: const Size(0, 48),
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: 52,
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       setState(() => isEditing = false);
+              //     },
+              //     child: const Text("Save"),
+              //   ),
+              // ),
+              Container(
+                color: Colors.white,
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed:
+                        isEditing
+                            ? () {
+                              setState(() {
+                                isEditing = false;
+                              });
+                            }
+                            : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: onboardingTitleColor,
+                      foregroundColor: whiteColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(
-                        'Save',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: isEditing ? whiteColor : Colors.grey,
-                        ),
+                      elevation: 0,
+                      minimumSize: const Size(0, 48),
+                    ),
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: isEditing ? whiteColor : Colors.grey,
                       ),
                     ),
                   ),
                 ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
- Widget buildDateInput(context,{bool isEditing = false, }  ) {
+
+  Widget buildDateInput(context, {bool isEditing = false}) {
     return TextField(
+      cursorColor: onboardingTitleColor,
       readOnly: true,
       controller: dateController,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: isEditing ? blackColor : Colors.grey,
-          ),
+        color: isEditing ? blackColor : Colors.grey,
+      ),
       decoration: InputDecoration(
         hintText: 'DD-MM-YYYY',
         hintStyle: Theme.of(context).textTheme.bodySmall,
@@ -228,38 +226,44 @@ String? nomineeRelation;
       },
     );
   }
- Widget nomineeRelationDropdown(BuildContext context,{bool isEditing = false, }) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 12,),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(color: Colors.grey),
-    ),
-    child: DropdownMenu<String>(
-      requestFocusOnTap: true,
-      enableSearch: false,
-      expandedInsets: EdgeInsets.zero,
-      
-      hintText: "Nominee Relation",
-      textStyle: Theme.of(context).textTheme.bodySmall,
-      inputDecorationTheme:  InputDecorationTheme(
-        suffixIconColor: onboardingTitleColor,
-        border: InputBorder.none,
-        isDense: true,
-        contentPadding: EdgeInsets.symmetric( vertical: 12),
-      ),
-      dropdownMenuEntries: const [
-        DropdownMenuEntry(value: "Father", label: "Father"),
-        DropdownMenuEntry(value: "Mother", label: "Mother"),
-        DropdownMenuEntry(value: "Spouse", label: "Spouse"),
-        DropdownMenuEntry(value: "Son", label: "Son"),
-        DropdownMenuEntry(value: "Daughter", label: "Daughter"),
-        DropdownMenuEntry(value: "Brother", label: "Brother"),
-        DropdownMenuEntry(value: "Sister", label: "Sister"),
-      ],
-      onSelected: isEditing ? (value) => setState(() => nomineeRelation = value) : null,
-    ),
-  );
-}
 
+  Widget nomineeRelationDropdown(
+    BuildContext context, {
+    bool isEditing = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey),
+      ),
+      child: DropdownMenu<String>(
+        requestFocusOnTap: false,
+        enableSearch: false,
+        expandedInsets: EdgeInsets.zero,
+
+        hintText: "Nominee Relation",
+        textStyle: Theme.of(context).textTheme.bodySmall,
+        inputDecorationTheme: InputDecorationTheme(
+          suffixIconColor: onboardingTitleColor,
+          border: InputBorder.none,
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(vertical: 12),
+        ),
+        dropdownMenuEntries: const [
+          DropdownMenuEntry(value: "Father", label: "Father"),
+          DropdownMenuEntry(value: "Mother", label: "Mother"),
+          DropdownMenuEntry(value: "Spouse", label: "Spouse"),
+          DropdownMenuEntry(value: "Son", label: "Son"),
+          DropdownMenuEntry(value: "Daughter", label: "Daughter"),
+          DropdownMenuEntry(value: "Brother", label: "Brother"),
+          DropdownMenuEntry(value: "Sister", label: "Sister"),
+        ],
+        onSelected:
+            isEditing
+                ? (value) => setState(() => nomineeRelation = value)
+                : null,
+      ),
+    );
+  }
 }

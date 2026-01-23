@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
+import 'package:invoicediscounting/src/modules/secure_pin.dart/create_secure_pin.dart';
+import 'package:invoicediscounting/src/modules/secure_pin.dart/enter_secure_pin.dart';
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 import 'package:invoicediscounting/src/modules/signUp/phone_verification.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
@@ -71,7 +73,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '''we have sent OTP to abc@gmail.com''',
+                  '''We have sent OTP to abc@gmail.com''',
                   textAlign: TextAlign.center,
         
                   style: Theme.of(
@@ -100,6 +102,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                   width: 50,
                   height: 50,
                   child: TextField(
+                     cursorColor: onboardingTitleColor,
                     controller: _controllers[index],
                     focusNode: _focusNodes[index],
                     keyboardType: TextInputType.number,
@@ -134,7 +137,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Expect OTP in',
+                      text: 'Resend OTP in',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextSpan(
@@ -166,8 +169,8 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                     MaterialPageRoute(
                       builder:
                           (context) =>
-                              //EnterSecurePin()
-                              KycAddressScreen(),
+                              CreateSecurePin()
+                             // KycAddressScreen(),
                     ),
                   );
                 },

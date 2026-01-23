@@ -20,9 +20,10 @@ class _PaymentModeState extends State<PaymentMode> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
-          'Deposite to Birbal Plus Pocket',
-          style: Theme.of(context).textTheme.bodyLarge,
+          'Deposite to My Pocket',
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         elevation: 0,
         backgroundColor: backgroundColor,
@@ -105,7 +106,7 @@ class _PaymentModeState extends State<PaymentMode> {
                 border: Border.all(color: Colors.grey.shade200),
               ),
               child: DropdownMenu<PaymentMethod>(
-                requestFocusOnTap: true,
+                requestFocusOnTap: false,
                 inputDecorationTheme: InputDecorationTheme(
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(
@@ -151,6 +152,7 @@ class _PaymentModeState extends State<PaymentMode> {
                 child: Column(
                   children: [
                     TextField(
+                       cursorColor: onboardingTitleColor,
                       // controller: controller,
                       style: Theme.of(context).textTheme.bodyLarge,
                       decoration: InputDecoration(

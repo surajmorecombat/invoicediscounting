@@ -12,8 +12,9 @@ class ReturnTaxation extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
-        title: Text("Return Taxation", style: Theme.of(context).textTheme.bodyLarge),
+        title: Text("Return Taxation", style: Theme.of(context).textTheme.headlineMedium),
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
