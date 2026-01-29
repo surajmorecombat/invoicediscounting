@@ -53,7 +53,7 @@ class WidrawalSuccessCard extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 50, right: 50),
                     child: SizedBox(
                       width: double.infinity,
-                      height: 40,
+                      height: 48,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: onboardingTitleColor,

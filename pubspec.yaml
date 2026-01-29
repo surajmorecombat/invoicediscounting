@@ -44,6 +44,8 @@ dependencies:
   super_tooltip: ^2.1.0
   sentry_flutter: ^9.10.0
   keyboard_actions: ^4.2.1
+  shimmer_animation: ^2.2.2+1
+  shimmer: ^3.0.0
   
 
 dev_dependencies:

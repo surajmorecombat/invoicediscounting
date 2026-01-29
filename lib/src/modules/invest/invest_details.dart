@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/about_entity_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/opportunity_summary_card.dart';
+import 'package:invoicediscounting/src/components/shimmer/platform_track_record.dart';
+import 'package:invoicediscounting/src/components/shimmer/primary_card_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/risk_mitigation_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_done_success.dart';
 import 'package:invoicediscounting/src/modules/invest/wallet.dart';
@@ -13,6 +18,7 @@ class InvestDetails extends StatefulWidget {
 }
 
 class _InvestDetailsState extends State<InvestDetails> {
+  bool isLoading = true;
   bool showRiskSection = true;
   bool faqOne = false;
   bool faqTwo = false;
@@ -30,6 +36,17 @@ class _InvestDetailsState extends State<InvestDetails> {
 
   int get unitLeftNow => unitLeft + unitCount;
   int get totalAmount => unitCount * pricePerUnit;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   void dispose() {
     _tooltipController.dispose();
@@ -91,14 +108,25 @@ class _InvestDetailsState extends State<InvestDetails> {
         ),
         child: Column(
           children: [
-            _primaryCard(context),
+            isLoading ? PrimaryCardShimmer() : _primaryCard(context),
 
-            const SizedBox(height: 16),
-            riskMitigationCard(context),
+            // const SizedBox(height: 16),
+            isLoading
+                ? const RiskMitigationCardShimmer()
+                : riskMitigationCard(context),
 
-            platformTrackRecordCard(context),
-            opportunitySummaryCard(context),
-            aboutEntitiesCard(context),
+            isLoading
+                ? const PlatformTrackRecordCardShimmer()
+                : platformTrackRecordCard(context),
+
+            isLoading
+                ? const OpportunitySummaryCardShimmer()
+                : opportunitySummaryCard(context),
+
+            isLoading
+                ? const AboutEntitiesCardShimmer()
+                : aboutEntitiesCard(context),
+
             shareDealCard(context),
           ],
         ),
@@ -594,23 +622,7 @@ class _InvestDetailsState extends State<InvestDetails> {
               ),
             ),
 
-            // const SizedBox(height: 8),
-            // Text(
-            //   "Sampoorna Feeds Pvt Ltd is a Phagwara, Punjab-based company specializing in manufacturing and selling a range of animal feed, including poultry and cattle feed, primarily produced through contract farming.",
-            //   style: Theme.of(
-            //     context,
-            //   ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-            // ),
             if (showAboutEntities) ...[
-              // const SizedBox(height: 16),
-
-              // Text(
-              //   "Frequently Asked Questions",
-              //   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              //     color: blackColor,
-              //     fontWeight: FontWeight.w500,
-              //   ),
-              // ),
               Row(
                 children: [
                   Expanded(
@@ -703,18 +715,6 @@ class _InvestDetailsState extends State<InvestDetails> {
                   '''Returns in invoice discounting are primarily calculated as the difference between the full value of an invoice and the discounted amount paid upfront, often expressed as a percentage rate. This calculation is a simple arithmetic difference for the financier's nominal return, and a time-value-adjusted calculation to determine the actual annualized rate of return.''',
                 ),
               ],
-
-              // _aboutSection(
-              //   "About the Trustee",
-              //   "Beacon Trusteeship Limited is a SEBI-registered debenture trustee that provides a wide range of trustee services, including Debenture Trustee Services, Security Trustee Services, Trustee to Alternate Investment Funds (AIF), Trustee to Securitization transactions, Bond Trusteeship Services, Escrow Services, and Safekeeping.",
-              // ),
-
-              // const SizedBox(height: 16),
-
-              // _aboutSection(
-              //   "About NBFC",
-              //   "Gangotree Baitar Private Limited (GBPL) is a Non Deposit-Taking NBFC registered with RBI having registration number as 05.02902. Backed by a team of qualified investment professionals, GBPL specializes in providing Invoice Discounting and Supply Chain Financing to Corporates in India.",
-              // ),
             ],
           ],
         ),
