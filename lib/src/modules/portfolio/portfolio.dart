@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:invoicediscounting/src/components/appbar.dart';
 import 'package:invoicediscounting/src/components/holding_card.dart';
+import 'package:invoicediscounting/src/components/shimmer/appbar_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/portfolio_tab_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/total_earning_card.dart';
 import 'package:invoicediscounting/src/components/total_earning_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
-import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
+
 import 'package:invoicediscounting/src/modules/portfolio/holding_detail.dart';
-import 'package:invoicediscounting/src/modules/profile/profile.dart'
-    show Profile;
+
 
 class Portfolio extends StatefulWidget {
   const Portfolio({super.key});
@@ -17,6 +20,18 @@ class Portfolio extends StatefulWidget {
 }
 
 class _PortfolioState extends State<Portfolio> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   final List<InvestmentCardData> holdings = [
     InvestmentCardData(
       bondName: "Navi Finserv Limited",
@@ -50,7 +65,9 @@ class _PortfolioState extends State<Portfolio> {
         backgroundColor: backgroundColor,
         showDefaultBottom: true,
         ctx: 2,
-        appBar: AppBar(
+        appBar: isLoading ? const InvestAppBarShimmer() : InvestAppBar(),
+        /*
+         AppBar(
           elevation: 0,
           backgroundColor: backgroundColor,
           centerTitle: false,
@@ -122,16 +139,24 @@ class _PortfolioState extends State<Portfolio> {
             ),
           ],
         ),
+
+        */
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
           child: Column(
             children: [
               const SizedBox(height: 10),
-              totalEarningCard(context),
+              isLoading ? TotalEarningCardShimmer() : totalEarningCard(context),
               const SizedBox(height: 16),
               _portfolioTabs(context),
               const SizedBox(height: 12),
-              Expanded(child: _portfolioTabViews(context)),
+              Expanded(
+                child:
+                    isLoading
+                        ? const PortfolioTabShimmer()
+                        : _portfolioTabViews(context),
+                // _portfolioTabViews(context)
+              ),
             ],
           ),
         ),

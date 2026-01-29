@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/wallat_balance_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_method.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
@@ -12,10 +13,18 @@ class WalletAdd extends StatefulWidget {
 
 class _WalletAddState extends State<WalletAdd> {
   final TextEditingController amountController = TextEditingController();
-
+  bool isLoading = true;
   int selectedAmount = 000000;
   final FocusNode amountFocusNode = FocusNode();
-
+@override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
@@ -89,7 +98,9 @@ class _WalletAddState extends State<WalletAdd> {
       //     ),
       //   ),
       // ),
-      body: Padding(
+      body: isLoading?WalletBalanceCardShimmer(isTablet: isTablet):
+      
+      Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
         child: Card(
           elevation: 0.1,

@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/components/birbal_assuresheet.dart';
+import 'package:invoicediscounting/src/components/shimmer/secondary_card_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/unitcalculator_shimmer.dart';
 import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/payment_done_success.dart';
@@ -17,6 +19,7 @@ class AddToWallet extends StatefulWidget {
 }
 
 class _AddToWalletState extends State<AddToWallet> {
+  bool isLoading = true;
   bool addwallet = false;
   int selectedAmount = 000000;
   int unitCount = 1;
@@ -36,6 +39,11 @@ class _AddToWalletState extends State<AddToWallet> {
   void initState() {
     super.initState();
     _controller = SuperTooltipController();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   @override
@@ -78,7 +86,10 @@ class _AddToWalletState extends State<AddToWallet> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Invest Now', style: Theme.of(context).textTheme.headlineMedium),
+        title: Text(
+          'Invest Now',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: blackColor),
@@ -138,15 +149,17 @@ class _AddToWalletState extends State<AddToWallet> {
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isTablet ? 120 : 16,
-            vertical: 16,
+            //  vertical: 16,
           ),
           child: Column(
             children: [
-              unitCalculatorCard(context),
+              isLoading
+                  ? UnitCalculatorCardShimmer()
+                  : unitCalculatorCard(context),
 
-              secondaryCard(context),
+              isLoading ? const SecondaryCardShimmer() : secondaryCard(context),
 
-              liquidityCard(context),
+              isLoading ? const LiquidityCardShimmer() : liquidityCard(context),
 
               coveredByCard(context),
 
@@ -193,9 +206,7 @@ class _AddToWalletState extends State<AddToWallet> {
             SizedBox(height: 10),
 
             buildRow(context, 'Unit Value', '₹1,00,000.00'),
-            // buildRow(context, 'Coupon Rate', '12.5%'),
-            // buildRow(context, 'Investment Value', '₹1,03,561.64'),
-            // buildRow(context, 'Unit Price', '₹1,00,000.00'),
+
             buildRow(
               context,
               'Accrued Interest',
@@ -204,30 +215,6 @@ class _AddToWalletState extends State<AddToWallet> {
               tooltipWidth: 200,
               icon: Icons.info_outline,
             ),
-            // buildRow(
-            //   context,
-            //   'Next Liquidity Event',
-            //   '13/11/2025',
-            //   icon: Icons.info_outline,
-            // ),
-            // buildRow(
-            //   context,
-            //   'Liquidity Event Amount',
-            //   '₹1,04,589.98',
-            //   icon: Icons.info_outline,
-            // ),
-            // buildRow(
-            //   context,
-            //   'Final Maturity Date',
-            //   '08/01/2028',
-            //   icon: Icons.info_outline,
-            // ),
-            // buildRow(
-            //   context,
-            //   'Exp. Maturity Amount',
-            //   '₹1,36,708.72',
-            //   highlight: true,
-            // ),
           ],
         ),
       ),
@@ -364,17 +351,6 @@ class _AddToWalletState extends State<AddToWallet> {
 
                 const SizedBox(width: 50),
 
-                // Column(
-                //   children: [
-
-                //     Text(
-                //       unitCount.toString().padLeft(2, '0'),
-                //       style: Theme.of(context).textTheme.displaySmall,
-                //     ),
-
-                //     Text("Unit", style: Theme.of(context).textTheme.bodySmall),
-                //   ],
-                // ),
                 Column(
                   children: [
                     GestureDetector(
@@ -456,7 +432,7 @@ class _AddToWalletState extends State<AddToWallet> {
                                     ],
                                   ),
                                   child: TextField(
-                                     cursorColor: onboardingTitleColor,
+                                    cursorColor: onboardingTitleColor,
                                     controller: unitController,
                                     focusNode: _unitFocusNode,
                                     keyboardType: TextInputType.number,

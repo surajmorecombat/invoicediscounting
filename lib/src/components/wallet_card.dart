@@ -1,10 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/wallat_shimmer.dart';
 import 'package:invoicediscounting/src/components/widrawl_success_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/wallet/wallet_add.dart';
-import 'package:keyboard_actions/keyboard_actions.dart';
+
 
 class WalletCard extends StatefulWidget {
   const WalletCard({super.key});
@@ -14,6 +15,17 @@ class WalletCard extends StatefulWidget {
 }
 
 class _WalletCardState extends State<WalletCard> {
+   bool isLoading = true;
+
+   @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
   void widrawlCardOne() {
     showDialog(
       context: context,
@@ -32,7 +44,9 @@ class _WalletCardState extends State<WalletCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isLoading? WalletSummaryCardShimmer():
+    
+    Container(
       margin: EdgeInsets.only(top: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(

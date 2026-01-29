@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/bank_account_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/payment_method_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/neft_payment.dart'
     show PayOfflineScreen;
@@ -13,9 +15,20 @@ class SelectPaymentMethod extends StatefulWidget {
 
 class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
   int selectedMethod = 0;
+  bool isLoading = true;
 
+    @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
+     final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -64,12 +77,20 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(left: 16, right: 16),
+        padding: EdgeInsets.symmetric(
+          horizontal: isTablet ? 120 : 16,
+          // vertical: 16,
+        ),
         child: Column(
           children: [
-            _bankAccountCard(),
-            const SizedBox(height: 16),
-            _paymentMethodCard(),
+           isLoading
+    ? const BankAccountCardShimmer()
+    : _bankAccountCard(),
+
+isLoading
+    ? const PaymentMethodCardShimmer()
+    : _paymentMethodCard(),
+
           ],
         ),
       ),

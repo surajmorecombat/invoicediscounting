@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:invoicediscounting/src/components/appbar.dart';
+import 'package:invoicediscounting/src/components/shimmer/appbar_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/invoice_card_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/models/invoicemodel.dart';
@@ -16,6 +19,17 @@ class Invest extends StatefulWidget {
 
 class _InvestState extends State<Invest> {
   String selectedFilter = 'all';
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   final List<InvoiceModel> allInvoices = [
     InvoiceModel(
@@ -46,6 +60,22 @@ class _InvestState extends State<Invest> {
           ? allInvoices
           : allInvoices.where((e) => e.category == selectedFilter).toList();
 
+  void _onFilterSelected(String filter) {
+    setState(() {
+      selectedFilter = filter;
+      isLoading = true;
+    });
+
+    // Simulate API/filtering delay
+    Future.delayed(const Duration(milliseconds: 800), () {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
@@ -53,6 +83,11 @@ class _InvestState extends State<Invest> {
       backgroundColor: backgroundColor,
       ctx: 0,
       showDefaultBottom: true,
+      appBar: isLoading
+    ? const InvestAppBarShimmer()
+    : InvestAppBar(),
+
+/*
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
@@ -71,8 +106,6 @@ class _InvestState extends State<Invest> {
               radius: 34,
               child: Image.asset('assets/icons/profile.png'),
             ),
-
-  
           ),
         ),
         actions: [
@@ -117,103 +150,59 @@ class _InvestState extends State<Invest> {
             ),
           ),
 
-          // Notification Bell
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: SvgPicture.asset('assets/icons/bell.svg',width: 20,height: 20,),
-      
+            child: SvgPicture.asset(
+              'assets/icons/bell.svg',
+              width: 20,
+              height: 20,
+            ),
           ),
         ],
       ),
-
-      /*
-  Row(
-              children: [
-                // Icon(Icons.person),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    );
-                  },
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: greycolor,
-                    child: Icon(Icons.person, color: whiteColor),
-                  ),
-                ),
-                // IconButton(
-                //   onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Profile()),
-                // );
-                //   },
-                //   icon: Icon(Icons.person),
-                // ),
-                // const Icon(Icons.person, size: 20),
-                const SizedBox(width: 12),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TrainsationAll()),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      // color: Colors.blue.shade50,
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: onboardingTitleColor),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.account_balance_wallet_outlined,
-                          size: 20,
-                          color: onboardingTitleColor,
-                        ),
-                        SizedBox(width: 6),
-                        Text(
-                          '₹1,00,000',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Stack(
-                  children: const [
-                    Icon(Icons.notifications_none_outlined, size: 20),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: CircleAvatar(
-                        radius: 4,
-                        backgroundColor: Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
       */
+
       body: SafeArea(
         child: Column(
           children: [
             SizedBox(height: 10),
-            _TopBar(
-              selected: selectedFilter,
-              onSelect: (f) => setState(() => selectedFilter = f),
-            ),
+            isLoading
+                ? const TopBarShimmer()
+                : _TopBar(
+                  selected: selectedFilter,
+                  onSelect: _onFilterSelected,
+                ),
+
             SizedBox(height: 10),
+            Expanded(
+              child:
+                  isLoading
+                      ? ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 14,
+                        ),
+                        itemCount: 5,
+                        itemBuilder: (_, __) => const InvoiceCardShimmer(),
+                      )
+                      : ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 14,
+                        ),
+                        itemCount: filteredInvoices.length,
+                        itemBuilder: (_, index) {
+                          final i = filteredInvoices[index];
+                          return _InvoiceCard(
+                            buyer: i.buyer,
+                            seller: i.seller,
+                            imagepathbuyer: i.buyerImg,
+                            imagepatseller: i.sellerImg,
+                          );
+                        },
+                      ),
+            ),
+            /*
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(
@@ -232,6 +221,7 @@ class _InvestState extends State<Invest> {
                 },
               ),
             ),
+            */
           ],
         ),
       ),
@@ -260,83 +250,6 @@ class _TopBar extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Row(
-            //   children: [
-            //     // Icon(Icons.person),
-            //     GestureDetector(
-            //       onTap: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(builder: (context) => Profile()),
-            //         );
-            //       },
-            //       child: CircleAvatar(
-            //         radius: 20,
-            //         backgroundColor: greycolor,
-            //         child: Icon(Icons.person, color: whiteColor),
-            //       ),
-            //     ),
-            //     // IconButton(
-            //     //   onPressed: () {
-            //     // Navigator.push(
-            //     //   context,
-            //     //   MaterialPageRoute(builder: (context) => Profile()),
-            //     // );
-            //     //   },
-            //     //   icon: Icon(Icons.person),
-            //     // ),
-            //     // const Icon(Icons.person, size: 20),
-            //     const SizedBox(width: 12),
-            //     const Spacer(),
-            //     GestureDetector(
-            //       onTap: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(builder: (context) => TrainsationAll()),
-            //         );
-            //       },
-            //       child: Container(
-            //         padding: const EdgeInsets.symmetric(
-            //           horizontal: 14,
-            //           vertical: 6,
-            //         ),
-            //         decoration: BoxDecoration(
-            //           // color: Colors.blue.shade50,
-            //           borderRadius: BorderRadius.circular(30),
-            //           border: Border.all(color: onboardingTitleColor),
-            //         ),
-            //         child: Row(
-            //           children: [
-            //             Icon(
-            //               Icons.account_balance_wallet_outlined,
-            //               size: 20,
-            //               color: onboardingTitleColor,
-            //             ),
-            //             SizedBox(width: 6),
-            //             Text(
-            //               '₹1,00,000',
-            //               style: Theme.of(context).textTheme.bodyMedium,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //     const SizedBox(width: 10),
-            //     Stack(
-            //       children: const [
-            //         Icon(Icons.notifications_none_outlined, size: 20),
-            //         Positioned(
-            //           right: 0,
-            //           top: 0,
-            //           child: CircleAvatar(
-            //             radius: 4,
-            //             backgroundColor: Colors.red,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
             const SizedBox(height: 12),
             Text(
               'Invoice Discounting',
@@ -415,14 +328,8 @@ class _InvoiceCard extends StatelessWidget {
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         margin: const EdgeInsets.only(bottom: 16),
-        // padding: const EdgeInsets.all(16),
-        // decoration: BoxDecoration(
-        //   color: Colors.white,
-        //   borderRadius: BorderRadius.circular(16),
-        //   border: Border.all(color: Colors.grey.shade200),
-        // ),
+
         child: Container(
-          //  margin: const EdgeInsets.only(bottom: 16),
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
@@ -462,9 +369,8 @@ class _InvoiceCard extends StatelessWidget {
                 children: const [
                   _Metric(label: 'Unit Cost', value: '₹1,00,000'),
                   _Metric(label: 'XIRR', value: '13.65%', green: true),
-                   _Metric(label: 'Coupon Rate', value: '12.5%', green: true),
+                  _Metric(label: 'Coupon Rate', value: '12.5%', green: true),
                   _Metric(label: 'Tenure', value: '90 Days'),
-                 
                 ],
               ),
               const SizedBox(height: 18),
@@ -525,10 +431,6 @@ class _Metric extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: green ? Colors.green : Colors.black,
           ),
-          // style: TextStyle(
-          //   fontWeight: FontWeight.bold,
-          //   color: green ? Colors.green : Colors.black,
-          // ),
         ),
       ],
     );

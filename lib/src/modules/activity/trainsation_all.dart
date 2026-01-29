@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:invoicediscounting/src/components/shimmer/transaction_list_shimmer.dart';
 import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
@@ -13,7 +14,18 @@ class TrainsationAll extends StatefulWidget {
 }
 
 class _TrainsationAllState extends State<TrainsationAll> {
+  bool isLoading = true;
   String sortBy = 'newest';
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   void showSort(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -23,9 +35,7 @@ class _TrainsationAllState extends State<TrainsationAll> {
           (_) => Container(
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20),
-              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
             child: Padding(
               padding: const EdgeInsets.only(top: 8),
@@ -176,117 +186,117 @@ class _TrainsationAllState extends State<TrainsationAll> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (_) {
-         return StatefulBuilder(
-  builder: (context, setState) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(22), 
-        ),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Select Month',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 12),
-
-          DropdownButton<int>(
-            value: selectedYear,
-            style: TextStyle(color: blackColor),
-            items: List.generate(
-              15,
-              (i) => DropdownMenuItem(
-                value: DateTime.now().year - i,
-                child: Text((DateTime.now().year - i).toString()),
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
               ),
-            ),
-            onChanged: (v) => setState(() => selectedYear = v!),
-          ),
-
-          const SizedBox(height: 12),
-
-          GridView.builder(
-            shrinkWrap: true,
-            itemCount: 12,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 2.4,
-            ),
-            itemBuilder: (_, index) {
-              final m = index + 1;
-              final isSelected = m == selectedMonth;
-
-              return GestureDetector(
-                onTap: () => setState(() => selectedMonth = m),
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? onboardingTitleColor
-                        : faintboxbackground,
-                    borderRadius: BorderRadius.circular(8),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Select Month',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  child: Text(
-                    DateFormat.MMM().format(DateTime(0, m)),
-                    style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.black,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
+                  const SizedBox(height: 12),
 
-          const SizedBox(height: 14),
-
-          Row(
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: 48,
-                  child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(color: onboardingTitleColor),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: SizedBox(
-                     height: 48,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: onboardingTitleColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  DropdownButton<int>(
+                    value: selectedYear,
+                    style: TextStyle(color: blackColor),
+                    items: List.generate(
+                      15,
+                      (i) => DropdownMenuItem(
+                        value: DateTime.now().year - i,
+                        child: Text((DateTime.now().year - i).toString()),
                       ),
                     ),
-                    onPressed: () => Navigator.pop(
-                      context,
-                      DateTime(selectedYear, selectedMonth),
-                    ),
-                    child: const Text('Apply'),
+                    onChanged: (v) => setState(() => selectedYear = v!),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  },
-);
 
+                  const SizedBox(height: 12),
+
+                  GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: 12,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 2.4,
+                        ),
+                    itemBuilder: (_, index) {
+                      final m = index + 1;
+                      final isSelected = m == selectedMonth;
+
+                      return GestureDetector(
+                        onTap: () => setState(() => selectedMonth = m),
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color:
+                                isSelected
+                                    ? onboardingTitleColor
+                                    : faintboxbackground,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            DateFormat.MMM().format(DateTime(0, m)),
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+
+                  const SizedBox(height: 14),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 48,
+                          child: OutlinedButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(color: onboardingTitleColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: SizedBox(
+                          height: 48,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: onboardingTitleColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed:
+                                () => Navigator.pop(
+                                  context,
+                                  DateTime(selectedYear, selectedMonth),
+                                ),
+                            child: const Text('Apply'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
       },
     );
   }
@@ -304,76 +314,33 @@ class _TrainsationAllState extends State<TrainsationAll> {
           vertical: 16,
         ),
         child: Column(
+          
           children: [
             WalletCard(),
 
             SizedBox(height: 10),
 
-            _TopBar(
-              onSort: () => showSort(context),
-              onType: () => showType(context),
-              onMonth: () => showMonth(context),
-            ),
             Expanded(
-              child: ListView.builder(
-                // padding: const EdgeInsets.all(16),
-                itemCount: filtered.length,
-                itemBuilder: (_, i) => TransactionTile(t: filtered[i]),
-              ),
+              child:
+                  isLoading
+                      ? const TransactionListShimmer()
+                      : Column(
+                        children: [
+                          _TopBar(
+                            onSort: () => showSort(context),
+                            onType: () => showType(context),
+                            onMonth: () => showMonth(context),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: filtered.length,
+                              itemBuilder:
+                                  (_, i) => TransactionTile(t: filtered[i]),
+                            ),
+                          ),
+                        ],
+                      ),
             ),
-            // Container(
-            //   padding: const EdgeInsets.all(16),
-            //   decoration: BoxDecoration(
-            //     color: whiteColor,
-            //     borderRadius: BorderRadius.circular(12),
-            //     border: Border.all(color: Colors.grey.shade200),
-            //   ),
-            //   child: Column(
-            //     children: [
-            //       Row(
-            //         children: [
-            //           Expanded(
-            //             child: Text(
-            //               'Need help ?',
-            //               style: Theme.of(context).textTheme.headlineLarge,
-            //             ),
-            //           ),
-            //           const SizedBox(width: 12),
-            //           Flexible(
-            //             child: Text(
-            //               '+91-9876543210',
-            //               textAlign: TextAlign.right,
-            //               maxLines: 2,
-            //               overflow: TextOverflow.ellipsis,
-            //               style: Theme.of(context).textTheme.bodyMedium,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //       const SizedBox(height: 10),
-            //       Row(
-            //         children: [
-            //           Expanded(
-            //             child: Text(
-            //               'contact us if you have any concern',
-            //               style: Theme.of(context).textTheme.bodyMedium,
-            //             ),
-            //           ),
-            //           const SizedBox(width: 12),
-            //           Flexible(
-            //             child: Text(
-            //               'contact.person@domainmail.com',
-            //               textAlign: TextAlign.right,
-            //               maxLines: 2,
-            //               overflow: TextOverflow.ellipsis,
-            //               style: Theme.of(context).textTheme.bodyMedium,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),

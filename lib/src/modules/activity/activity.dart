@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:invoicediscounting/src/components/appbar.dart';
+import 'package:invoicediscounting/src/components/shimmer/appbar_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/invoice_card_shimmer.dart';
+import 'package:invoicediscounting/src/components/shimmer/market_news.dart';
+import 'package:invoicediscounting/src/components/shimmer/transaction_more_shimmer.dart';
 import 'package:invoicediscounting/src/components/total_earning_card.dart';
 import 'package:invoicediscounting/src/components/wallet_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
@@ -18,8 +23,19 @@ class Activity extends StatefulWidget {
 }
 
 class _ActivityState extends State<Activity> {
+  bool isLoading = true;
   int visibleCount = 2;
   bool showTransaction = true;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
@@ -27,7 +43,9 @@ class _ActivityState extends State<Activity> {
       backgroundColor: backgroundColor,
       showDefaultBottom: true,
       ctx: 1,
+      appBar: isLoading ? const InvestAppBarShimmer() : InvestAppBar(),
 
+      /*
       appBar: AppBar(
         elevation: 0,
         backgroundColor: backgroundColor,
@@ -101,6 +119,8 @@ class _ActivityState extends State<Activity> {
           ),
         ],
       ),
+
+      */
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -111,7 +131,7 @@ class _ActivityState extends State<Activity> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // totalEarningCard(context),
-               SizedBox(height: 10),
+              SizedBox(height: 10),
               buildDemateAddCard(context),
               SizedBox(height: 10),
 
@@ -122,17 +142,21 @@ class _ActivityState extends State<Activity> {
                 ).textTheme.bodyLarge?.copyWith(color: blackColor),
               ),
               SizedBox(height: 10),
-              _InvoiceCard(
-                buyer: 'Shristi Ispat',
-                seller: 'Flipkart',
-                imagepathbuyer: 'assets/images/imageone.png',
-                imagepatseller: 'assets/images/imagetwo.png',
-              ),
-       
-              showTransactionCard(context),
+              isLoading
+                  ? InvoiceCardShimmer()
+                  : _InvoiceCard(
+                    buyer: 'Shristi Ispat',
+                    seller: 'Flipkart',
+                    imagepathbuyer: 'assets/images/imageone.png',
+                    imagepatseller: 'assets/images/imagetwo.png',
+                  ),
+              isLoading
+                  ? TransactionMoreShimmer()
+                  : showTransactionCard(context),
               // WalletCard(),
               // walletBalanceCard(context),
-              marketNews(context),
+              isLoading?MarketNewsShimmer():
+            marketNews(context),
             ],
           ),
         ),
@@ -478,7 +502,7 @@ class _InvoiceCard extends StatelessWidget {
                 children: const [
                   _Metric(label: 'Unit Cost', value: '₹1,00,000'),
                   _Metric(label: 'XIRR', value: '13.65%', green: true),
-                     _Metric(label: 'Coupon Rate', value: '12.5%', green: true),
+                  _Metric(label: 'Coupon Rate', value: '12.5%', green: true),
                   _Metric(label: 'Tenure', value: '90 Days'),
                 ],
               ),
