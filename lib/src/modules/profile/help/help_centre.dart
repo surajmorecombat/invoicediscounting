@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/help_center_shimmer.dart';
 
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/profile/help/general/general.dart';
@@ -6,9 +7,24 @@ import 'package:invoicediscounting/src/modules/profile/help/get_started/get_star
 import 'package:invoicediscounting/src/modules/profile/help/help_portfolio/help_portfolio.dart';
 import 'package:invoicediscounting/src/modules/profile/help/return_taxation/return_taxation.dart';
 
-class HelpCentre extends StatelessWidget {
+class HelpCentre extends StatefulWidget {
   const HelpCentre({super.key});
 
+  @override
+  State<HelpCentre> createState() => _HelpCentreState();
+}
+
+class _HelpCentreState extends State<HelpCentre> {
+    bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
@@ -27,7 +43,8 @@ class HelpCentre extends StatelessWidget {
 
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
-        child: Column(
+        child:isLoading? HelpCenterShimmer():
+        Column(
           children: [
             helpCategoryCard(
               context,

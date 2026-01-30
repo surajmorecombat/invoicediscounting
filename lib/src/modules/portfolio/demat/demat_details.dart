@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/demat_details_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/constant/input_fields.dart';
 
@@ -10,6 +11,16 @@ class DematDetails extends StatefulWidget {
 }
 
 class _DematDetailsState extends State<DematDetails> {
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
   final TextEditingController dpIdController = TextEditingController(
     text: '98765400',
   );
@@ -50,7 +61,8 @@ class _DematDetailsState extends State<DematDetails> {
 
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
-        child: SingleChildScrollView(
+        child: isLoading? DematDetailsShimmer():
+        SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: 10),

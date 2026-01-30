@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/news_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 
-class MarketNewsDetail extends StatelessWidget {
+class MarketNewsDetail extends StatefulWidget {
   const MarketNewsDetail({super.key});
+
+  @override
+  State<MarketNewsDetail> createState() => _MarketNewsDetailState();
+}
+
+class _MarketNewsDetailState extends State<MarketNewsDetail> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +35,16 @@ class MarketNewsDetail extends StatelessWidget {
         elevation: 0,
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
-        title: Text(
-          'News',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
+        title: Text('News', style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: isTablet ? 120 : 16,
           vertical: 16,
         ),
-        child: Column(children: const [Expanded(child: _Content())]),
+        child: Column(children:  [Expanded(child: isLoading?MarketNewsDetailShimmer():
+        
+        _Content())]),
       ),
     );
   }
@@ -39,7 +56,8 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
+      child: 
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(

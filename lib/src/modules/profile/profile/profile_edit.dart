@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoicediscounting/src/components/shimmer/profile_edit_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/constant/input_fields.dart';
 
@@ -14,6 +15,16 @@ class ProfileEdit extends StatefulWidget {
 }
 
 class _ProfileState extends State<ProfileEdit> {
+     bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
   final TextEditingController nameController = TextEditingController(
     text: 'Nitish Sanjay Sharma',
   );
@@ -63,7 +74,9 @@ class _ProfileState extends State<ProfileEdit> {
   
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
-        child: SingleChildScrollView(
+        child:isLoading?ProfileEditShimmer():
+        
+         SingleChildScrollView(
           child: Column(
             children: [
               _header(context),
@@ -144,40 +157,7 @@ class _ProfileState extends State<ProfileEdit> {
                   ),
                 ),
 
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 80, right: 80),
-                //   child: SizedBox(
-                //     width: double.infinity,
-
-                //     child: ElevatedButton(
-                //       onPressed:
-                // isEditing
-                //     ? () {
-                //       setState(() {
-                //         isEditing = false;
-                //       });
-                //     }
-                //     : null,
-                //       style: ElevatedButton.styleFrom(
-                //         backgroundColor: onboardingTitleColor,
-                //         foregroundColor: whiteColor,
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(8),
-                //         ),
-                //         elevation: 0,
-                //         minimumSize: const Size(0, 48),
-                //       ),
-                //       child: const Text(
-                //         'Update',
-                //         style: TextStyle(
-                //           fontSize: 18,
-                //           fontWeight: FontWeight.w600,
-                //           color: Colors.white,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+          
               ],
 
               const SizedBox(height: 24),
@@ -205,12 +185,7 @@ class _ProfileState extends State<ProfileEdit> {
             ),
             child: GestureDetector(
               onTap: () => showSourceSheet(false),
-              // () {
-              //   // Navigator.push(
-              //   //   context,
-              //   //   MaterialPageRoute(builder: (context) => ProfileEdit()),
-              //   // );
-              // },
+      
               child: CircleAvatar(
                 radius: 13,
                 backgroundColor: whiteColor,
@@ -222,7 +197,6 @@ class _ProfileState extends State<ProfileEdit> {
       ],
     );
 
-    //  CircleAvatar(radius: 50, backgroundColor: Colors.grey);
   }
   void showSourceSheet(bool isPan) {
     showModalBottomSheet(

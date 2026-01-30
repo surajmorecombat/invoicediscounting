@@ -94,16 +94,7 @@ Widget shimmerLine({required double width, double height = 14}) {
   );
 }
 
-Widget shimmerSquare({double size = 16}) {
-  return Container(
-    width: size,
-    height: size,
-    decoration: BoxDecoration(
-      color: Colors.grey.shade300,
-      borderRadius: BorderRadius.circular(3),
-    ),
-  );
-}
+
 
 Widget shimmerCircle({double size = 20}) {
   return Container(

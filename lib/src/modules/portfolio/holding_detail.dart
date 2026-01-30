@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/components/sell_unit_dialog.dart';
+import 'package:invoicediscounting/src/components/shimmer/holding_details_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
 class HoldingDetail extends StatefulWidget {
@@ -13,6 +14,17 @@ class HoldingDetail extends StatefulWidget {
 
 class _HoldingDetailState extends State<HoldingDetail> {
   late BuildContext rootContext;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -83,15 +95,24 @@ class _HoldingDetailState extends State<HoldingDetail> {
           child: Column(
             children: [
               //    const SizedBox(height: 12),
-              investedAmountCard(context),
+              isLoading
+                  ? InvestedAmountCardShimmer()
+                  : investedAmountCard(context),
               SizedBox(height: 12),
-              investmentDetailsCard(context),
+
+              isLoading
+                  ? InvestmentDetailsCardShimmer()
+                  : investmentDetailsCard(context),
               SizedBox(height: 12),
-              repaymentDetailsCard(context),
+              isLoading
+                  ? const RepaymentDetailsCardShimmer()
+                  : repaymentDetailsCard(context),
+
               SizedBox(height: 12),
-              partiesCard(context),
+              isLoading ? const PartiesCardShimmer() : partiesCard(context),
+
               SizedBox(height: 12),
-              documentCard(context),
+              isLoading ? const DocumentCardShimmer() : documentCard(context),
             ],
           ),
         ),
