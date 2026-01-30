@@ -5,7 +5,7 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/profile/profile.dart';
 
 class InvestAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const InvestAppBar();
+  const InvestAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

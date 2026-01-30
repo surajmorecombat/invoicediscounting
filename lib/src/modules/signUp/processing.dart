@@ -80,20 +80,20 @@ class _VerificationProcessingState extends State<VerificationProcessing> {
   }
 
 
-    Widget _menuItem(IconData icon, String title, context, VoidCallback onTap) {
-    return ListTile(
-      leading: Icon(icon, color: blackColor),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: blackColor,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: Icon(Icons.chevron_right, color: blackColor),
-      onTap: onTap,
-    );
-  }
+  //   Widget _menuItem(IconData icon, String title, context, VoidCallback onTap) {
+  //   return ListTile(
+  //     leading: Icon(icon, color: blackColor),
+  //     title: Text(
+  //       title,
+  //       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+  //         color: blackColor,
+  //         fontWeight: FontWeight.w500,
+  //       ),
+  //     ),
+  //     trailing: Icon(Icons.chevron_right, color: blackColor),
+  //     onTap: onTap,
+  //   );
+  // }
 
   Widget _supportCard(context) {
     return Container(

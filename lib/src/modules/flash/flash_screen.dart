@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
+
 import 'package:invoicediscounting/src/modules/signUp/login_with.dart';
-import 'package:lottie/lottie.dart';
+
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});

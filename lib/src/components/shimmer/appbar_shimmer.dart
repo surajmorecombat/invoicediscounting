@@ -6,7 +6,7 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 
 class InvestAppBarShimmer extends StatelessWidget
     implements PreferredSizeWidget {
-  const InvestAppBarShimmer();
+  const InvestAppBarShimmer({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

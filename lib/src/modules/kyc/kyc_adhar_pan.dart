@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoicediscounting/src/components/keyboard_done.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/modules/kyc/bank_verification.dart';
+
+import 'package:invoicediscounting/src/modules/kyc/selfie_capture.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -99,7 +100,9 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BankVerification()),
+                MaterialPageRoute(builder: (context) => SelfieCapture()
+                // BankVerification()
+                ),
               );
             },
             child: Text(

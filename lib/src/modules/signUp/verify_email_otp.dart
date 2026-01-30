@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
+
 import 'package:invoicediscounting/src/modules/secure_pin.dart/create_secure_pin.dart';
-import 'package:invoicediscounting/src/modules/secure_pin.dart/enter_secure_pin.dart';
+
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
-import 'package:invoicediscounting/src/modules/signUp/phone_verification.dart';
-import 'package:keyboard_actions/keyboard_actions.dart';
+
 
 class VerifyEmailOtp extends StatefulWidget {
   const VerifyEmailOtp({super.key});
@@ -18,11 +17,11 @@ class VerifyEmailOtp extends StatefulWidget {
 class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
     final FocusNode amountFocusNode = FocusNode();
   final List<TextEditingController> _controllers = List.generate(
-    6,
+    4,
     (_) => TextEditingController(),
   );
 
-  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
   @override
   void dispose() {
@@ -36,7 +35,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
   }
 
   void _onOtpChanged(String value, int index) {
-    if (value.isNotEmpty && index < 5) {
+    if (value.isNotEmpty && index < 3) {
       _focusNodes[index + 1].requestFocus();
     } else if (value.isEmpty && index > 0) {
       _focusNodes[index - 1].requestFocus();
@@ -95,19 +94,19 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
             const SizedBox(height: 32),
         
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: List.generate(
-                6,
+                4,
                 (index) => SizedBox(
-                  width: 50,
-                  height: 50,
+                  width: 60,
+                  height: 60,
                   child: TextField(
                      cursorColor: onboardingTitleColor,
                     controller: _controllers[index],
                     focusNode: _focusNodes[index],
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
-                    maxLength: 1,
+                  //  maxLength: 1,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     style: Theme.of(context).textTheme.bodyLarge,
                     decoration: InputDecoration(

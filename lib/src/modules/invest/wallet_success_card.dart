@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/invest.dart';
-import 'package:invoicediscounting/src/modules/invest/invest_details.dart';
+
 import 'package:lottie/lottie.dart';
 
 class WalletSuccessCard extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
-import 'package:invoicediscounting/src/modules/signUp/verify_email_otp.dart';
+
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});

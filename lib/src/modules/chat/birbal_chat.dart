@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/mainlayout.dart';
+
 import 'package:invoicediscounting/src/models/chat_model.dart';
-import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
-import 'package:invoicediscounting/src/modules/profile/profile.dart';
+
 
 class BirbalChat extends StatefulWidget {
   const BirbalChat({super.key});

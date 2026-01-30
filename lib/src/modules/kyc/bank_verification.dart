@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoicediscounting/src/components/keyboard_done.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/modules/kyc/review.dart';
+
 import 'package:invoicediscounting/src/modules/signUp/processing.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -67,9 +67,9 @@ class _BankVerificationState extends State<BankVerification> {
                 ),
               );
             },
-            child:  Text(
+            child: Text(
               "Verify & Continue",
-                style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
         ),
@@ -79,7 +79,7 @@ class _BankVerificationState extends State<BankVerification> {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: isTablet ? 120 : 24,
-            //  vertical: 20,
+              //  vertical: 20,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,12 +106,12 @@ class _BankVerificationState extends State<BankVerification> {
                 _field(
                   "Account Holder Name",
                   "Enter your full name",
-        
+
                   TextInputType.text,
                   accountHolderFocusNode,
                   context,
                 ),
-        
+
                 accountTypeDropdown(context),
                 _field(
                   "IFSC Code",
@@ -120,7 +120,6 @@ class _BankVerificationState extends State<BankVerification> {
                   ifscFocusNode,
                   context,
                 ),
-                
               ],
             ),
           ),
@@ -305,7 +304,7 @@ class _BankVerificationState extends State<BankVerification> {
         inputType == TextInputType.number || inputType == TextInputType.phone;
 
     final textField = TextField(
-       cursorColor: onboardingTitleColor,
+      cursorColor: onboardingTitleColor,
       controller: controller,
       focusNode: focusNode,
       keyboardType: inputType,
@@ -416,10 +415,10 @@ class _BankVerificationState extends State<BankVerification> {
               expandedInsets: EdgeInsets.zero,
 
               hintText: "Account Type",
-              
+
               textStyle: Theme.of(context).textTheme.bodyLarge,
               inputDecorationTheme: InputDecorationTheme(
-                 hintStyle: Theme.of(context).textTheme.bodySmall,
+                hintStyle: Theme.of(context).textTheme.bodySmall,
                 suffixIconColor: onboardingTitleColor,
                 border: InputBorder.none,
                 isDense: true,

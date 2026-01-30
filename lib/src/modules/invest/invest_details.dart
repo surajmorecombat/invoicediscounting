@@ -954,20 +954,20 @@ class _InvestDetailsState extends State<InvestDetails> {
   //   );
   // }
 
-  Widget _unitButton(IconData icon, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 42,
-        height: 42,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Icon(icon),
-      ),
-    );
-  }
+  // Widget _unitButton(IconData icon, VoidCallback onTap) {
+  //   return GestureDetector(
+  //     onTap: onTap,
+  //     child: Container(
+  //       width: 42,
+  //       height: 42,
+  //       decoration: BoxDecoration(
+  //         color: Colors.grey.shade100,
+  //         borderRadius: BorderRadius.circular(8),
+  //       ),
+  //       child: Icon(icon),
+  //     ),
+  //   );
+  // }
 }
 
 class _DocChip extends StatelessWidget {
@@ -996,32 +996,32 @@ class _DocChip extends StatelessWidget {
   }
 }
 
-class _DownloadButton extends StatelessWidget {
-  final String text;
-  const _DownloadButton(this.text);
+// class _DownloadButton extends StatelessWidget {
+//   final String text;
+//   const _DownloadButton(this.text);
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22),
-          ),
-        ),
-        onPressed: () {},
-        icon: const Icon(Icons.download, size: 16),
-        label: Text(
-          text,
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: whiteColor),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Expanded(
+//       child: ElevatedButton.icon(
+//         style: ElevatedButton.styleFrom(
+//           backgroundColor: Colors.black,
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(22),
+//           ),
+//         ),
+//         onPressed: () {},
+//         icon: const Icon(Icons.download, size: 16),
+//         label: Text(
+//           text,
+//           style: Theme.of(
+//             context,
+//           ).textTheme.bodySmall?.copyWith(color: whiteColor),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class _RiskItem extends StatefulWidget {
   final String title;

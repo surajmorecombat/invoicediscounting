@@ -4,8 +4,9 @@ import 'package:invoicediscounting/src/modules/invest/invest.dart';
 import 'package:lottie/lottie.dart';
 
 class PaymentDoneSuccess extends StatelessWidget {
-  const PaymentDoneSuccess();
+  const PaymentDoneSuccess({super.key});
 
+  @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return Scaffold(
