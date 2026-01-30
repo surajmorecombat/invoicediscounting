@@ -126,32 +126,32 @@ class _PrimaryRowShimmer extends StatelessWidget {
 }
 
 
-class _KeyValueRowShimmer extends StatelessWidget {
-  final bool highlight;
-  const _KeyValueRowShimmer({this.highlight = false});
+// class _KeyValueRowShimmer extends StatelessWidget {
+//   final bool highlight;
+//   const _KeyValueRowShimmer({this.highlight = false});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          shimmerLine(width: 140),
-          Row(
-            children: [
-              shimmerLine(width: highlight ? 60 : 80, height: 16),
-              if (highlight) ...[
-                const SizedBox(width: 6),
-                shimmerSquare(size: 14),
-              ],
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 8),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           shimmerLine(width: 140),
+//           Row(
+//             children: [
+//               shimmerLine(width: highlight ? 60 : 80, height: 16),
+//               if (highlight) ...[
+//                 const SizedBox(width: 6),
+//                 shimmerSquare(size: 14),
+//               ],
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 Widget shimmerLine({required double width, double height = 14}) {
   return Container(

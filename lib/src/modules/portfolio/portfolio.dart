@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:invoicediscounting/src/components/appbar.dart';
 import 'package:invoicediscounting/src/components/holding_card.dart';
 import 'package:invoicediscounting/src/components/shimmer/appbar_shimmer.dart';

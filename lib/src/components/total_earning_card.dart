@@ -74,7 +74,7 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
     );
   }
 class MiniBarChart extends StatelessWidget {
-  const MiniBarChart();
+  const MiniBarChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +122,7 @@ class MiniBarChart extends StatelessWidget {
 
 class ValueBlock extends StatelessWidget {
   final String label, value;
-  const ValueBlock({required this.label, required this.value});
+  const ValueBlock({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {

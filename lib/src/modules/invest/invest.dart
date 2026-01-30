@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:invoicediscounting/src/components/appbar.dart';
 import 'package:invoicediscounting/src/components/shimmer/appbar_shimmer.dart';
 import 'package:invoicediscounting/src/components/shimmer/invoice_card_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/models/invoicemodel.dart';
-import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
+
 import 'package:invoicediscounting/src/modules/invest/invest_details.dart';
-import 'package:invoicediscounting/src/modules/profile/profile.dart';
+
 
 class Invest extends StatefulWidget {
   const Invest({super.key});
@@ -78,7 +78,7 @@ class _InvestState extends State<Invest> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isTablet = MediaQuery.of(context).size.width >= 600;
+
     return MainLayout(
       backgroundColor: backgroundColor,
       ctx: 0,

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:invoicediscounting/src/components/appbar.dart';
 import 'package:invoicediscounting/src/components/shimmer/appbar_shimmer.dart';
 import 'package:invoicediscounting/src/components/shimmer/invoice_card_shimmer.dart';
 import 'package:invoicediscounting/src/components/shimmer/market_news.dart';
 import 'package:invoicediscounting/src/components/shimmer/transaction_more_shimmer.dart';
-import 'package:invoicediscounting/src/components/total_earning_card.dart';
-import 'package:invoicediscounting/src/components/wallet_card.dart';
+
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/mainlayout.dart';
 import 'package:invoicediscounting/src/modules/activity/market_news_detail.dart';
 import 'package:invoicediscounting/src/modules/activity/trainsation_all.dart';
 import 'package:invoicediscounting/src/modules/invest/invest_details.dart';
 import 'package:invoicediscounting/src/modules/portfolio/demat/demat_details.dart';
-import 'package:invoicediscounting/src/modules/profile/profile.dart';
+
 
 class Activity extends StatefulWidget {
   const Activity({super.key});

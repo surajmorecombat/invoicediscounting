@@ -137,7 +137,7 @@ class WithdrawalDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FocusNode widrawlamountFocusNode = FocusNode();
+   
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 24),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

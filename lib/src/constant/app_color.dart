@@ -4,6 +4,7 @@ Color backgroundColor = const Color(0xffFAFAFA);
 Color constColor = const Color(0xff004297);
 Color borderColor = const Color(0xff898989);
 Color onboardingTitleColor = const Color(0xff00194E);
+Color onboardingTitleColorLight = const Color.fromARGB(255, 133, 164, 231);
 Color onboardingsubTitleColor = const Color(0xff313131);
 Color blackColor = const Color(0xff000000);
 Color whiteColor = const Color(0xffffffff);

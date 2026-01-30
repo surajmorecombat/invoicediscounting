@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
-import 'package:invoicediscounting/src/modules/signUp/verify_email_otp.dart';
+
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class CreateSecurePin extends StatefulWidget {
@@ -14,16 +14,16 @@ class CreateSecurePin extends StatefulWidget {
 
 class _CreateSecurePinState extends State<CreateSecurePin> {
   final List<TextEditingController> _controllersone = List.generate(
-    6,
+    4,
     (_) => TextEditingController(),
   );
 
   final List<TextEditingController> _controllerstwo = List.generate(
-    6,
+    4,
     (_) => TextEditingController(),
   );
-  final List<FocusNode> _focusNodesone = List.generate(6, (_) => FocusNode());
-  final List<FocusNode> _focusNodestwo = List.generate(6, (_) => FocusNode());
+  final List<FocusNode> _focusNodesone = List.generate(4, (_) => FocusNode());
+  final List<FocusNode> _focusNodestwo = List.generate(4, (_) => FocusNode());
 
   @override
   void dispose() {
@@ -45,7 +45,7 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
   }
 
   void _onPinChangedOne(String value, int index) {
-    if (value.isNotEmpty && index < 5) {
+    if (value.isNotEmpty && index < 3) {
       _focusNodesone[index + 1].requestFocus();
     } else if (value.isEmpty && index > 0) {
       _focusNodesone[index - 1].requestFocus();
@@ -53,7 +53,7 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
   }
 
   void _onPinChangeTwo(String value, int index) {
-    if (value.isNotEmpty && index < 5) {
+    if (value.isNotEmpty && index < 3) {
       _focusNodestwo[index + 1].requestFocus();
     } else if (value.isEmpty && index > 0) {
       _focusNodestwo[index - 1].requestFocus();
@@ -67,6 +67,7 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: backgroundColor,
         title: Text(
           'Create PIN',
@@ -137,11 +138,11 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
               ),
               SizedBox(height: 10),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(
-                  6,
+                  4,
                   (index) => SizedBox(
-                    width: 50,
+                    width: 60,
                     height: 60,
                     child: KeyboardActions(
                       config: KeyboardActionsConfig(
@@ -227,11 +228,11 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
               Text('Confirm PIN', style: Theme.of(context).textTheme.bodyLarge),
               SizedBox(height: 10),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(
-                  6,
+                  4,
                   (index) => SizedBox(
-                    width: 50,
+                    width: 60,
                     height: 60,
                     child: KeyboardActions(
                       config: KeyboardActionsConfig(

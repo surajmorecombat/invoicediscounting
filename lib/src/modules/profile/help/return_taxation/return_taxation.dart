@@ -5,6 +5,8 @@ import 'package:invoicediscounting/src/components/faq_card.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
 class ReturnTaxation extends StatelessWidget {
+  const ReturnTaxation({super.key});
+
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
