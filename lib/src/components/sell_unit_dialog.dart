@@ -22,7 +22,7 @@ class _SellUnitDialogState extends State<SellUnitDialog> {
           (_) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: Container(
-              color: const Color(0xFF003A8F).withOpacity(.15),
+              color: const Color(0xFF003A8F).withValues(alpha: .15),
               child: const ConfirmSellDialog(),
             ),
           ),
@@ -176,7 +176,7 @@ class _ConfirmSellDialogState extends State<ConfirmSellDialog> {
             (_) => BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
               child: Container(
-                color: const Color(0xFF003A8F).withOpacity(.15),
+                color: const Color(0xFF003A8F).withValues(alpha: .15),
                 child: const SuccessDialog(),
               ),
             ),

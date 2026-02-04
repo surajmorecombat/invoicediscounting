@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
+// ignore: must_be_immutable
 class MainLayout extends StatefulWidget {
   final Widget? bottomNavigationBar;
   final Widget? body;

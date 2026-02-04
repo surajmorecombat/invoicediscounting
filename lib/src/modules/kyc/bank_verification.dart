@@ -75,6 +75,7 @@ class _BankVerificationState extends State<BankVerification> {
         ),
       ),
       body: SafeArea(
+        
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -84,7 +85,9 @@ class _BankVerificationState extends State<BankVerification> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _uploadBlock("Upload  Passbook/Cheque", context, true, panFile),
+                documentTypeDropdown(context),
+                SizedBox(height: 10,),
+                _uploadBlock("Upload  Document", context, true, panFile),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Center(
@@ -113,11 +116,21 @@ class _BankVerificationState extends State<BankVerification> {
                 ),
 
                 accountTypeDropdown(context),
+                  SizedBox(height: 10,),
                 _field(
                   "IFSC Code",
                   "Enter IFSC Code",
                   TextInputType.text,
                   ifscFocusNode,
+                  context,
+                ),
+                  SizedBox(height: 10,),
+                _field(
+                  "Branch Name",
+                  "Enter your Branch Name",
+
+                  TextInputType.text,
+                  accountHolderFocusNode,
                   context,
                 ),
               ],
@@ -308,7 +321,7 @@ class _BankVerificationState extends State<BankVerification> {
       controller: controller,
       focusNode: focusNode,
       keyboardType: inputType,
-      readOnly: onTap != null, // ✅ for date picker fields
+      readOnly: onTap != null,
       onTap: onTap,
       style: Theme.of(context).textTheme.bodyLarge,
       decoration: InputDecoration(
@@ -327,7 +340,7 @@ class _BankVerificationState extends State<BankVerification> {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -427,6 +440,66 @@ class _BankVerificationState extends State<BankVerification> {
               dropdownMenuEntries: const [
                 DropdownMenuEntry(value: "Savings", label: "Savings"),
                 DropdownMenuEntry(value: "Current", label: "Current"),
+              ],
+              onSelected: (value) => setState(() => accountType = value),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget documentTypeDropdown(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            text: TextSpan(
+              text: 'Document Type',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              children: [
+                TextSpan(
+                  text: '*',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey),
+            ),
+            child: DropdownMenu<String>(
+              requestFocusOnTap: false,
+              enableSearch: false,
+
+              expandedInsets: EdgeInsets.zero,
+
+              hintText: "Document Type",
+
+              textStyle: Theme.of(context).textTheme.bodyLarge,
+              inputDecorationTheme: InputDecorationTheme(
+                hintStyle: Theme.of(context).textTheme.bodySmall,
+                suffixIconColor: onboardingTitleColor,
+                border: InputBorder.none,
+                isDense: true,
+                contentPadding: EdgeInsets.symmetric(vertical: 12),
+              ),
+              dropdownMenuEntries: const [
+                DropdownMenuEntry(value: "Passbook", label: "Passbook"),
+                DropdownMenuEntry(value: "Cheque", label: "Cheque"),
               ],
               onSelected: (value) => setState(() => accountType = value),
             ),

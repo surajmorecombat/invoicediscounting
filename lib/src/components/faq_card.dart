@@ -27,7 +27,7 @@ class _FAQCardState extends State<FAQCard> {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(.08),
+              color: Colors.black..withValues(alpha:.08),
               blurRadius: 20,
               offset: const Offset(0, 6),
             ),

@@ -151,6 +151,17 @@ class _SupportCardShimmer extends StatelessWidget {
     );
   }
 }
+
+Widget shimmerSquare({double size = 20}) {
+  return Container(
+    width: size,
+    height: size,
+    decoration: BoxDecoration(
+      color: Colors.grey.shade300,
+      borderRadius: BorderRadius.circular(4),
+    ),
+  );
+}
 // Widget shimmerLine({required double width, double height = 14}) {
 //   return Container(
 //     width: width == double.infinity ? null : width,
@@ -172,14 +183,3 @@ class _SupportCardShimmer extends StatelessWidget {
 //     ),
 //   );
 // }
-
-Widget shimmerSquare({double size = 20}) {
-  return Container(
-    width: size,
-    height: size,
-    decoration: BoxDecoration(
-      color: Colors.grey.shade300,
-      borderRadius: BorderRadius.circular(4),
-    ),
-  );
-}

@@ -22,7 +22,6 @@ class TotalEarningCardShimmer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header row
             Row(
               children: [
                 _line(width: 140, height: 20),
@@ -33,12 +32,10 @@ class TotalEarningCardShimmer extends StatelessWidget {
 
             const SizedBox(height: 14),
 
-            // Total earning value
             _line(width: 180, height: 28),
 
             const SizedBox(height: 24),
 
-            // Value blocks
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [_ValueBlockShimmer(), _ValueBlockShimmer()],
@@ -49,7 +46,6 @@ class TotalEarningCardShimmer extends StatelessWidget {
 
             const SizedBox(height: 10),
 
-            // Returns row
             Row(children: [_line(width: 70), const Spacer(), _line(width: 60)]),
           ],
         ),

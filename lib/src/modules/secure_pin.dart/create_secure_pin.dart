@@ -167,7 +167,7 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(
+                                            color: Colors.black.withValues(alpha: 
                                               0.12,
                                             ),
                                             blurRadius: 6,
@@ -257,7 +257,7 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(
+                                            color: Colors.black.withValues(alpha: 
                                               0.12,
                                             ),
                                             blurRadius: 6,

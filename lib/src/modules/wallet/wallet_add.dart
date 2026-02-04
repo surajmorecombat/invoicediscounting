@@ -150,7 +150,7 @@ class _WalletAddState extends State<WalletAdd> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(
+                                            color: Colors.black.withValues(alpha: 
                                               0.12,
                                             ),
                                             blurRadius: 6,
@@ -269,7 +269,7 @@ class _WalletAddState extends State<WalletAdd> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         decoration: BoxDecoration(
-          color: selected ? onboardingTitleColor.withOpacity(.1) : Colors.white,
+          color: selected ? onboardingTitleColor.withValues(alpha: .1) : Colors.white,
           border: Border.all(
             color: selected ? onboardingTitleColor : Colors.grey.shade300,
           ),

@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 import 'package:invoicediscounting/src/modules/signUp/sign_up.dart';
+import 'package:invoicediscounting/src/services/google_auth_service.dart';
+
+import 'package:local_auth/local_auth.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class LoginWith extends StatelessWidget {
   const LoginWith({super.key});
@@ -32,6 +37,27 @@ class LoginWith extends StatelessWidget {
               ),
 
               const Spacer(flex: 2),
+              ElevatedButton(
+                onPressed: () async {
+                  final auth = LocalAuthentication();
+                  try {
+                    final result = await auth.authenticate(
+                      localizedReason: 'Final biometric test',
+                      biometricOnly: false,
+                    );
+                    debugPrint('RESULT = $result');
+                    if (result && context.mounted) {
+                      Navigator.of(
+                        context,
+                      ).pushNamedAndRemoveUntil('/invest', (_) => false);
+                    }
+                  } on LocalAuthException catch (e) {
+                    debugPrint('ERROR CODE = ${e.code}');
+                    debugPrint('ERROR MESSAGE = ${e.description}');
+                  }
+                },
+                child: const Text('Test Biometrics'),
+              ),
 
               _googleButton(context),
               const SizedBox(height: 16),
@@ -62,26 +88,6 @@ class LoginWith extends StatelessWidget {
                 ),
               ),
 
-              //      const SizedBox(height: 20),
-
-              // Text.rich(
-              //   TextSpan(
-              //     text: 'By continuing, you agree to our ',
-              //     style: Theme.of(context).textTheme.bodySmall,
-              //     children: [
-              //       TextSpan(
-              //         text: 'Terms',
-              //         style: TextStyle(color: onboardingTitleColor),
-              //       ),
-              //       const TextSpan(text: ' and '),
-              //       TextSpan(
-              //         text: 'Privacy Policy',
-              //         style: TextStyle(color: onboardingTitleColor),
-              //       ),
-              //     ],
-              //   ),
-              //   textAlign: TextAlign.center,
-              // ),
               const Spacer(),
             ],
           ),
@@ -94,11 +100,27 @@ class LoginWith extends StatelessWidget {
     width: double.infinity,
     height: 52,
     child: OutlinedButton.icon(
-      onPressed: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const LoginWith()),
-        // );
+      onPressed: () async {
+        try {
+          final authService = GoogleAuthService();
+          final UserCredential? userCredential =
+              await authService.signInWithGoogle();
+
+          if (userCredential != null && context.mounted) {
+            Navigator.of(
+              context,
+            ).pushNamedAndRemoveUntil('/invest', (_) => false);
+          }
+        } catch (e, stackTrace) {
+          debugPrint('Google Sign-In Error: $e');
+          await Sentry.captureException(e, stackTrace: stackTrace);
+
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Google sign-in failed')),
+            );
+          }
+        }
       },
       style: OutlinedButton.styleFrom(
         side: BorderSide(color: onboardingTitleColor),

@@ -20,6 +20,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   bool isLoading = true;
 
+  @override
   void initState(){
     super.initState();
     Future.delayed(const Duration(seconds: 2),(){
