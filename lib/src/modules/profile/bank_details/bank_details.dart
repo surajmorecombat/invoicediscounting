@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/banK_details_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/constant/input_fields.dart';
 
@@ -10,6 +11,17 @@ class BankDetails extends StatefulWidget {
 }
 
 class _BankDetailsState extends State<BankDetails> {
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   final TextEditingController accountNumberController = TextEditingController(
     text: '98765400103216',
   );
@@ -52,125 +64,93 @@ class _BankDetailsState extends State<BankDetails> {
 
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 10),
+        child:
+            isLoading
+                ? BankDetailsFormShimmer()
+                : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
 
-              if (onOffValye) ...[
-                inputField(
-                  isEditing: isEditing,
-                  context,
-                  'Account Number',
-                  TextInputType.number,
-                  accountNumberController,
-                ),
-
-                const SizedBox(height: 15),
-
-                inputField(
-                  isEditing: isEditing,
-                  context,
-                  'IFSC Code',
-                  TextInputType.text,
-                  ifscController,
-                ),
-
-                const SizedBox(height: 15),
-                inputField(
-                  isEditing: isEditing,
-                  context,
-                  'Account Type',
-                  TextInputType.text,
-                  accountTypeController,
-                ),
-
-                const SizedBox(height: 15),
-                inputField(
-                  isEditing: isEditing,
-                  context,
-                  'Bank Name',
-                  TextInputType.name,
-                  bankNameController,
-                ),
-
-                const SizedBox(height: 15),
-                // if (isEditing)
-                Container(
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: ElevatedButton(
-                      onPressed:
-                          isEditing
-                              ? () {
-                                setState(() {
-                                  isEditing = false;
-                                });
-                              }
-                              : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: onboardingTitleColor,
-                        foregroundColor: whiteColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                      if (onOffValye) ...[
+                        inputField(
+                          isEditing: isEditing,
+                          context,
+                          'Account Number',
+                          TextInputType.number,
+                          accountNumberController,
                         ),
-                        elevation: 0,
-                        minimumSize: const Size(0, 48),
-                      ),
-                      child: Text(
-                        'Update',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: isEditing ? whiteColor : Colors.grey,
+
+                        const SizedBox(height: 15),
+
+                        inputField(
+                          isEditing: isEditing,
+                          context,
+                          'IFSC Code',
+                          TextInputType.text,
+                          ifscController,
                         ),
-                      ),
-                    ),
+
+                        const SizedBox(height: 15),
+                        inputField(
+                          isEditing: isEditing,
+                          context,
+                          'Account Type',
+                          TextInputType.text,
+                          accountTypeController,
+                        ),
+
+                        const SizedBox(height: 15),
+                        inputField(
+                          isEditing: isEditing,
+                          context,
+                          'Bank Name',
+                          TextInputType.name,
+                          bankNameController,
+                        ),
+
+                        const SizedBox(height: 15),
+                        // if (isEditing)
+                        Container(
+                          color: Colors.white,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 52,
+                            child: ElevatedButton(
+                              onPressed:
+                                  isEditing
+                                      ? () {
+                                        setState(() {
+                                          isEditing = false;
+                                        });
+                                      }
+                                      : null,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: onboardingTitleColor,
+                                foregroundColor: whiteColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                elevation: 0,
+                                minimumSize: const Size(0, 48),
+                              ),
+                              child: Text(
+                                'Update',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: isEditing ? whiteColor : Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+
+                      const SizedBox(height: 24),
+                    ],
                   ),
                 ),
-
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 80, right: 80),
-                //   child: SizedBox(
-                //     width: double.infinity,
-
-                //     child: ElevatedButton(
-                //       onPressed:
-                // isEditing
-                //     ? () {
-                //       setState(() {
-                //         isEditing = false;
-                //       });
-                //     }
-                //     : null,
-                //       style: ElevatedButton.styleFrom(
-                //         backgroundColor: onboardingTitleColor,
-                //         foregroundColor: whiteColor,
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(8),
-                //         ),
-                //         elevation: 0,
-                //         minimumSize: const Size(0, 48),
-                //       ),
-                //       child: const Text(
-                //         'Update',
-                //         style: TextStyle(
-                //           fontSize: 18,
-                //           fontWeight: FontWeight.w600,
-                //           color: Colors.white,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-              ],
-
-              const SizedBox(height: 24),
-            ],
-          ),
-        ),
       ),
     );
   }

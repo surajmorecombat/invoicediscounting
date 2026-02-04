@@ -81,8 +81,9 @@ class _FlashScreenState extends State<FlashScreen>
 
   @override
   void dispose() {
+     _controller.dispose();
     super.dispose();
-    _controller.dispose();
+   
   }
 
   @override

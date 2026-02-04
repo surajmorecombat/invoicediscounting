@@ -63,6 +63,7 @@ class PayOfflineScreenShimmer extends StatelessWidget {
     );
   }
 }
+
 class _DetailCardShimmer extends StatelessWidget {
   const _DetailCardShimmer();
 

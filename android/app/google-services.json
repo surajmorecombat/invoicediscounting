@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1003264746242",
+    "project_id": "invoicediscounting-3c7f5",
+    "storage_bucket": "invoicediscounting-3c7f5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003264746242:android:1ef5bdb3c8d6769ea4581b",
+        "android_client_info": {
+          "package_name": "com.example.invoicediscounting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003264746242-patlegur44n9kiriufg2bbtk7s1ch0pj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.invoicediscounting",
+            "certificate_hash": "acf1ab0385fa4fd0fce74af396cf3d06dbea16a5"
+          }
+        },
+        {
+          "client_id": "1003264746242-ju6igge8n6qjt4n12hb94l650hsl3svk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgZX7CpmGIIDkglgvM2iZxnxQgpb7IlKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003264746242-ju6igge8n6qjt4n12hb94l650hsl3svk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

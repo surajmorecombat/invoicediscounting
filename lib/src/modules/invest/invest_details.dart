@@ -274,7 +274,7 @@ class _InvestDetailsState extends State<InvestDetails> {
                   ),
                   Expanded(
                     child: _RiskItem(
-                      "Amplio Assured",
+                      "Birbal Plus Assured",
                       "Built-In Insurance",
                       tooltip:
                           "Interest is credited to your bank account every month.",

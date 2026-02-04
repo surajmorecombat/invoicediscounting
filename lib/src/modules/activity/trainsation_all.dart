@@ -519,7 +519,7 @@ class _FilterSheetState extends State<FilterSheet> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
           color:
-              selected ? onboardingTitleColor.withOpacity(.06) : Colors.white,
+              selected ? onboardingTitleColor.withValues(alpha: .06) : Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: selected ? onboardingTitleColor : Colors.grey.shade300,

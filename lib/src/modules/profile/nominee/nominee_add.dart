@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoicediscounting/src/components/shimmer/banK_details_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/constant/input_fields.dart';
 
@@ -10,6 +11,16 @@ class NomineeAdd extends StatefulWidget {
 }
 
 class _NomineeAddState extends State<NomineeAdd> {
+   bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
   final TextEditingController nomineeNameController = TextEditingController(
     text: '',
   );
@@ -88,7 +99,8 @@ class _NomineeAddState extends State<NomineeAdd> {
 
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
-        child: SingleChildScrollView(
+        child: isLoading?BankDetailsFormShimmer():
+        SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 12),

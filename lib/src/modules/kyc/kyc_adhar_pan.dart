@@ -100,8 +100,9 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SelfieCapture()
-                // BankVerification()
+                MaterialPageRoute(
+                  builder: (context) => SelfieCapture(),
+                  // BankVerification()
                 ),
               );
             },
@@ -136,6 +137,17 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
 
                 const SizedBox(height: 30),
 
+                 
+                buildRow(
+                  'Name',
+                  buildInput(
+                    'Enter Name',
+                    context,
+                    TextInputType.text,
+                    addressFocusNode,
+                  ),
+                ),
+SizedBox(height: 10),
                 buildRow("PAN Details", buildUploadBox(true, panFile)),
 
                 Center(
@@ -146,7 +158,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                     ).textTheme.bodyLarge?.copyWith(color: greycolor),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
 
                 buildRow(
                   'PAN Number',
@@ -157,8 +169,9 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                     panFocusNode,
                   ),
                 ),
-                SizedBox(height: 10),
+                 SizedBox(height: 5),
                 buildRow('Birth Date', buildDateInput(context)),
+                 SizedBox(height: 5),
                 buildRow("Aadhaar Details", buildUploadBox(false, aadhaarFile)),
                 Center(
                   child: Text(
@@ -168,7 +181,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                     ).textTheme.bodyLarge?.copyWith(color: greycolor),
                   ),
                 ),
-                SizedBox(height: 10),
+                 SizedBox(height: 5),
                 buildRow(
                   'Aadhar Number',
                   buildInput(
@@ -178,7 +191,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                     aadhaarFocusNode,
                   ),
                 ),
-                SizedBox(height: 10),
+              SizedBox(height: 5),
                 buildRow(
                   'Address',
                   buildInput(
@@ -269,7 +282,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
         inputType == TextInputType.number || inputType == TextInputType.phone;
 
     final textField = TextField(
-       cursorColor: onboardingTitleColor,
+      cursorColor: onboardingTitleColor,
       // controller: controller,
       focusNode: focusNode,
       keyboardType: inputType,
@@ -311,7 +324,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
 
   Widget buildDateInput(context) {
     return TextField(
-       cursorColor: onboardingTitleColor,
+      cursorColor: onboardingTitleColor,
       readOnly: true,
       controller: dateController,
       style: Theme.of(context).textTheme.bodyLarge,

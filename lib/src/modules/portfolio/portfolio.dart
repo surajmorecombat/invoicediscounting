@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import 'package:invoicediscounting/src/components/appbar.dart';
@@ -201,94 +202,208 @@ class _PortfolioState extends State<Portfolio> {
     );
   }
 
-  Widget _activeInvestmentCard(BuildContext context) {
-    return Card(
+
+ Widget _activeInvestmentCard(BuildContext context) {
+  return Card(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _topRow(context),
+          const SizedBox(height: 12),
+
+          /// Total Returns
+          Text(
+            "₹2045.25",
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+              color: Colors.green,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            "Total Returns",
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+
+          /// 🔥 Sparkline added here
+          const SizedBox(height: 8),
+          const ReturnsSparkline(
+            data: [0, 300, 550, 900, 1200, 1500, 1800, 2045],
+          ),
+
+          const Divider(height: 30, color: Colors.grey),
+
+          /// Invested Amount
+          Text(
+            "₹1,00,000",
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+              color: Colors.black87,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            "Wheeley Private LTD",
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 6),
+          Text(
+            "15/10/2025",
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _closedInvestmentCard(BuildContext context) {
+  return Align(
+    alignment: Alignment.topCenter,
+    child: Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             _topRow(context),
             const SizedBox(height: 12),
-            Text(
-              "₹2045.25",
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                color: Colors.green,
-                fontWeight: FontWeight.w600,
+
+            /// Status badge
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.green.withValues(alpha: .12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Icon(Icons.check_circle, size: 14, color: Colors.green),
+                  SizedBox(width: 6),
+                  Text(
+                    "Closed Successfully",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 6),
+
+            const SizedBox(height: 14),
+
+            /// Total returns
+            Text(
+              "₹5,045.12",
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: Colors.green,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            const SizedBox(height: 4),
             Text(
               "Total Returns",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const Divider(height: 30, color: Colors.grey),
-            Text(
-              "₹1,00,000",
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                color: Colors.green,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              "Wheeley Private LTD",
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 6),
-            Text("15/10/2025", style: Theme.of(context).textTheme.bodySmall),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget _closedInvestmentCard(BuildContext context) {
-    return SingleChildScrollView(
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            const Divider(height: 30),
+
+            /// Final metrics
+            Row(
               children: [
-                _topRow(context),
-                const SizedBox(height: 12),
-                Text(
-                  "₹5045.12",
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    color: Colors.green,
-                    fontWeight: FontWeight.w600,
-                  ),
+                _finalMetric(
+                  context,
+                  value: "₹4,545.12",
+                  label: "Total Earnings",
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  "Total Returns",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const Divider(height: 30),
-                const Text("-"),
-                Text(
-                  "Total Earnings",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 14),
-                const Text("-"),
-                Text(
-                  "Realized IRR%",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                const SizedBox(width: 24),
+                _finalMetric(
+                  context,
+                  value: "11.8%",
+                  label: "Realized IRR",
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+Widget _finalMetric(BuildContext context,
+    {required String value, required String label}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        value,
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.w600,color: Colors.green
+            ),
+      ),
+      const SizedBox(height: 4),
+      Text(
+        label,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: blackColor),
+      ),
+    ],
+  );
+}
+
+  // Widget _closedInvestmentCard(BuildContext context) {
+  //   return SingleChildScrollView(
+  //     child: Align(
+  //       alignment: Alignment.topCenter,
+  //       child: Card(
+  //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(16),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               _topRow(context),
+  //               const SizedBox(height: 12),
+  //               Text(
+  //                 "₹5045.12",
+  //                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+  //                   color: Colors.green,
+  //                   fontWeight: FontWeight.w600,
+  //                 ),
+  //               ),
+  //               const SizedBox(height: 6),
+  //               Text(
+  //                 "Total Returns",
+  //                 style: Theme.of(context).textTheme.bodyMedium,
+  //               ),
+  //               const Divider(height: 30),
+  //               const Text("-"),
+  //               Text(
+  //                 "Total Earnings",
+  //                 style: Theme.of(context).textTheme.bodyMedium,
+  //               ),
+  //               const SizedBox(height: 14),
+  //               const Text("-"),
+  //               Text(
+  //                 "Realized IRR%",
+  //                 style: Theme.of(context).textTheme.bodyMedium,
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _topRow(BuildContext context) {
     return Align(
@@ -393,6 +508,57 @@ class _PortfolioState extends State<Portfolio> {
             // ),
           ),
         ],
+      ),
+    );
+  }
+}
+  class ReturnsSparkline extends StatelessWidget {
+  final List<double> data;
+
+  const ReturnsSparkline({super.key, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    if (data.isEmpty) return const SizedBox.shrink();
+
+    final minY = data.reduce((a, b) => a < b ? a : b);
+    final maxY = data.reduce((a, b) => a > b ? a : b);
+
+    return SizedBox(
+      height: 36,
+      width: double.infinity,
+      child: LineChart(
+        LineChartData(
+          minY: minY * 0.95,
+          maxY: maxY * 1.05,
+          gridData: FlGridData(show: false),
+          titlesData: FlTitlesData(show: false),
+          borderData: FlBorderData(show: false),
+          lineTouchData: LineTouchData(enabled: false),
+          lineBarsData: [
+            LineChartBarData(
+              spots: List.generate(
+                data.length,
+                (i) => FlSpot(i.toDouble(), data[i]),
+              ),
+              isCurved: true,
+              barWidth: 2.5,
+              color: Colors.green.shade600,
+              dotData: FlDotData(show: false),
+              belowBarData: BarAreaData(
+                show: true,
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.green.withValues(alpha: .25),
+                    Colors.green.withValues(alpha: .0),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -35,7 +35,7 @@ class _WalletCardState extends State<WalletCard> {
           (_) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: Container(
-              color: const Color(0xFF003A8F).withOpacity(.15),
+              color: const Color(0xFF003A8F).withValues(alpha: .15),
               child: WithdrawalDialog(),
             ),
           ),

@@ -63,7 +63,7 @@ class _AddToWalletState extends State<AddToWallet> {
           (_) => BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: Container(
-              color: const Color(0xFF003A8F).withOpacity(.15),
+              color: const Color(0xFF003A8F).withValues(alpha: .15),
               child: WithdrawalDialog(),
             ),
           ),
@@ -405,7 +405,7 @@ class _AddToWalletState extends State<AddToWallet> {
                                                     boxShadow: [
                                                       BoxShadow(
                                                         color: Colors.black
-                                                            .withOpacity(0.12),
+                                                            .withValues(alpha: .12),
                                                         blurRadius: 6,
                                                         offset: const Offset(
                                                           0,
@@ -551,7 +551,7 @@ class _AddToWalletState extends State<AddToWallet> {
         decoration: BoxDecoration(
           color:
               unitCount == value
-                  ? onboardingTitleColor.withOpacity(.12)
+                  ? onboardingTitleColor.withValues(alpha: .12)
                   : Colors.grey.shade100,
           borderRadius: BorderRadius.circular(20),
         ),
