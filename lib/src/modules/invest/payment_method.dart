@@ -5,6 +5,8 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/neft_payment.dart'
     show PayOfflineScreen;
 import 'package:invoicediscounting/src/modules/invest/payment_mode.dart';
+import 'package:invoicediscounting/src/services/razorpay_service.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class SelectPaymentMethod extends StatefulWidget {
   const SelectPaymentMethod({super.key});
@@ -14,10 +16,12 @@ class SelectPaymentMethod extends StatefulWidget {
 }
 
 class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
+  final RazorpayService _razorpayService = RazorpayService();
+  static const String razorpayKeyId = 'rzp_test_SC2UkYjivVaBh1';
   int selectedMethod = 0;
   bool isLoading = true;
 
-    @override
+  @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
@@ -25,10 +29,35 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         isLoading = false;
       });
     });
+
+    _razorpayService.init(
+      onSuccess: _handleSuccess,
+      onError: _handleError,
+      onExternalWallet: _handleExternalWallet,
+    );
   }
+
+  void _handleSuccess(PaymentSuccessResponse response) {
+    debugPrint('Payment Success: ${response.paymentId}');
+  }
+
+  void _handleError(PaymentFailureResponse response) {
+    debugPrint('Payment Error: ${response.code} | ${response.message}');
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    debugPrint('External Wallet: ${response.walletName}');
+  }
+
+  @override
+  void dispose() {
+    _razorpayService.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-     final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    final bool isTablet = MediaQuery.of(context).size.width >= 600;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -55,10 +84,18 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
             ),
             onPressed: () {
               if (selectedMethod == 0) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PaymentMode()),
+                _razorpayService.openCheckout(
+                  amount: 50000,
+                  keyId: razorpayKeyId,
+                  appName: 'Birbal Plus',
+                  description: 'Test Payment',
+                  contact: '9999999999',
+                  email: 'surajmorecombat@gmail.com.com',
                 );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => PaymentMode()),
+                // );
               } else {
                 Navigator.push(
                   context,
@@ -83,14 +120,9 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
         ),
         child: Column(
           children: [
-           isLoading
-    ? const BankAccountCardShimmer()
-    : _bankAccountCard(),
+            isLoading ? const BankAccountCardShimmer() : _bankAccountCard(),
 
-isLoading
-    ? const PaymentMethodCardShimmer()
-    : _paymentMethodCard(),
-
+            isLoading ? const PaymentMethodCardShimmer() : _paymentMethodCard(),
           ],
         ),
       ),
