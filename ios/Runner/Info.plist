@@ -53,6 +53,13 @@
 <key>NSFaceIDUsageDescription</key>
 <string>Authenticate to access your investment account</string>
 
+<key>NSAppTransportSecurity</key>
+<dict>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+</dict>
+
+
 
 </dict>
 </plist>

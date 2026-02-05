@@ -288,7 +288,6 @@ class _InvestmentCardsSliderState extends State<InvestmentCardsSlider> {
     );
   }
 
-  /// REUSABLE ARROW BUTTON UI
   Widget _arrowButton(IconData icon, VoidCallback onPressed) {
     return CircleAvatar(
       radius: 18,
