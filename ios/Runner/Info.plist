@@ -53,13 +53,22 @@
 <key>NSFaceIDUsageDescription</key>
 <string>Authenticate to access your investment account</string>
 
+
 <key>NSAppTransportSecurity</key>
 <dict>
   <key>NSAllowsArbitraryLoads</key>
   <true/>
 </dict>
 
-
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>com.googleusercontent.apps.1003264746242-2sch8qbed9p95mu88abtk1s40urqhj25</string>
+    </array>
+  </dict>
+</array>
 
 </dict>
 </plist>
