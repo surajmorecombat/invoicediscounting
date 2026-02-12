@@ -19,7 +19,7 @@ class AppRouter {
       case '/createprofile':
         return MaterialPageRoute(builder: (_) => const CreateProfile());
 
-      case '/createotpverify':
+      case '/verify-otp':
         return MaterialPageRoute(builder: (_) => const VerifyEmailOtp());
 
       case '/processing':

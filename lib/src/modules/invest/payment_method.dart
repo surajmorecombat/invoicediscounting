@@ -4,7 +4,7 @@ import 'package:invoicediscounting/src/components/shimmer/payment_method_shimmer
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/neft_payment.dart'
     show PayOfflineScreen;
-import 'package:invoicediscounting/src/modules/invest/payment_mode.dart';
+
 import 'package:invoicediscounting/src/modules/invest/wallet_success_card.dart';
 import 'package:invoicediscounting/src/services/razorpay_service.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';

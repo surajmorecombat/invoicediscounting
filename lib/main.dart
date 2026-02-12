@@ -1,17 +1,22 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:invoicediscounting/no_internet.dart';
+import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
 import 'package:invoicediscounting/src/constant/app_text_theme.dart';
 import 'package:invoicediscounting/src/router/approuter.dart';
 import 'package:invoicediscounting/src/services/app_lock_service.dart';
 import 'package:invoicediscounting/src/services/connection_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Firebase.initializeApp();
+  await dotenv.load(fileName: '.env');
+
+  await Firebase.initializeApp();
   await SentryFlutter.init((options) {
     options.dsn =
         'https://c6b4b3735c2a43cf358faf6eb8cc739f@o4510720145031168.ingest.us.sentry.io/4510724464902144';
@@ -44,7 +49,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     _connectionService.onStatusChange.listen((status) {
-      setState(() { 
+      setState(() {
         _status = status;
       });
     });
@@ -72,15 +77,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'invoicediscounting',
-          navigatorKey: MyApp.navigatorKey,
-          initialRoute: '/splashScreen',
-          onGenerateRoute: widget.appRouter.onGenerateRoute,
-          theme: ThemeData(
-            useMaterial3: false,
-          ).copyWith(textTheme: AppTextTheme.textTheme(context)),
+        MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => UserBloc())],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'invoicediscounting',
+            navigatorKey: MyApp.navigatorKey,
+            initialRoute: '/splashScreen',
+            onGenerateRoute: widget.appRouter.onGenerateRoute,
+            theme: ThemeData(
+              useMaterial3: false,
+            ).copyWith(textTheme: AppTextTheme.textTheme(context)),
+          ),
         ),
 
         if (_status == InternetStatus.disconnected) const NoInternetScreen(),
