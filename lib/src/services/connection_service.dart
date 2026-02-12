@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+
 class ConnectionService {
   late final InternetConnection _connection;
 
@@ -22,20 +23,13 @@ class ConnectionService {
             isSuccess: response.statusCode == 200,
           );
         } catch (_) {
-          return InternetCheckResult(
-            option: option,
-            isSuccess: false,
-          );
+          return InternetCheckResult(option: option, isSuccess: false);
         }
       },
     );
   }
 
-  Stream<InternetStatus> get onStatusChange =>
-      _connection.onStatusChange;
+  Stream<InternetStatus> get onStatusChange => _connection.onStatusChange;
 
-  Future<bool> get hasInternet =>
-      _connection.hasInternetAccess;
-
-    
+  Future<bool> get hasInternet => _connection.hasInternetAccess;
 }

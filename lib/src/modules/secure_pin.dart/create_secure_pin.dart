@@ -4,6 +4,7 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:pinput/pinput.dart';
 
 class CreateSecurePin extends StatefulWidget {
   const CreateSecurePin({super.key});
@@ -13,6 +14,13 @@ class CreateSecurePin extends StatefulWidget {
 }
 
 class _CreateSecurePinState extends State<CreateSecurePin> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController pinOneController = TextEditingController();
+  final TextEditingController pinTwoController = TextEditingController();
+  bool _isPinFilled = false;
+  // bool _isPinTwoFilled = false;
+  final FocusNode focusNodeOne = FocusNode();
+  final FocusNode focusNodeTwo = FocusNode();
   final List<TextEditingController> _controllersone = List.generate(
     4,
     (_) => TextEditingController(),
@@ -24,6 +32,28 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
   );
   final List<FocusNode> _focusNodesone = List.generate(4, (_) => FocusNode());
   final List<FocusNode> _focusNodestwo = List.generate(4, (_) => FocusNode());
+
+  @override
+  void initState() {
+    super.initState();
+    pinOneController.addListener(_checkPinOneFilled);
+    pinTwoController.addListener(_checkPinOneFilled);
+    // pinTwoController.addListener(_checkPinTwoFilled);
+  }
+
+  void _checkPinOneFilled() {
+    setState(() {
+      _isPinFilled =
+          pinOneController.text.length == 4 &&
+          pinTwoController.text.length == 4;
+    });
+  }
+
+  // void _checkPinTwoFilled() {
+  //   setState(() {
+  //     _isPinTwoFilled = pinTwoController.text.length == 4;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -44,25 +74,39 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
     super.dispose();
   }
 
-  void _onPinChangedOne(String value, int index) {
-    if (value.isNotEmpty && index < 3) {
-      _focusNodesone[index + 1].requestFocus();
-    } else if (value.isEmpty && index > 0) {
-      _focusNodesone[index - 1].requestFocus();
-    }
-  }
+  // void _onPinChangedOne(String value, int index) {
+  //   if (value.isNotEmpty && index < 3) {
+  //     _focusNodesone[index + 1].requestFocus();
+  //   } else if (value.isEmpty && index > 0) {
+  //     _focusNodesone[index - 1].requestFocus();
+  //   }
+  // }
 
-  void _onPinChangeTwo(String value, int index) {
-    if (value.isNotEmpty && index < 3) {
-      _focusNodestwo[index + 1].requestFocus();
-    } else if (value.isEmpty && index > 0) {
-      _focusNodestwo[index - 1].requestFocus();
-    }
-  }
+  // void _onPinChangeTwo(String value, int index) {
+  //   if (value.isNotEmpty && index < 3) {
+  //     _focusNodestwo[index + 1].requestFocus();
+  //   } else if (value.isEmpty && index > 0) {
+  //     _focusNodestwo[index - 1].requestFocus();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
+    // const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
+
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      textStyle: const TextStyle(
+        fontSize: 22,
+        color: Color.fromRGBO(30, 60, 87, 1),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(19),
+        border: Border.all(color: onboardingTitleColor),
+      ),
+    );
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -94,17 +138,24 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
           height: 52,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: onboardingTitleColor,
+              backgroundColor:
+                  _isPinFilled ? onboardingTitleColor : Colors.grey,
+              // backgroundColor: onboardingTitleColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => KycAddressScreen()),
-              );
-            },
+            onPressed:
+                _isPinFilled
+                    ? () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => KycAddressScreen(),
+                        ),
+                      );
+                    }
+                    : null,
             child: Text(
               'Create',
               style: Theme.of(context).textTheme.labelLarge,
@@ -116,15 +167,15 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 24),
-              Text(
-                'Enter your secure PIN',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+              // const SizedBox(height: 24),
+              // Text(
+              //   'Enter your secure PIN',
+              //   style: Theme.of(context).textTheme.displaySmall,
+              // ),
 
-              const SizedBox(height: 6),
+              // const SizedBox(height: 6),
               Text(
                 "This allows you to access your investment",
                 style: Theme.of(context).textTheme.bodyMedium,
@@ -137,6 +188,25 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: 10),
+
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Pinput(
+                  separatorBuilder: (index) => const SizedBox(width: 8),
+
+                  defaultPinTheme: defaultPinTheme,
+                  controller: pinOneController,
+                  focusNode: focusNodeOne,
+                  validator: (value) {
+                    if (value == null || value.length < 4) {
+                      return 'Please enter a valid 4-digit PIN';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+
+              /*
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(
@@ -167,8 +237,8 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withValues(alpha: 
-                                              0.12,
+                                            color: Colors.black.withValues(
+                                              alpha: 0.12,
                                             ),
                                             blurRadius: 6,
                                             offset: const Offset(0, 2),
@@ -192,7 +262,7 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                         ],
                       ),
                       child: TextField(
-                         cursorColor: onboardingTitleColor,
+                        cursorColor: onboardingTitleColor,
                         controller: _controllersone[index],
                         focusNode: _focusNodesone[index],
                         keyboardType: TextInputType.number,
@@ -227,6 +297,8 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
 
               Text('Confirm PIN', style: Theme.of(context).textTheme.bodyLarge),
               SizedBox(height: 10),
+
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(
@@ -257,8 +329,8 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withValues(alpha: 
-                                              0.12,
+                                            color: Colors.black.withValues(
+                                              alpha: 0.12,
                                             ),
                                             blurRadius: 6,
                                             offset: const Offset(0, 2),
@@ -282,7 +354,7 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                         ],
                       ),
                       child: TextField(
-                         cursorColor: onboardingTitleColor,
+                        cursorColor: onboardingTitleColor,
                         controller: _controllerstwo[index],
                         focusNode: _focusNodestwo[index],
                         keyboardType: TextInputType.number,
@@ -310,6 +382,28 @@ class _CreateSecurePinState extends State<CreateSecurePin> {
                       ),
                     ),
                   ),
+                ),
+              ),
+
+              */
+              const SizedBox(height: 22),
+
+              Text('Confirm PIN', style: Theme.of(context).textTheme.bodyLarge),
+              SizedBox(height: 10),
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: Pinput(
+                  separatorBuilder: (index) => const SizedBox(width: 8),
+
+                  defaultPinTheme: defaultPinTheme,
+                  controller: pinTwoController,
+                  focusNode: focusNodeTwo,
+                  validator: (value) {
+                    if (value == null || value.length < 4) {
+                      return 'Please enter a valid 4-digit PIN';
+                    }
+                    return null;
+                  },
                 ),
               ),
               const SizedBox(height: 32),
