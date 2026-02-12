@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:invoicediscounting/no_internet.dart';
 import 'package:invoicediscounting/src/constant/app_text_theme.dart';
 import 'package:invoicediscounting/src/router/approuter.dart';
 import 'package:invoicediscounting/src/services/app_lock_service.dart';
+import 'package:invoicediscounting/src/services/connection_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<void> main() async {
@@ -32,11 +35,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final AppLockService _appLockService = AppLockService();
+  final ConnectionService _connectionService = ConnectionService();
+  InternetStatus _status = InternetStatus.connected;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    _connectionService.onStatusChange.listen((status) {
+      setState(() { 
+        _status = status;
+      });
+    });
   }
 
   @override
@@ -59,15 +70,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'invoicediscounting',
-      navigatorKey: MyApp.navigatorKey,
-      initialRoute: '/splashScreen',
-      onGenerateRoute: widget.appRouter.onGenerateRoute,
-      theme: ThemeData(
-        useMaterial3: false,
-      ).copyWith(textTheme: AppTextTheme.textTheme(context)),
+    return Stack(
+      children: [
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'invoicediscounting',
+          navigatorKey: MyApp.navigatorKey,
+          initialRoute: '/splashScreen',
+          onGenerateRoute: widget.appRouter.onGenerateRoute,
+          theme: ThemeData(
+            useMaterial3: false,
+          ).copyWith(textTheme: AppTextTheme.textTheme(context)),
+        ),
+
+        if (_status == InternetStatus.disconnected) const NoInternetScreen(),
+      ],
     );
   }
 }

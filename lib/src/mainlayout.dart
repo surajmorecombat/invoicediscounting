@@ -40,7 +40,7 @@ class _MainLayoutState extends State<MainLayout> {
     return Scaffold(
       backgroundColor: backgroundColor,
 
-      // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+     
       resizeToAvoidBottomInset: true,
 
       appBar: widget.appBar,
