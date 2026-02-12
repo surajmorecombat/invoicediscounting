@@ -5,6 +5,7 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/modules/invest/neft_payment.dart'
     show PayOfflineScreen;
 import 'package:invoicediscounting/src/modules/invest/payment_mode.dart';
+import 'package:invoicediscounting/src/modules/invest/wallet_success_card.dart';
 import 'package:invoicediscounting/src/services/razorpay_service.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -39,6 +40,15 @@ class _SelectPaymentMethodState extends State<SelectPaymentMethod> {
 
   void _handleSuccess(PaymentSuccessResponse response) {
     debugPrint('Payment Success: ${response.paymentId}');
+     Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (_) => WalletSuccessCard(
+   
+            ),
+      ),
+    );
   }
 
   void _handleError(PaymentFailureResponse response) {

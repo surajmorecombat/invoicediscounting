@@ -96,7 +96,7 @@ class LoginWith extends StatelessWidget {
     );
   }
 
-  Widget _googleButton(BuildContext context) => SizedBox(
+  Widget _googleButton(BuildContext context) => SizedBox(  
     width: double.infinity,
     height: 52,
     child: OutlinedButton.icon(
