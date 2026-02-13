@@ -7,8 +7,23 @@ class UserRepository {
     return await userApi.userLogin(jsonData);
   }
 
-  
-   Future<dynamic> verifyOtp(jsonData) async {
+  Future<dynamic> verifyOtp(jsonData) async {
     return await userApi.verifyOtp(jsonData);
+  }
+
+  Future<dynamic> sendPhoneOtp(jsonData) async {
+    return await userApi.sendPhoneOtp(jsonData);
+  }
+
+  Future<dynamic> verifyPhoneOtp(jsonData) async {
+    return await userApi.verifyPhoneOtp(jsonData);
+  }
+
+  Future<dynamic> sendEmailOtp(jsonData) async {
+    return await userApi.sendEmailOtp(jsonData);
+  }
+
+  Future<dynamic> verifyEmailOtp(jsonData) async {
+    return await userApi.verifyEmailOtp(jsonData);
   }
 }

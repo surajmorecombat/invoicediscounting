@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum UserStatus { initial, loading, authenticated, unauthenticated, error,sendingOtp, otpSent,otperror ,resendingOtp,resendedOtp}
+enum UserStatus { initial, loading, authenticated, unauthenticated, error,sendingOtp, otpSent,otperror ,resendingOtp,resendedOtp,mobileOtpSent,otpVerified,emailOtpSent,emailOtpVerified }
 
 class UserState extends Equatable {
   final UserStatus status;

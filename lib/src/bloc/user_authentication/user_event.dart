@@ -35,3 +35,44 @@ class UserVerifyOtpRequested extends UserEvent {
   @override
   List<Object?> get props => [emailOrPhoneNumber, otp, rememberMe];
 }
+
+class UserPhoneOtpRequested extends UserEvent {
+  final String phoneNumber;
+  final String role;
+
+  UserPhoneOtpRequested(this.phoneNumber, this.role);
+
+  @override
+  List<Object?> get props => [phoneNumber, role];
+}
+
+class UserPhoneOtpVerified extends UserEvent {
+  final String otp;
+  final String sessionId;
+
+  UserPhoneOtpVerified(this.otp, this.sessionId);
+
+  @override
+  List<Object?> get props => [otp, sessionId];
+}
+
+class UserEmailOtpRequested extends UserEvent {
+  final String email;
+  final String sessionId;
+
+  UserEmailOtpRequested(this.email, this.sessionId);
+
+  @override
+  List<Object?> get props => [email, sessionId];
+}
+
+
+class UserEmailOtpVerified extends UserEvent {
+  final String otp;
+  final String sessionId;
+
+  UserEmailOtpVerified(this.otp, this.sessionId);
+
+  @override
+  List<Object?> get props => [otp, sessionId];
+}

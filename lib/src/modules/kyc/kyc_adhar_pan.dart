@@ -137,7 +137,6 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
 
                 const SizedBox(height: 30),
 
-                 
                 buildRow(
                   'Name',
                   buildInput(
@@ -147,19 +146,18 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                     addressFocusNode,
                   ),
                 ),
-SizedBox(height: 10),
+                // SizedBox(height: 10),
                 buildRow("PAN Details", buildUploadBox(true, panFile)),
 
-                Center(
-                  child: Text(
-                    'OR',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: greycolor),
-                  ),
-                ),
-                SizedBox(height: 5),
-
+                // Center(
+                //   child: Text(
+                //     'OR',
+                //     style: Theme.of(
+                //       context,
+                //     ).textTheme.bodyLarge?.copyWith(color: greycolor),
+                //   ),
+                // ),
+                // SizedBox(height: 5),
                 buildRow(
                   'PAN Number',
                   buildInput(
@@ -169,19 +167,19 @@ SizedBox(height: 10),
                     panFocusNode,
                   ),
                 ),
-                 SizedBox(height: 5),
+                // SizedBox(height: 5),
                 buildRow('Birth Date', buildDateInput(context)),
-                 SizedBox(height: 5),
+                // SizedBox(height: 5),
                 buildRow("Aadhaar Details", buildUploadBox(false, aadhaarFile)),
-                Center(
-                  child: Text(
-                    'OR',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: greycolor),
-                  ),
-                ),
-                 SizedBox(height: 5),
+                // Center(
+                //   child: Text(
+                //     'OR',
+                //     style: Theme.of(
+                //       context,
+                //     ).textTheme.bodyLarge?.copyWith(color: greycolor),
+                //   ),
+                // ),
+                //  SizedBox(height: 5),
                 buildRow(
                   'Aadhar Number',
                   buildInput(
@@ -191,7 +189,7 @@ SizedBox(height: 10),
                     aadhaarFocusNode,
                   ),
                 ),
-              SizedBox(height: 5),
+                // SizedBox(height: 5),
                 buildRow(
                   'Address',
                   buildInput(
@@ -202,7 +200,7 @@ SizedBox(height: 10),
                   ),
                 ),
 
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
 
                 Row(
                   children: [
