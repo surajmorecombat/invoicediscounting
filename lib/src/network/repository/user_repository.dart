@@ -26,4 +26,26 @@ class UserRepository {
   Future<dynamic> verifyEmailOtp(jsonData) async {
     return await userApi.verifyEmailOtp(jsonData);
   }
+
+  Future<dynamic> getKycProgess(jsonData) async {
+    return await userApi.getKycProgess(jsonData);
+  }
+
+  Future<dynamic> fileUpload(String  filePath) async {
+    return await userApi.fileUpload(filePath);
+  }
+
+  Future<dynamic> investorRegistration(jsonData) async {
+    return await userApi.investorRegistration(jsonData);
+  }
+
+Future<dynamic> getIfsc(String ifscCode) async {
+  return await userApi.getIfsc(ifscCode);
+}
+
+
+Future<dynamic> kycBankAdd(jsonData) async {
+  return await userApi.kycBankAdd(jsonData);
+}
+
 }
