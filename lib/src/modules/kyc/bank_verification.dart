@@ -1,12 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:invoicediscounting/src/components/keyboard_done.dart';
+import 'package:invoicediscounting/src/bloc/user_authentication/user.state.dart';
+import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
+import 'package:invoicediscounting/src/bloc/user_authentication/user_event.dart';
+
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/constant/storage_constant.dart'
+    show storage;
 
 import 'package:invoicediscounting/src/modules/signUp/processing.dart';
-import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:invoicediscounting/src/utils/validators.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 class BankVerification extends StatefulWidget {
@@ -17,131 +24,252 @@ class BankVerification extends StatefulWidget {
 }
 
 class _BankVerificationState extends State<BankVerification> {
+  @override
+  void initState() {
+    super.initState();
+    // kycProgesstatus();
+  }
+
+  void kycProgesstatus() async {
+    String? sessionId = await storage.read(key: 'sessionId');
+    final bloc = BlocProvider.of<UserBloc>(context);
+    bloc.add(UserKycProgressRequested(sessionId.toString()));
+  }
+
+  final _formKey = GlobalKey<FormState>();
   final FocusNode accountNumberFocusNode = FocusNode();
   final FocusNode accountHolderFocusNode = FocusNode();
   final FocusNode ifscFocusNode = FocusNode();
-  File? panFile;
-  String? accountType;
+  final FocusNode branchNameFocusNode = FocusNode();
+  final TextEditingController accountNumberController = TextEditingController();
+  final TextEditingController accountHolderController = TextEditingController();
+  final TextEditingController ifscController = TextEditingController();
+  final TextEditingController branchNameController = TextEditingController();
+
+  final TextEditingController bankNameController = TextEditingController();
+  final TextEditingController bankShortCodeController = TextEditingController();
+  File? bankFile;
+  String? accountType = "Savings";
+  String? selectedDocumentType = "Passbook";
+  KycDocType getKycDocType() {
+    if (selectedDocumentType == "Cheque") {
+      return KycDocType.bankCheque;
+    }
+    return KycDocType.bankPassbook;
+  }
+
   Future<bool> ensureCameraPermission() async {
     final status = await Permission.camera.request();
     return status.isGranted;
   }
 
+  void ifscData(UserState state) {
+    branchNameController.text = state.ifscBankDetails!.branchName;
+    bankNameController.text = state.ifscBankDetails!.bankName;
+    bankShortCodeController.text = state.ifscBankDetails!.bankShortCode;
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: backgroundColor,
-        iconTheme: IconThemeData(color: blackColor),
-        centerTitle: true,
-        title: Text(
-          "Bank Account Verification",
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SizedBox(
-          width: double.infinity,
-          height: 52,
-          child: ElevatedButton(
-            style: OutlinedButton.styleFrom(
-              backgroundColor: onboardingTitleColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+    return BlocConsumer<UserBloc, UserState>(
+      listener: (context, state) {
+        if (state.status == UserStatus.ifscfetched) {
+          ifscData(state);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("IFSC details fetched successfully")),
+          );
+        }
+        if (state.status == UserStatus.ifscfetchError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Failed to fetch IFSC details")),
+          );
+        }
+
+        if (state.status == UserStatus.bankAdded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Bank details submitted successfully!")),
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => VerificationProcessing()),
+          );
+        } else if (state.status == UserStatus.bankAddFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.errorMessage ?? "Bank details submission failed!",
               ),
             ),
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Review()),
-              // );
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => VerificationProcessing(),
-                ),
-              );
-            },
-            child: Text(
-              "Verify & Continue",
-              style: Theme.of(context).textTheme.labelLarge,
+          );
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: backgroundColor,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: backgroundColor,
+            iconTheme: IconThemeData(color: blackColor),
+            centerTitle: true,
+            title: Text(
+              "Bank Account Verification",
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-        ),
-      ),
-      body: SafeArea(
-        
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isTablet ? 120 : 24,
-              //  vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                documentTypeDropdown(context),
-                SizedBox(height: 10,),
-                _uploadBlock("Upload  Document", context, true, panFile),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Center(
-                    child: Text(
-                      'OR',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: greycolor),
-                    ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(16),
+            child: SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton(
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: onboardingTitleColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                _field(
-                  "Account Number",
-                  "Enter your bank account number",
-                  TextInputType.number,
-                  accountNumberFocusNode,
-                  context,
-                ),
-                _field(
-                  "Account Holder Name",
-                  "Enter your full name",
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => Review()),
+                    // );
+                    String? usersId = await storage.read(key: 'usersId');
+                    final userBloc = context.read<UserBloc>();
+                    final bankDetails = {
+                      "bankName": bankNameController.text.trim(),
+                      "bankShortCode": bankShortCodeController.text.trim(),
+                      "ifscCode": ifscController.text.trim(),
+                      "branchName": branchNameController.text.trim(),
+                      "bankAddress": "",
+                      "accountHolderName": accountHolderController.text.trim(),
+                      "accountNumber": accountNumberController.text.trim(),
+                      "accountType": accountType == "Savings" ? 0 : 1,
+                      "bankAccountProofType":
+                          getKycDocType() == KycDocType.bankPassbook ? 0 : 1,
+                      "bankAccountProofId":
+                          getKycDocType() == KycDocType.bankPassbook
+                              ? state.bankPassbookDocId ?? ""
+                              : state.bankChequeDocId ?? "",
+                    };
+                    //
+                    userBloc.add(
+                      InvestorBankAddRequested(
+                        formData: {
+                          "usersId": usersId,
+                          "bankDetails": bankDetails,
+                        },
+                      ),
+                    );
+                  }
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => Review()),
+                  // );
 
-                  TextInputType.text,
-                  accountHolderFocusNode,
-                  context,
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => VerificationProcessing(),
+                  //   ),
+                  // );
+                },
+                child: Text(
+                  "Verify & Continue",
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
-
-                accountTypeDropdown(context),
-                  SizedBox(height: 10,),
-                _field(
-                  "IFSC Code",
-                  "Enter IFSC Code",
-                  TextInputType.text,
-                  ifscFocusNode,
-                  context,
-                ),
-                  SizedBox(height: 10,),
-                _field(
-                  "Branch Name",
-                  "Enter your Branch Name",
-
-                  TextInputType.text,
-                  accountHolderFocusNode,
-                  context,
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 120 : 24,
+                  //  vertical: 20,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      documentTypeDropdown(context),
+                      SizedBox(height: 10),
+                      _uploadBlock(
+                        "Upload  Document",
+                        context,
+                        getKycDocType(),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 10),
+                      //   child: Center(
+                      //     child: Text(
+                      //       'OR',
+                      //       style: Theme.of(
+                      //         context,
+                      //       ).textTheme.bodyLarge?.copyWith(color: greycolor),
+                      //     ),
+                      //   ),
+                      // ),
+                      SizedBox(height: 10),
+                      _field(
+                        "IFSC Code",
+                        "Enter IFSC Code",
+                        TextInputType.text,
+                        ifscFocusNode,
+                        context,
+                        controller: ifscController,
+                        validator: CommonValidators.requiredValidator,
+                        suffixIcon: true,
+                      ),
+                      SizedBox(height: 10),
+                      _field(
+                        "Account Number",
+                        "Enter your bank account number",
+                        TextInputType.number,
+                        accountNumberFocusNode,
+                        context,
+                        controller: accountNumberController,
+                        validator: CommonValidators.requiredValidator,
+                      ),
+
+                      _field(
+                        "Account Holder Name",
+                        "Enter your full name",
+
+                        TextInputType.text,
+                        accountHolderFocusNode,
+                        context,
+                        controller: accountHolderController,
+                        validator: CommonValidators.requiredValidator,
+                      ),
+
+                      accountTypeDropdown(context),
+
+                      SizedBox(height: 10),
+                      _field(
+                        "Branch Name",
+                        "Enter your Branch Name",
+
+                        TextInputType.text,
+                        branchNameFocusNode,
+                        context,
+                        controller: branchNameController,
+                        validator: CommonValidators.requiredValidator,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
-  Widget _uploadBlock(String title, context, bool isPan, File? file) {
+  Widget _uploadBlock(String title, context, KycDocType docType) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -185,7 +313,7 @@ class _BankVerificationState extends State<BankVerification> {
         //   ),
         // const SizedBox(height: 10),
         GestureDetector(
-          onTap: () => showSourceSheet(isPan),
+          onTap: () => showSourceSheet(docType),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             decoration: BoxDecoration(
@@ -204,7 +332,7 @@ class _BankVerificationState extends State<BankVerification> {
                   ),
                   child: Center(
                     child: Text(
-                      file == null ? "Select file" : "Change file",
+                      "Select File",
                       style: Theme.of(
                         context,
                       ).textTheme.bodySmall?.copyWith(color: blueDark),
@@ -214,7 +342,8 @@ class _BankVerificationState extends State<BankVerification> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    file == null
+                    docType == KycDocType.bankPassbook ||
+                            docType == KycDocType.bankCheque
                         ? "Drop files here to upload"
                         : "File selected ✓",
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -253,7 +382,7 @@ class _BankVerificationState extends State<BankVerification> {
     );
   }
 
-  Future<void> pickDocument(bool isPan, ImageSource source) async {
+  Future<void> pickDocument(KycDocType docType, ImageSource source) async {
     final picker = ImagePicker();
     final XFile? picked = await picker.pickImage(
       source: source,
@@ -262,14 +391,17 @@ class _BankVerificationState extends State<BankVerification> {
 
     if (picked != null) {
       setState(() {
-        if (isPan) {
-          panFile = File(picked.path);
-        }
+        // if (docType == KycDocType.bankPassbook || docType == KycDocType.bankCheque) {
+        //   bankFile = File(picked.path);
+        // }
+        context.read<UserBloc>().add(
+          UserFileUploadRequested(filePath: picked.path, docType: docType),
+        );
       });
     }
   }
 
-  void showSourceSheet(bool isPan) {
+  void showSourceSheet(KycDocType docType) {
     showModalBottomSheet(
       context: context,
       builder:
@@ -284,7 +416,7 @@ class _BankVerificationState extends State<BankVerification> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    pickDocument(isPan, ImageSource.camera);
+                    pickDocument(docType, ImageSource.camera);
                   },
                 ),
                 ListTile(
@@ -295,7 +427,7 @@ class _BankVerificationState extends State<BankVerification> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    pickDocument(isPan, ImageSource.gallery);
+                    pickDocument(docType, ImageSource.gallery);
                   },
                 ),
               ],
@@ -312,11 +444,15 @@ class _BankVerificationState extends State<BankVerification> {
     BuildContext context, {
     TextEditingController? controller,
     VoidCallback? onTap,
+
+    final FormFieldValidator<String>? validator,
+    bool suffixIcon = false,
   }) {
     final bool isNumeric =
         inputType == TextInputType.number || inputType == TextInputType.phone;
 
-    final textField = TextField(
+    final textField = TextFormField(
+      validator: validator,
       cursorColor: onboardingTitleColor,
       controller: controller,
       focusNode: focusNode,
@@ -327,15 +463,56 @@ class _BankVerificationState extends State<BankVerification> {
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: Theme.of(context).textTheme.bodySmall,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: Colors.grey),
         ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
         ),
+        suffixIcon:
+            suffixIcon
+                ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      // if (isNumeric) {
+                      String ifscCode = ifscController.text.trim();
+                      if (ifscCode.isNotEmpty) {
+                        context.read<UserBloc>().add(
+                          IfscDetailsRequested(ifscCode),
+                        );
+                      }
+
+                      print('ifsc ifsc ifsc');
+
+                      // }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: onboardingTitleColor,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+
+                      width: 80,
+                      child: Center(
+                        child: Text(
+                          'Fetch',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                : SizedBox.shrink(),
       ),
     );
 
@@ -364,26 +541,7 @@ class _BankVerificationState extends State<BankVerification> {
           ),
 
           const SizedBox(height: 8),
-
-          // ✅ ONLY numeric fields get KeyboardActions
-          if (isNumeric && focusNode != null)
-            SizedBox(
-              height: 60,
-              child: KeyboardActions(
-                config: KeyboardActionsConfig(
-                  keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
-                  actions: [
-                    KeyboardActionsItem(
-                      focusNode: focusNode,
-                      toolbarButtons: [(node) => styledDoneButton(node)],
-                    ),
-                  ],
-                ),
-                child: textField,
-              ),
-            )
-          else
-            textField,
+          textField,
         ],
       ),
     );
@@ -501,7 +659,8 @@ class _BankVerificationState extends State<BankVerification> {
                 DropdownMenuEntry(value: "Passbook", label: "Passbook"),
                 DropdownMenuEntry(value: "Cheque", label: "Cheque"),
               ],
-              onSelected: (value) => setState(() => accountType = value),
+              onSelected:
+                  (value) => setState(() => selectedDocumentType = value),
             ),
           ),
         ],

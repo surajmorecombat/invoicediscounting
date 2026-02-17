@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:invoicediscounting/src/bloc/user_authentication/user.state.dart';
 
 class UserEvent extends Equatable {
   @override
@@ -66,7 +67,6 @@ class UserEmailOtpRequested extends UserEvent {
   List<Object?> get props => [email, sessionId];
 }
 
-
 class UserEmailOtpVerified extends UserEvent {
   final String otp;
   final String sessionId;
@@ -76,3 +76,58 @@ class UserEmailOtpVerified extends UserEvent {
   @override
   List<Object?> get props => [otp, sessionId];
 }
+
+class UserKycProgressRequested extends UserEvent {
+  final String sessionId;
+
+  UserKycProgressRequested(this.sessionId);
+
+  @override
+  List<Object?> get props => [sessionId];
+}
+
+class UserFileUploadRequested extends UserEvent {
+  final String filePath;
+  final KycDocType docType;
+
+  UserFileUploadRequested({required this.filePath, required this.docType});
+
+  @override
+  List<Object?> get props => [filePath, docType];
+}
+
+class UserImageCleared extends UserEvent {
+  final KycDocType docType;
+  UserImageCleared(this.docType);
+
+  @override
+  List<Object?> get props => [docType];
+}
+
+class InvestorRegistrationRequested extends UserEvent {
+  final Map<String, dynamic>? formData;
+
+  InvestorRegistrationRequested({this.formData});
+
+  @override
+  List<Object?> get props => [formData];
+}
+
+class IfscDetailsRequested extends UserEvent {
+  final String ifscCode;
+
+  IfscDetailsRequested(this.ifscCode);
+
+  @override
+  List<Object?> get props => [ifscCode];
+}
+
+class InvestorBankAddRequested extends UserEvent {
+  final Map<String, dynamic>? formData;
+
+  InvestorBankAddRequested({this.formData});
+
+  @override
+  List<Object?> get props => [formData];
+}
+
