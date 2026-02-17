@@ -77,11 +77,17 @@ class _CreateProfileState extends State<CreateProfile> {
                       ),
                 ),
               );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage.toString()),
+                ),
+              );
+
             }
           } else if (state.status == UserStatus.otperror) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'OTP sending failed'),
+                content: Text(state.errorMessage.toString()),
               ),
             );
           }

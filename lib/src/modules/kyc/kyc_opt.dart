@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
-import 'package:invoicediscounting/src/bloc/user_authentication/user_event.dart';
+
+
 import 'package:invoicediscounting/src/constant/app_color.dart';
-import 'package:invoicediscounting/src/constant/storage_constant.dart';
+
 import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
 
 class KycOpt extends StatefulWidget {
@@ -14,17 +13,17 @@ class KycOpt extends StatefulWidget {
 }
 
 class _KycOptState extends State<KycOpt> {
-  @override
-  void initState() {
-    super.initState();
-    kycProgesstatus();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   kycProgesstatus();
+  // }
 
-  void kycProgesstatus() async {
-    String? sessionId = await storage.read(key: 'sessionId');
-    final bloc = BlocProvider.of<UserBloc>(context);
-    bloc.add(UserKycProgressRequested(sessionId.toString()));
-  }
+  // void kycProgesstatus() async {
+  //   String? sessionId = await storage.read(key: 'sessionId');
+  //   final bloc = BlocProvider.of<UserBloc>(context);
+  //   bloc.add(UserKycProgressRequested(sessionId.toString()));
+  // }
 
   void _openDigiLocker(BuildContext context) {
     Navigator.pushNamed(context, '/kyc/digilocker');

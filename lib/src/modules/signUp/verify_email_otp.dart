@@ -7,7 +7,7 @@ import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
 import 'package:invoicediscounting/src/bloc/user_authentication/user_event.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
-import 'package:invoicediscounting/src/modules/secure_pin.dart/create_secure_pin.dart';
+
 
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 import 'package:pinput/pinput.dart';
@@ -137,13 +137,19 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state.status == UserStatus.authenticated) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CreateSecurePin(),
-                // KycAddressScreen(),
+               ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage ?? 'Authentication Successful'),
               ),
             );
+            Navigator.pushReplacementNamed(context, '/invest');
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => CreateSecurePin(),
+            //     // KycAddressScreen(),
+            //   ),
+            // );
           } else if (state.status == UserStatus.unauthenticated) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
