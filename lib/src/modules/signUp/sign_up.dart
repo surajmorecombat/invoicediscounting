@@ -7,9 +7,10 @@ import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
 import 'package:invoicediscounting/src/bloc/user_authentication/user_event.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 import 'package:invoicediscounting/src/constant/storage_constant.dart';
-import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
+import 'package:invoicediscounting/src/modules/kyc/bank_verification.dart';
+
 import 'package:invoicediscounting/src/modules/kyc/kyc_opt.dart';
-import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
+
 import 'package:invoicediscounting/src/utils/validators.dart';
 import 'package:pinput/pinput.dart';
 
@@ -300,6 +301,25 @@ class _SignUpState extends State<SignUp> {
               SnackBar(content: Text(state.errorMessage ?? 'OTP Error')),
             );
           }
+
+          if (state.status == UserStatus.kycProgessed) {
+            final progress = state.createProfileResponse!.currentProgress;
+            if (progress.isEmpty) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => KycOpt()),
+              );
+            } else if (progress.contains('investor_kyc')) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => BankVerification()),
+              );
+            }
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (c) => KycOpt()),
+            // );
+          }
         },
         builder: (context, state) {
           return SingleChildScrollView(
@@ -549,24 +569,27 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             onPressed: () async {
-              // String? sessionId = await storage.read(key: 'sessionId');
-              // final bloc = BlocProvider.of<UserBloc>(context);
-              // bloc.add(UserKycProgressRequested(sessionId.toString()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (c) => KycOpt()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (c) => KycOpt()),
+              // );
+              String? sessionId = await storage.read(key: 'sessionId');
+              final bloc = BlocProvider.of<UserBloc>(context);
+              bloc.add(UserKycProgressRequested(sessionId.toString()));
             },
-
-            // (mobileVerified && emailVerified)
-            //     ? () async {
-
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(builder: (c) => KycOpt()),
-            //       );
-            //     }
-            //     : null,
+            /*
+                (mobileVerified && emailVerified)
+                    ? () async {
+                      String? sessionId = await storage.read(key: 'sessionId');
+                      final bloc = BlocProvider.of<UserBloc>(context);
+                      bloc.add(UserKycProgressRequested(sessionId.toString()));
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (c) => KycOpt()),
+                      // );
+                    }
+                    : null,
+                    */
             child: Text(
               'Continue',
               style: Theme.of(context).textTheme.labelLarge,

@@ -7,6 +7,7 @@ import 'package:invoicediscounting/src/constant/repos_constant.dart';
 import 'package:invoicediscounting/src/constant/storage_constant.dart';
 import 'package:invoicediscounting/src/models/bank_add_model.dart';
 import 'package:invoicediscounting/src/models/ifsc_model.dart';
+import 'package:invoicediscounting/src/models/profile_model.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(const UserState()) {
@@ -70,12 +71,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.otpSent));
+        emit(state.copyWith(status: UserStatus.otpSent,
+        errorMessage: result['message']?.toString()?? 'OTP sent successfully',
+        ));
       } else {
         emit(
           state.copyWith(
             status: UserStatus.otperror,
-            errorMessage: result['message'] ?? 'Login failed',
+            errorMessage:  result['error']['message']?.toString()??
+          'Login failed',
           ),
         );
       }
@@ -103,12 +107,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.resendedOtp));
+        emit(state.copyWith(status: UserStatus.resendedOtp,
+         errorMessage: result['message']?.toString()?? 'OTP sent successfully',
+        ));
       } else {
         emit(
           state.copyWith(
             status: UserStatus.otperror,
-            errorMessage: result['message'] ?? 'Login failed',
+             errorMessage:  result['error']['message']?.toString()??
+          'Login failed',
           ),
         );
       }
@@ -137,12 +144,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.authenticated));
+        emit(state.copyWith(status: UserStatus.authenticated,
+         errorMessage: result['message']?.toString()?? 'OTP verified successfully',));
       } else {
         emit(
           state.copyWith(
             status: UserStatus.unauthenticated,
-            errorMessage: result['message'] ?? 'OTP verification failed',
+            errorMessage: result['error']['message']?.toString() ?? 'OTP verification failed',
           ),
         );
       }
@@ -303,14 +311,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if (success) {
         emit(
           state.copyWith(
-            status: UserStatus.success,
+            status: UserStatus.kycProgessed,
+              createProfileResponse: CreateProfileModel.fromJson(result),
             // kycProgress: result['kycProgress'] ?? 0,
           ),
         );
       } else {
         emit(
           state.copyWith(
-            status: UserStatus.error,
+            status: UserStatus.kycProgressError,
+            createProfileResponse: CreateProfileModel.empty,
             errorMessage: result['message'] ?? 'Failed to load KYC progress',
           ),
         );

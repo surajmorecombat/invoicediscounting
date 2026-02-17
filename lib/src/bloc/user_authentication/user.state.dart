@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:invoicediscounting/src/models/bank_add_model.dart';
 import 'package:invoicediscounting/src/models/ifsc_model.dart';
+import 'package:invoicediscounting/src/models/profile_model.dart';
 
 enum KycDocType { pan, aadhaarFront, aadhaarBack, selfie ,bankPassbook,bankCheque}
 
@@ -29,6 +30,8 @@ enum UserStatus {
   ifscfetchError,
   bankAdded,
   bankAddFailed,
+  kycProgessed,
+  kycProgressError,
 }
 
 class UserState extends Equatable {
@@ -53,6 +56,7 @@ class UserState extends Equatable {
   final String? bankChequeDocId;
     final IfscBankDetailsModel? ifscBankDetails;
     final CreateBankAccountModel? createBankAccountResponse;
+    final CreateProfileModel? createProfileResponse;
 
   const UserState({
     this.status = UserStatus.initial,
@@ -71,7 +75,8 @@ class UserState extends Equatable {
     this.bankPassbookDocId,
     this.bankChequeDocId,
     this.ifscBankDetails,
-    this.createBankAccountResponse = CreateBankAccountModel.empty
+    this.createBankAccountResponse = CreateBankAccountModel.empty,
+    this.createProfileResponse = CreateProfileModel.empty,
   });
 
   UserState copyWith({
@@ -92,6 +97,7 @@ class UserState extends Equatable {
     String? bankChequeDocId,
     IfscBankDetailsModel? ifscBankDetails,
     CreateBankAccountModel? createBankAccountResponse,
+    CreateProfileModel? createProfileResponse,
   }) {
     return UserState(
       status: status ?? this.status,
@@ -111,6 +117,7 @@ class UserState extends Equatable {
       bankChequeDocId: bankChequeDocId ?? this.bankChequeDocId,
       ifscBankDetails: ifscBankDetails ?? this.ifscBankDetails,
       createBankAccountResponse: createBankAccountResponse ?? this.createBankAccountResponse,
+      createProfileResponse: createProfileResponse ?? this.createProfileResponse,
     );
   }
 
@@ -133,5 +140,6 @@ class UserState extends Equatable {
     bankChequeDocId,
     ifscBankDetails,
     createBankAccountResponse,
+    createProfileResponse,
   ];
 }

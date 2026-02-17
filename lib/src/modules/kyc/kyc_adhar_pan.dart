@@ -8,6 +8,7 @@ import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
 import 'package:invoicediscounting/src/bloc/user_authentication/user_event.dart';
 
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/constant/storage_constant.dart';
 
 import 'package:invoicediscounting/src/modules/kyc/selfie_capture.dart';
 import 'package:invoicediscounting/src/utils/validators.dart';
@@ -22,6 +23,12 @@ class KycAddressScreen extends StatefulWidget {
 }
 
 class _KycAddressScreenState extends State<KycAddressScreen> {
+
+    @override
+  void initState() {
+    super.initState();
+    //kycProgesstatus();
+  }
   final TextEditingController nameController = TextEditingController();
   final TextEditingController panController = TextEditingController();
 
@@ -33,6 +40,12 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
 
   DateTime? selectedDate;
   bool isConcentChecked = false;
+
+    void kycProgesstatus() async {
+    String? sessionId = await storage.read(key: 'sessionId');
+    final bloc = BlocProvider.of<UserBloc>(context);
+    bloc.add(UserKycProgressRequested(sessionId.toString()));
+  }
 
   Future<bool> ensureCameraPermission() async {
     final status = await Permission.camera.request();
