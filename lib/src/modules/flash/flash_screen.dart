@@ -4,6 +4,7 @@ import 'package:invoicediscounting/src/constant/app_color.dart';
 
 import 'package:invoicediscounting/src/modules/signUp/login_with.dart';
 import 'package:invoicediscounting/src/network/controller/user_authentication.dart';
+import 'package:invoicediscounting/src/services/local_auth_service.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -65,7 +66,6 @@ class _FlashScreenState extends State<FlashScreen>
     );
 
     _controller.forward();
-
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(seconds: 2), () async {
@@ -75,6 +75,43 @@ class _FlashScreenState extends State<FlashScreen>
           if (!mounted) return;
 
           if (isLogin) {
+            // Navigate to invest screen first (flash screen ends)
+            Navigator.pushReplacementNamed(context, '/invest');
+
+            // Then trigger biometric AFTER navigation completes
+            Future.delayed(const Duration(milliseconds: 500), () async {
+              final canAuth = await authService.canAuthenticate();
+              if (canAuth) {
+                final success = await authService.authenticate(
+                  reason: 'Authenticate to access your portfolio',
+                );
+
+                if (!success) {
+                  debugPrint("Biometric authentication failed or cancelled");
+                }
+              }
+            });
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginWith()),
+            );
+          }
+        });
+      }
+    });
+
+    /*
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(seconds: 2), () async {
+          final auth = UserAuthentication();
+          final isLogin = await auth.checkLogin();
+
+          if (!mounted) return;
+
+          if (isLogin) {
+            
             Navigator.pushReplacementNamed(context, '/invest');
           } else {
             Navigator.pushReplacement(
@@ -105,6 +142,8 @@ class _FlashScreenState extends State<FlashScreen>
         // });
       }
     });
+
+    */
   }
 
   @override
