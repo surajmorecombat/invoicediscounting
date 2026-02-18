@@ -37,28 +37,28 @@ class LoginWith extends StatelessWidget {
               ),
 
               const Spacer(flex: 2),
-              ElevatedButton(
-                onPressed: () async {
-                  final auth = LocalAuthentication();
-                  try {
-                    final result = await auth.authenticate(
-                      localizedReason: 'Final biometric test',
-                      biometricOnly: false,
-                    );
-                    debugPrint('RESULT = $result');
-                    if (result && context.mounted) {
-                      Navigator.of(
-                        context,
-                      ).pushNamedAndRemoveUntil('/invest', (_) => false);
-                    }
-                  } on LocalAuthException catch (e) {
-                    debugPrint('ERROR CODE = ${e.code}');
-                    debugPrint('ERROR MESSAGE = ${e.description}');
-                  }
-                },
-                child: const Text('Test Biometrics'),
-              ),
 
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     final auth = LocalAuthentication();
+              //     try {
+              //       final result = await auth.authenticate(
+              //         localizedReason: 'Final biometric test',
+              //         biometricOnly: false,
+              //       );
+              //       debugPrint('RESULT = $result');
+              //       if (result && context.mounted) {
+              //         Navigator.of(
+              //           context,
+              //         ).pushNamedAndRemoveUntil('/invest', (_) => false);
+              //       }
+              //     } on LocalAuthException catch (e) {
+              //       debugPrint('ERROR CODE = ${e.code}');
+              //       debugPrint('ERROR MESSAGE = ${e.description}');
+              //     }
+              //   },
+              //   child: const Text('Test Biometrics'),
+              // ),
               _googleButton(context),
               const SizedBox(height: 16),
               _emailButton(context),
@@ -96,7 +96,7 @@ class LoginWith extends StatelessWidget {
     );
   }
 
-  Widget _googleButton(BuildContext context) => SizedBox(  
+  Widget _googleButton(BuildContext context) => SizedBox(
     width: double.infinity,
     height: 52,
     child: OutlinedButton.icon(

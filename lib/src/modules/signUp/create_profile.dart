@@ -30,37 +30,38 @@ class _CreateProfileState extends State<CreateProfile> {
         elevation: 0,
         iconTheme: IconThemeData(color: blackColor),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.white,
-        child: SizedBox(
-          height: 52,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: onboardingTitleColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                final userBloc = BlocProvider.of<UserBloc>(context);
-                userBloc.add(
-                  UserLoginRequested(emailOrPhoneController.text.trim(), true),
-                );
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
-                // );
-              }
-            },
-            child: Text(
-              'Submit',
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-          ),
-        ),
-      ),
+      // bottomNavigationBar:
+      //  Container(
+      //   padding: const EdgeInsets.all(16),
+      //   color: Colors.white,
+      //   child: SizedBox(
+      //     height: 52,
+      //     child: ElevatedButton(
+      //       style: ElevatedButton.styleFrom(
+      //         backgroundColor: onboardingTitleColor,
+      //         shape: RoundedRectangleBorder(
+      //           borderRadius: BorderRadius.circular(8),
+      //         ),
+      //       ),
+      //       onPressed: () {
+      //         if (_formKey.currentState!.validate()) {
+      //           final userBloc = BlocProvider.of<UserBloc>(context);
+      //           userBloc.add(
+      //             UserLoginRequested(emailOrPhoneController.text.trim(), true),
+      //           );
+      //           // Navigator.push(
+      //           //   context,
+      //           //   MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
+      //           // );
+      //         }
+      //       },
+      //       child: Text(
+      //         'Submit',
+      //         style: Theme.of(context).textTheme.labelLarge,
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state.status == UserStatus.otpSent) {
@@ -143,6 +144,39 @@ class _CreateProfileState extends State<CreateProfile> {
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
+                    SizedBox(height: 5,),
+                     Container(
+       // padding: const EdgeInsets.all(16),
+        color: Colors.white,
+        child: SizedBox(
+          height: 52,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: onboardingTitleColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                final userBloc = BlocProvider.of<UserBloc>(context);
+                userBloc.add(
+                  UserLoginRequested(emailOrPhoneController.text.trim(), true),
+                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => VerifyEmailOtp()),
+                // );
+              }
+            },
+            child: Text(
+              'Submit',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+        ),
+      ),
 
                     // /// Continue Button
                     // SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/components/shimmer/profile_shimmer.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/constant/storage_constant.dart';
 
 import 'package:invoicediscounting/src/modules/portfolio/demat/demat_details.dart';
 import 'package:invoicediscounting/src/modules/profile/bank_details/bank_details.dart';
@@ -21,14 +22,15 @@ class _ProfileState extends State<Profile> {
   bool isLoading = true;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2),(){
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         isLoading = false;
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width >= 600;
@@ -37,7 +39,10 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text('Profile', style: Theme.of(context).textTheme.headlineMedium),
+        title: Text(
+          'Profile',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
         backgroundColor: backgroundColor,
         iconTheme: IconThemeData(color: blackColor),
       ),
@@ -49,10 +54,16 @@ class _ProfileState extends State<Profile> {
           height: 52,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
+              storage.delete(key: 'accessToken');
+              Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => LoginWith()),
+                MaterialPageRoute(builder: (c) => LoginWith()),
+                (route) => false,
               );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => LoginWith()),
+              // );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: whiteColor,
@@ -75,91 +86,105 @@ class _ProfileState extends State<Profile> {
           ),
         ),
       ),
-      body:isLoading?ProfileShimmer(): SingleChildScrollView(
-        child:
-        
-         Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: isTablet ? 120 : 16),
-              child: Column(
-                children: [
-                  _profileHeader(context),
-                  SizedBox(height: 15),
-            
-                  Card(
-                    elevation: 0.1,
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+      body:
+          isLoading
+              ? ProfileShimmer()
+              : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isTablet ? 120 : 16,
+                      ),
+                      child: Column(
+                        children: [
+                          _profileHeader(context),
+                          SizedBox(height: 15),
+
+                          Card(
+                            elevation: 0.1,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Column(
+                              children: [
+                                _menuItem(
+                                  Icons.account_balance,
+                                  "Bank Details",
+                                  context,
+                                  () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BankDetails(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                _menuItem(
+                                  Icons.person_outline,
+                                  "Demat Details",
+                                  context,
+                                  () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DematDetails(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                _menuItem(
+                                  Icons.info_outline,
+                                  "Nominee Details",
+                                  context,
+                                  () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NomineeAdd(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                _menuItem(
+                                  Icons.notifications_none,
+                                  "Notification",
+                                  context,
+                                  () {},
+                                ),
+                                _menuItem(
+                                  Icons.help_outline,
+                                  "Help",
+                                  context,
+                                  () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HelpCentre(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                _menuItem(
+                                  Icons.info_outline,
+                                  "About app",
+                                  context,
+                                  () {},
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(height: 15),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        _menuItem(
-                          Icons.account_balance,
-                          "Bank Details",
-                          context,
-                          () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BankDetails(),
-                              ),
-                            );
-                          },
-                        ),
-                        _menuItem(
-                          Icons.person_outline,
-                          "Demat Details",
-                          context,
-                          () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DematDetails(),
-                              ),
-                            );
-                          },
-                        ),
-                        _menuItem(
-                          Icons.info_outline,
-                          "Nominee Details",
-                          context,
-                          () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => NomineeAdd()),
-                            );
-                          },
-                        ),
-                        _menuItem(
-                          Icons.notifications_none,
-                          "Notification",
-                          context,
-                          () {},
-                        ),
-                        _menuItem(Icons.help_outline, "Help", context, () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HelpCentre()),
-                          );
-                        }),
-                        _menuItem(Icons.info_outline, "About app", context, () {}),
-                      ],
-                    ),
-                  ),
-            
-                  SizedBox(height: 15),
-                 
-            
-             
-                ],
+                    _supportCard(context),
+                  ],
+                ),
               ),
-            ),
-             _supportCard(context),
-          ],
-        ),
-      ),
     );
   }
 
@@ -255,11 +280,9 @@ class _ProfileState extends State<Profile> {
 
   Widget _supportCard(context) {
     return Container(
-  width: double.infinity,
-        // padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-        ),
+      width: double.infinity,
+      // padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(color: Colors.grey.shade200),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -273,11 +296,14 @@ class _ProfileState extends State<Profile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Relationship Manager', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  Text(
+                    'Relationship Manager',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: blackColor,
                       fontWeight: FontWeight.w500,
-                    ),),
-                  SizedBox(height: 5,),
+                    ),
+                  ),
+                  SizedBox(height: 5),
                   Text(
                     "Shradha Singh",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
