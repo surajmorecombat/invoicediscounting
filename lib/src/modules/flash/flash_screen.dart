@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
 import 'package:invoicediscounting/src/modules/signUp/login_with.dart';
-
+import 'package:invoicediscounting/src/network/controller/user_authentication.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({super.key});
@@ -68,22 +68,49 @@ class _FlashScreenState extends State<FlashScreen>
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Future.delayed(const Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 2), () async {
+          final auth = UserAuthentication();
+          final isLogin = await auth.checkLogin();
+
           if (!mounted) return;
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const LoginWith()),
-          );
+
+          if (isLogin) {
+            Navigator.pushReplacementNamed(context, '/invest');
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const LoginWith()),
+            );
+          }
         });
+
+        // Future.delayed(const Duration(seconds: 2), () {
+        //   final auth = UserAuthentication();
+        //   final isLogin = auth.checkLogin();
+        //   if (!mounted) return;
+
+        //   if (isLogin) {
+        //     Navigator.pushReplacementNamed(context, '/invest');
+        //     // Navigator.pushReplacement(
+        //     //   context,
+        //     //   MaterialPageRoute(builder: (_) => const LoginWith()),
+        //     // );
+        //   }
+        //   {
+        //     Navigator.pushReplacement(
+        //       context,
+        //       MaterialPageRoute(builder: (_) => const LoginWith()),
+        //     );
+        //   }
+        // });
       }
     });
   }
 
   @override
   void dispose() {
-     _controller.dispose();
+    _controller.dispose();
     super.dispose();
-   
   }
 
   @override

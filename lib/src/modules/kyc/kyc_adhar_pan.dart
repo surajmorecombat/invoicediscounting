@@ -23,12 +23,12 @@ class KycAddressScreen extends StatefulWidget {
 }
 
 class _KycAddressScreenState extends State<KycAddressScreen> {
-
-    @override
+  @override
   void initState() {
     super.initState();
     //kycProgesstatus();
   }
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController panController = TextEditingController();
 
@@ -38,10 +38,15 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
   final ScrollController scrollController = ScrollController();
   final _formKey = GlobalKey<FormState>();
 
+  // upload error messages for files
+  String? panUploadError;
+  String? aadhaarFrontUploadError;
+  String? aadhaarBackUploadError;
+
   DateTime? selectedDate;
   bool isConcentChecked = false;
 
-    void kycProgesstatus() async {
+  void kycProgesstatus() async {
     String? sessionId = await storage.read(key: 'sessionId');
     final bloc = BlocProvider.of<UserBloc>(context);
     bloc.add(UserKycProgressRequested(sessionId.toString()));
@@ -127,24 +132,72 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
+            
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => SelfieCapture(
-                          name: nameController.text,
-                          panId: panController.text,
-                          dob: dateController.text,
-                          adharId: addressController.text,
-                          address: addressController.text,
-                        ),
-                    // BankVerification()
-                  ),
-                );
+                // validate uploaded files (PAN, Aadhaar front & back)
+                final userState = BlocProvider.of<UserBloc>(context).state;
+                bool hasError = false;
+                setState(() {
+                  panUploadError = null;
+                  aadhaarFrontUploadError = null;
+                  aadhaarBackUploadError = null;
+                });
+
+                if (userState.panImageUrl == null) {
+                  setState(() {
+                    panUploadError = 'Please upload PAN document';
+                  });
+                  hasError = true;
+                }
+                if (userState.aadhaarFrontImageUrl == null) {
+                  setState(() {
+                    aadhaarFrontUploadError = 'Please upload Aadhaar front';
+                  });
+                  hasError = true;
+                }
+                if (userState.aadhaarBackImageUrl == null) {
+                  setState(() {
+                    aadhaarBackUploadError = 'Please upload Aadhaar back';
+                  });
+                  hasError = true;
+                }
+
+                if (!hasError) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => SelfieCapture(
+                            name: nameController.text,
+                            panId: panController.text,
+                            dob: dateController.text,
+                            adharId: addressController.text,
+                            address: addressController.text,
+                          ),
+                      // BankVerification()
+                    ),
+                  );
+                }
               }
             },
+            
+            // onPressed: () {
+            //   Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder:
+            //               (context) => SelfieCapture(
+            //                 name: nameController.text,
+            //                 panId: panController.text,
+            //                 dob: dateController.text,
+            //                 adharId: addressController.text,
+            //                 address: addressController.text,
+            //               ),
+            //           // BankVerification()
+            //         ),
+            //       );
+            // },
             child: Text(
               'Verify & Continue',
               style: Theme.of(context).textTheme.labelLarge,
@@ -154,18 +207,38 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
       ),
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
-          if (state.status == UserStatus.success &&
-              state.uploadedImageUrl != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('File uploaded successfully!')),
-            );
-          } else if (state.status == UserStatus.failed) {
+          if (state.panImageUrl != null) {
+            setState(() {
+              panUploadError = null;
+            });
+          }
+          if (state.aadhaarFrontImageUrl != null) {
+            setState(() {
+              aadhaarFrontUploadError = null;
+            });
+          }
+          if (state.aadhaarBackImageUrl != null) {
+            setState(() {
+              aadhaarBackUploadError = null;
+            });
+          }
+
+          if (state.status == UserStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'File upload failed'),
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text('File uploaded successfully!', style: TextStyle(color: whiteColor)),
               ),
             );
           }
+          //  else if (state.status == UserStatus.failed) {
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: Text(state.errorMessage ?? 'File upload failed'),
+          //     ),
+          //   );
+          // }
         },
         builder: (context, state) {
           return SafeArea(
@@ -215,7 +288,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                           TextInputType.name,
                           panFocusNode,
                           panController,
-                          CommonValidators.requiredValidator,
+                          CommonValidators.panValidator,
                         ),
                       ),
                       // SizedBox(height: 5),
@@ -251,7 +324,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                           aadhaarFocusNode,
                           adharController,
 
-                          CommonValidators.requiredValidator,
+                          CommonValidators.aadhaarValidator,
                         ),
                       ),
 
@@ -412,20 +485,20 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: Theme.of(context).textTheme.bodySmall,
-   
-         enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              borderSide: const BorderSide(color: Colors.grey),
-            ),
 
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
-            ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: onboardingTitleColor, width: 1.6),
+        ),
       ),
     );
     // if (!isNumeric || focusNode == null) return textField;
@@ -434,7 +507,8 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
   }
 
   Widget buildDateInput(context) {
-    return TextField(
+    return TextFormField(
+      validator: CommonValidators.requiredValidator,
       cursorColor: onboardingTitleColor,
       readOnly: true,
       controller: dateController,
@@ -470,45 +544,67 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
   }
 
   Widget buildUploadBox(KycDocType docType) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-      decoration: BoxDecoration(
-        color: adharBox,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: greycolor),
-      ),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () => showSourceSheet(docType),
-            child: Container(
-              height: 36,
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              decoration: BoxDecoration(
-                color: adharInnerBox,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Center(
-                child: Text(
-                  "Select File",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: blueDark),
+    String? error;
+    if (docType == KycDocType.pan) {
+      error = panUploadError;
+    } else if (docType == KycDocType.aadhaarFront) {
+      error = aadhaarFrontUploadError;
+    } else if (docType == KycDocType.aadhaarBack) {
+      error = aadhaarBackUploadError;
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+          decoration: BoxDecoration(
+            color: adharBox,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: greycolor),
+          ),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () => showSourceSheet(docType),
+                child: Container(
+                  height: 36,
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(
+                    color: adharInnerBox,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Select File",
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(color: blueDark),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  "Drop files here to upload",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(color: onboardingTitleColor),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 12),
-          Expanded(
+        ),
+        if (error != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 6, left: 4),
             child: Text(
-              "Drop files here to upload",
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: onboardingTitleColor),
+              error,
+              style: TextStyle(color: Colors.red, fontSize: 12),
             ),
           ),
-        ],
-      ),
+      ],
     );
   }
 

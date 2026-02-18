@@ -7,8 +7,6 @@ import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
 import 'package:invoicediscounting/src/bloc/user_authentication/user_event.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
 
-
-
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 import 'package:pinput/pinput.dart';
 
@@ -82,12 +80,12 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
       );
 
       // Show snackbar confirmation
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('OTP resent successfully'),
-          duration: Duration(seconds: 2),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('OTP resent successfully'),
+      //     duration: Duration(seconds: 2),
+      //   ),
+      // );
 
       _startCountdownTimer();
     }
@@ -137,12 +135,21 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state.status == UserStatus.authenticated) {
-               ScaffoldMessenger.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication Successful'),
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: whiteColor),
+                ),
               ),
             );
-            Navigator.pushReplacementNamed(context, '/invest');
+
+            Future.delayed(Duration(milliseconds: 500), () {
+              Navigator.pushReplacementNamed(context, '/invest');
+            });
+
             // Navigator.pushReplacement(
             //   context,
             //   MaterialPageRoute(
@@ -153,7 +160,34 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
           } else if (state.status == UserStatus.unauthenticated) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication failed'),
+                backgroundColor: Colors.red,
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: whiteColor),
+                ),
+              ),
+            );
+          }
+
+          if (state.status == UserStatus.resendedOtp) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: whiteColor),
+                ),
+              ),
+            );
+          } else if (state.status == UserStatus.otperror) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: whiteColor),
+                ),
               ),
             );
           }
@@ -182,7 +216,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '''We have sent OTP to abc@gmail.com''',
+                        '''We have sent OTP to ${widget.emailOrPhoneNumber}''',
                         textAlign: TextAlign.center,
 
                         style: Theme.of(
@@ -191,13 +225,13 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                       ),
                       SizedBox(width: 5),
                       GestureDetector(
-                        onTap:
-                            () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => CreateProfile(),
-                              ),
-                            ),
+                        onTap: () => Navigator.of(context).pop(),
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (_) => CreateProfile(),
+                        //   ),
+                        // ),
                         child: Icon(Icons.edit, size: 16, color: blackColor),
                       ),
                     ],

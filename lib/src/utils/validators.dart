@@ -51,6 +51,34 @@ class CommonValidators {
     return 'Please enter a valid email or 10-digit phone number';
   }
 
+  /// Validates PAN (India) in the format: 5 letters, 4 digits, 1 letter (e.g. ABCDE1234F)
+  static String? panValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'PAN is required';
+    }
+    final pan = value.trim().toUpperCase();
+    final panRegex = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$');
+    if (!panRegex.hasMatch(pan)) {
+      return 'Please enter a valid PAN (e.g. ABCDE1234F)';
+    }
+    return null;
+  }
+
+  /// Validates Aadhaar number (12 digits) and verifies checksum using Verhoeff algorithm
+  static String? aadhaarValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Aadhaar is required';
+    }
+    final digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digitsOnly.length != 12) {
+      return 'Aadhaar must be 12 digits';
+    }
+    if (!_isValidVerhoeff(digitsOnly)) {
+      return 'Please enter a valid Aadhaar number';
+    }
+    return null;
+  }
+
 
   static String? minLengthValidator(String? value, int minLength) {
     if (value == null || value.isEmpty) {
@@ -60,6 +88,39 @@ class CommonValidators {
       return 'Must be at least $minLength characters';
     }
     return null;
+  }
+
+  static bool _isValidVerhoeff(String num) {
+    final d = [
+      [0,1,2,3,4,5,6,7,8,9],
+      [1,2,3,4,0,6,7,8,9,5],
+      [2,3,4,0,1,7,8,9,5,6],
+      [3,4,0,1,2,8,9,5,6,7],
+      [4,0,1,2,3,9,5,6,7,8],
+      [5,9,8,7,6,0,4,3,2,1],
+      [6,5,9,8,7,1,0,4,3,2],
+      [7,6,5,9,8,2,1,0,4,3],
+      [8,7,6,5,9,3,2,1,0,4],
+      [9,8,7,6,5,4,3,2,1,0]
+    ];
+
+    final p = [
+      [0,1,2,3,4,5,6,7,8,9],
+      [1,5,7,6,2,8,3,0,9,4],
+      [5,8,0,3,7,9,6,1,4,2],
+      [8,9,1,6,0,4,3,5,2,7],
+      [9,4,5,3,1,2,6,8,7,0],
+      [4,2,8,6,5,7,3,9,0,1],
+      [2,7,9,3,8,0,6,4,1,5],
+      [7,0,4,6,9,1,3,2,5,8]
+    ];
+
+    int c = 0;
+    for (int i = 0; i < num.length; i++) {
+      final int digit = int.parse(num[num.length - 1 - i]);
+      c = d[c][p[i % 8][digit]];
+    }
+    return c == 0;
   }
 
  

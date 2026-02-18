@@ -141,9 +141,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final result = await userRepository.verifyOtp(jsonData);
       print('verify otp result $result');
 
+
       final success = result['success'] ?? false;
 
       if (success) {
+         await storage.write(key: 'accessToken', value: result['accessToken']);
         emit(state.copyWith(status: UserStatus.authenticated,
          errorMessage: result['message']?.toString()?? 'OTP verified successfully',));
       } else {
@@ -178,16 +180,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.mobileOtpSent));
+        emit(state.copyWith(status: UserStatus.mobileOtpSent,
+         errorMessage: result['message']?.toString()?? 'OTP sent successfully',
+        ));
         await storage.write(
           key: 'sessionId',
           value: result['sessionId']?.toString() ?? '',
+          
         );
       } else {
         emit(
           state.copyWith(
             status: UserStatus.otperror,
-            errorMessage: result['message'] ?? 'Failed to send OTP',
+           errorMessage: result['error']['message']?.toString() ?? 'Failed to send OTP',
           ),
         );
       }
@@ -214,12 +219,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.otpVerified));
+        emit(state.copyWith(status: UserStatus.otpVerified,
+         errorMessage: result['message']?.toString()?? 'OTP verified successfully',));
       } else {
         emit(
           state.copyWith(
             status: UserStatus.unauthenticated,
-            errorMessage: result['message'] ?? 'OTP verification failed',
+            errorMessage: result['error']['message']?.toString() ?? 'OTP verification failed',
           ),
         );
       }
@@ -247,12 +253,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.emailOtpSent));
+        emit(state.copyWith(status: UserStatus.emailOtpSent,
+         errorMessage: result['message']?.toString()?? 'OTP sent successfully',
+        ));
       } else {
         emit(
           state.copyWith(
             status: UserStatus.otperror,
-            errorMessage: result['message'] ?? 'Failed to send OTP',
+            errorMessage: result['error']['message']?.toString() ?? 'Failed to send OTP',
           ),
         );
       }
@@ -279,12 +287,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.emailOtpVerified));
+        emit(state.copyWith(status: UserStatus.emailOtpVerified,
+         errorMessage: result['message']?.toString()?? 'OTP verified successfully',));
       } else {
         emit(
           state.copyWith(
             status: UserStatus.unauthenticated,
-            errorMessage: result['message'] ?? 'OTP verification failed',
+            errorMessage: result['error']['message']?.toString() ?? 'OTP verification failed',
           ),
         );
       }
@@ -313,6 +322,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           state.copyWith(
             status: UserStatus.kycProgessed,
               createProfileResponse: CreateProfileModel.fromJson(result),
+              errorMessage: result['message']?.toString() ?? 'KYC progress fetched successfully',
             // kycProgress: result['kycProgress'] ?? 0,
           ),
         );
@@ -321,7 +331,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           state.copyWith(
             status: UserStatus.kycProgressError,
             createProfileResponse: CreateProfileModel.empty,
-            errorMessage: result['message'] ?? 'Failed to load KYC progress',
+             errorMessage: result['error']['message']?.toString() ?? 'Failed to fetch KYC progress',
+           
           ),
         );
       }
@@ -375,6 +386,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               aadhaarFrontImageUrl: uploadedUrl,
               status: UserStatus.success,
               aadhaarFrontDocId: uploadedDocId,
+              errorMessage: result['message']?.toString()
             ),
           );
           break;
@@ -386,6 +398,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               aadhaarBackImageUrl: uploadedUrl,
               status: UserStatus.success,
               aadhaarBackDocId: uploadedDocId,
+              errorMessage: result['message']?.toString()
             ),
           );
           break;
@@ -396,6 +409,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               selfieImageUrl: uploadedUrl,
               status: UserStatus.success,
               selfieDocId: uploadedDocId,
+              errorMessage: result['message']?.toString() ?? 'File uploaded successfully',
             ),
           );
           break;
@@ -406,6 +420,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               bankPassbookImageUrl: uploadedUrl,
               status: UserStatus.success,
               bankPassbookDocId: uploadedDocId,
+              errorMessage: result['message']?.toString() ?? 'File uploaded successfully',
             ),
           );
           break;
@@ -416,6 +431,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               bankChequeImageUrl: uploadedUrl,
               status: UserStatus.success,
               bankChequeDocId: uploadedDocId,
+              errorMessage: result['message']?.toString() ?? 'File uploaded successfully',
             ),
           );
           break;
@@ -438,7 +454,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final success = result['success'] ?? false;
 
       if (success) {
-        emit(state.copyWith(status: UserStatus.kycRegistered));
+        emit(state.copyWith(status: UserStatus.kycRegistered, errorMessage: result['message']?.toString() ?? 'KYC registered successfully'));
         await storage.write(
           key: 'usersId',
           value: result['usersId']?.toString() ?? '',
@@ -447,7 +463,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(
           state.copyWith(
             status: UserStatus.kycNotRegistered,
-            errorMessage: result['message'] ?? 'Registration failed',
+            errorMessage: result['error']['message']?.toString() ?? 'Failed to fetch KYC progress',
           ),
         );
       }
@@ -478,6 +494,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           state.copyWith(
             status: UserStatus.ifscfetched,
             ifscBankDetails: ifscData,
+            errorMessage: result['message']?.toString() ?? 'IFSC details fetched successfully',
           ),
         );
       } else {
@@ -485,7 +502,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           state.copyWith(
             status: UserStatus.ifscfetchError,
             ifscBankDetails: IfscBankDetailsModel.empty,
-            errorMessage: result['message'] ?? 'Failed to fetch IFSC details',
+            errorMessage: result['error']['message']?.toString() ?? 'Failed to fetch KYC progress',
           ),
         );
       }
@@ -511,6 +528,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           state.copyWith(
             status: UserStatus.bankAdded,
             createBankAccountResponse: CreateBankAccountModel.fromJson(result),
+            errorMessage: result['message']?.toString() ?? 'Bank details submitted successfully',
           ),
         );
       } else {
@@ -518,7 +536,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           state.copyWith(
             status: UserStatus.bankAddFailed,
             createBankAccountResponse: CreateBankAccountModel.empty,
-            errorMessage: result['message'] ?? 'Bank details submission failed',
+            errorMessage: result['error']['message']?.toString() ?? 'Failed to submit bank details',
           ),
         );
       }

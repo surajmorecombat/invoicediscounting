@@ -79,9 +79,11 @@ class _SelfieCaptureState extends State<SelfieCapture> {
 
     return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
-        if (state.status == UserStatus.kycRegistered ) {
+        if (state.status == UserStatus.kycRegistered) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Investor Registration successfully!')),
+            SnackBar(
+              backgroundColor: onboardingTitleColor,
+              content: Text(state.errorMessage.toString(),style: TextStyle(color: Colors.white), ),),
           );
           Navigator.push(
             context,
@@ -90,8 +92,9 @@ class _SelfieCaptureState extends State<SelfieCapture> {
         } else if (state.status == UserStatus.kycNotRegistered) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              backgroundColor: Colors.red,
               content: Text(
-                state.errorMessage ?? 'Investor Registration failed!',
+                state.errorMessage.toString() ,style: TextStyle(color: Colors.white),
               ),
             ),
           );
@@ -123,12 +126,13 @@ class _SelfieCaptureState extends State<SelfieCapture> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-          //       onPressed: () {
-          //            Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => BankVerification()),
-          // );
-          //       },
+
+                //       onPressed: () {
+                //            Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => BankVerification()),
+                // );
+                //       },
                 onPressed:
                     hasSelfie
                         ? () async {

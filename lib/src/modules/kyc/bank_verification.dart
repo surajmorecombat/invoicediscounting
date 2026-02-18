@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +37,8 @@ class _BankVerificationState extends State<BankVerification> {
     bloc.add(UserKycProgressRequested(sessionId.toString()));
   }
 
+  String? bankPassbookUploadError;
+  String? bankChequeUploadError;
   final _formKey = GlobalKey<FormState>();
   final FocusNode accountNumberFocusNode = FocusNode();
   final FocusNode accountHolderFocusNode = FocusNode();
@@ -77,18 +80,39 @@ class _BankVerificationState extends State<BankVerification> {
         if (state.status == UserStatus.ifscfetched) {
           ifscData(state);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("IFSC details fetched successfully")),
+            SnackBar(
+              duration: Duration(milliseconds: 500),
+              backgroundColor: onboardingTitleColor,
+              content: Text(
+                state.errorMessage.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           );
         }
         if (state.status == UserStatus.ifscfetchError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Failed to fetch IFSC details")),
+            SnackBar(
+              duration: Duration(milliseconds: 500),
+              backgroundColor: Colors.red,
+              content: Text(
+                state.errorMessage.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           );
         }
 
         if (state.status == UserStatus.bankAdded) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Bank details submitted successfully!")),
+            SnackBar(
+              duration: Duration(milliseconds: 500),
+              backgroundColor: onboardingTitleColor,
+              content: Text(
+                state.errorMessage.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           );
           Navigator.push(
             context,
@@ -97,8 +121,11 @@ class _BankVerificationState extends State<BankVerification> {
         } else if (state.status == UserStatus.bankAddFailed) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
+              duration: Duration(milliseconds: 500),
+              backgroundColor: Colors.red,
               content: Text(
                 state.errorMessage ?? "Bank details submission failed!",
+                style: TextStyle(color: Colors.white),
               ),
             ),
           );
@@ -131,6 +158,25 @@ class _BankVerificationState extends State<BankVerification> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    final userState = context.read<UserBloc>().state;
+                    setState(() {
+                      bankPassbookUploadError = null;
+                      bankChequeUploadError = null;
+                    });
+                    if (userState.bankChequeImageUrl == null &&
+                        getKycDocType() == KycDocType.bankCheque) {
+                      setState(() {
+                        bankChequeUploadError = "Please upload a cheque image";
+                      });
+                      return;
+                    } else if (userState.bankPassbookImageUrl == null &&
+                        getKycDocType() == KycDocType.bankPassbook) {
+                      setState(() {
+                        bankPassbookUploadError =
+                            "Please upload a passbook image";
+                      });
+                      return;
+                    }
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(builder: (context) => Review()),
@@ -201,6 +247,15 @@ class _BankVerificationState extends State<BankVerification> {
                         context,
                         getKycDocType(),
                       ),
+                      SizedBox(height: 5),
+                      if (state.bankChequeImageUrl != null &&
+                          getKycDocType() == KycDocType.bankCheque)
+                        uploadedImagePreview(state.bankChequeImageUrl!),
+
+                      if (state.bankPassbookImageUrl != null &&
+                          getKycDocType() == KycDocType.bankPassbook)
+                        uploadedImagePreview(state.bankPassbookImageUrl!),
+
                       // Padding(
                       //   padding: const EdgeInsets.only(top: 10),
                       //   child: Center(
@@ -269,7 +324,55 @@ class _BankVerificationState extends State<BankVerification> {
     );
   }
 
+  Widget uploadedImagePreview(String imageUrl) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => FullScreenImage(imageUrl: imageUrl),
+          ),
+        );
+      },
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Stack(
+          children: [
+            Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, progress) {
+                    if (progress == null) return child;
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  errorBuilder: (_, __, ___) {
+                    return const Center(child: Icon(Icons.broken_image));
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _uploadBlock(String title, context, KycDocType docType) {
+    String? error;
+    if (docType == KycDocType.bankPassbook) {
+      error = bankPassbookUploadError;
+    } else if (docType == KycDocType.bankCheque) {
+      error = bankChequeUploadError;
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -378,6 +481,14 @@ class _BankVerificationState extends State<BankVerification> {
         //     ),
         //   ),
         // ),
+        if (error != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 6, left: 4),
+            child: Text(
+              error,
+              style: TextStyle(color: Colors.red, fontSize: 12),
+            ),
+          ),
       ],
     );
   }
@@ -664,6 +775,37 @@ class _BankVerificationState extends State<BankVerification> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class FullScreenImage extends StatelessWidget {
+  final String imageUrl;
+
+  const FullScreenImage({Key? key, required this.imageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: Center(
+        child: InteractiveViewer(
+          minScale: 1,
+          maxScale: 4,
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.contain,
+            loadingBuilder: (context, child, progress) {
+              if (progress == null) return child;
+              return const CircularProgressIndicator(color: Colors.white);
+            },
+          ),
+        ),
       ),
     );
   }
