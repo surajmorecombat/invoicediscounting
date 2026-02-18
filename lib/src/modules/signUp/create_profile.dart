@@ -64,30 +64,40 @@ class _CreateProfileState extends State<CreateProfile> {
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state.status == UserStatus.otpSent) {
-            // Only navigate if we're not already on the OTP screen
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: whiteColor),
+                ),
+              ),
+            );
             final currentRoute = ModalRoute.of(context)?.settings.name;
             if (currentRoute != '/verify-otp') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  settings: RouteSettings(name: '/verify-otp'),
-                  builder:
-                      (context) => VerifyEmailOtp(
-                        emailOrPhoneNumber: emailOrPhoneController.text.trim(),
-                      ),
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.errorMessage.toString()),
-                ),
-              );
-
+              Future.delayed(Duration(milliseconds: 500), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    settings: RouteSettings(name: '/verify-otp'),
+                    builder:
+                        (context) => VerifyEmailOtp(
+                          emailOrPhoneNumber:
+                              emailOrPhoneController.text.trim(),
+                        ),
+                  ),
+                );
+              });
             }
           } else if (state.status == UserStatus.otperror) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage.toString()),
+                backgroundColor: Colors.red,
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: whiteColor),
+                ),
               ),
             );
           }

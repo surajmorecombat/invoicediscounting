@@ -253,13 +253,27 @@ class _SignUpState extends State<SignUp> {
         listener: (context, state) {
           if (state.status == UserStatus.mobileOtpSent) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Mobile OTP sent successfully')),
+              SnackBar(
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             );
           }
 
           if (state.status == UserStatus.otpVerified) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Mobile OTP verified successfully')),
+              SnackBar(
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             );
 
             if (isMobileOtpComplete) {
@@ -273,12 +287,26 @@ class _SignUpState extends State<SignUp> {
           }
           if (state.status == UserStatus.emailOtpSent) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Email OTP sent successfully')),
+              SnackBar(
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             );
           }
           if (state.status == UserStatus.emailOtpVerified) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Email OTP verified successfully')),
+              SnackBar(
+                backgroundColor: onboardingTitleColor,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             );
 
             if (isEmailOtpComplete) {
@@ -293,12 +321,24 @@ class _SignUpState extends State<SignUp> {
           if (state.status == UserStatus.unauthenticated) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'Otp verification failed'),
+                backgroundColor: Colors.red,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage ?? 'Otp verification failed',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             );
           } else if (state.status == UserStatus.otperror) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage ?? 'OTP Error')),
+              SnackBar(
+                backgroundColor: Colors.red,
+                duration: Duration(milliseconds: 500),
+                content: Text(
+                  state.errorMessage ?? 'OTP Error',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             );
           }
 
@@ -333,7 +373,7 @@ class _SignUpState extends State<SignUp> {
                     label: 'Phone Number',
                     hint: 'Enter mobile number',
                     keyboardType: TextInputType.phone,
-                    validator: CommonValidators.emailOrPhoneValidator,
+                    validator: CommonValidators.phoneValidator,
                   ),
 
                   const SizedBox(height: 12),
@@ -348,7 +388,15 @@ class _SignUpState extends State<SignUp> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          onPressed: isMobileValid ? _onMobileContinue : null,
+                          onPressed:
+                              isMobileValid
+                                  ? () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _onMobileContinue();
+                                    }
+                                  }
+                                  : null,
+                          // onPressed: isMobileValid ? _onMobileContinue : null,
                           child: Text(
                             'Continue',
                             style: Theme.of(context).textTheme.labelLarge,
@@ -456,7 +504,15 @@ class _SignUpState extends State<SignUp> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            onPressed: isEmailValid ? _onEmailContinue : null,
+                            // onPressed: isEmailValid ? _onEmailContinue : null,
+                            onPressed:
+                                isEmailValid
+                                    ? () {
+                                      if (_formKey.currentState!.validate()) {
+                                        _onEmailContinue();
+                                      }
+                                    }
+                                    : null,
                             child: Text(
                               'Continue',
                               style: Theme.of(context).textTheme.labelLarge,
@@ -568,28 +624,28 @@ class _SignUpState extends State<SignUp> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () async {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (c) => KycOpt()),
-              // );
-              String? sessionId = await storage.read(key: 'sessionId');
-              final bloc = BlocProvider.of<UserBloc>(context);
-              bloc.add(UserKycProgressRequested(sessionId.toString()));
-            },
-            /*
+            onPressed:
+                //  () async {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (c) => KycOpt()),
+                //   );
+                //   String? sessionId = await storage.read(key: 'sessionId');
+                //   final bloc = BlocProvider.of<UserBloc>(context);
+                //   bloc.add(UserKycProgressRequested(sessionId.toString()));
+                // },
                 (mobileVerified && emailVerified)
                     ? () async {
                       String? sessionId = await storage.read(key: 'sessionId');
                       final bloc = BlocProvider.of<UserBloc>(context);
                       bloc.add(UserKycProgressRequested(sessionId.toString()));
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (c) => KycOpt()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (c) => KycOpt()),
+                      );
                     }
                     : null,
-                    */
+
             child: Text(
               'Continue',
               style: Theme.of(context).textTheme.labelLarge,

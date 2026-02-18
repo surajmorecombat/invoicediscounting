@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/modules/kyc/bank_verification.dart';
-import 'package:invoicediscounting/src/modules/kyc/kyc_adhar_pan.dart';
+
 import 'package:invoicediscounting/src/services/local_auth_service.dart';
 
 class AppLockService with WidgetsBindingObserver {
