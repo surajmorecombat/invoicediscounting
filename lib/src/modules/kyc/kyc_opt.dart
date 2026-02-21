@@ -26,7 +26,7 @@ class _KycOptState extends State<KycOpt> {
   // }
 
   void _openDigiLocker(BuildContext context) {
-    Navigator.pushNamed(context, '/kyc/digilocker');
+    // Navigator.pushNamed(context, '/kyc/digilocker');
   }
 
   void _openManual(BuildContext context) {

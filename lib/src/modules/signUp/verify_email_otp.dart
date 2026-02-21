@@ -21,14 +21,14 @@ class VerifyEmailOtp extends StatefulWidget {
 class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
   final _formKey = GlobalKey<FormState>();
 
-  final List<TextEditingController> _controllers = List.generate(
-    4,
-    (_) => TextEditingController(),
-  );
+  // final List<TextEditingController> _controllers = List.generate(
+  //   4,
+  //   (_) => TextEditingController(),
+  // );
   final TextEditingController pinController = TextEditingController();
   final FocusNode focusNode = FocusNode();
 
-  final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
+  // final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
   late Timer _countdownTimer;
   int _remainingSeconds = 60;
@@ -94,12 +94,12 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
   @override
   void dispose() {
     _countdownTimer.cancel();
-    for (final c in _controllers) {
-      c.dispose();
-    }
-    for (final f in _focusNodes) {
-      f.dispose();
-    }
+    // for (final c in _controllers) {
+    //   c.dispose();
+    // }
+    // for (final f in _focusNodes) {
+    //   f.dispose();
+    // }
     pinController.removeListener(_checkOtpCompleted);
     pinController.dispose();
     super.dispose();

@@ -259,7 +259,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
 
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 10),
 
                       buildRow(
                         'Name',

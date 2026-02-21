@@ -33,7 +33,7 @@ class CommonValidators {
     return null;
   }
 
-  /// Validates email or phone number (either one is valid)
+ 
   static String? emailOrPhoneValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email or phone number is required';
@@ -51,7 +51,7 @@ class CommonValidators {
     return 'Please enter a valid email or 10-digit phone number';
   }
 
-  /// Validates PAN (India) in the format: 5 letters, 4 digits, 1 letter (e.g. ABCDE1234F)
+ 
   static String? panValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'PAN is required';
@@ -64,7 +64,6 @@ class CommonValidators {
     return null;
   }
 
-  /// Validates Aadhaar number (12 digits) and verifies checksum using Verhoeff algorithm
   static String? aadhaarValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Aadhaar is required';
