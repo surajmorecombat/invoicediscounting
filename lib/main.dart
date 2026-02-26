@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:invoicediscounting/no_internet.dart';
+import 'package:invoicediscounting/src/bloc/kyc_bloc/kyc_bloc.dart';
 import 'package:invoicediscounting/src/bloc/user_authentication/user_bloc.dart';
 import 'package:invoicediscounting/src/constant/app_text_theme.dart';
 import 'package:invoicediscounting/src/router/approuter.dart';
@@ -78,7 +79,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return Stack(
       children: [
         MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => UserBloc())],
+          providers: [
+            BlocProvider(create: (context) => UserBloc()),
+            BlocProvider(create: (context) => KycBloc()),
+            ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'invoicediscounting',

@@ -164,4 +164,67 @@ class Api {
     }
   }
 
+
+final newProtocol = 'https://in.staging.decentro.tech/';
+
+  Future<dynamic> requestPostDecentro({
+    required String path,
+    dynamic parameters,
+    required String clientId,
+    required String clientSecret,
+    required String moduleSecret,
+  }) async {
+    final headers = {
+      ..._defaultHeaders,
+      'client_id': clientId,
+      'client_secret': clientSecret,
+      'module_secret': moduleSecret,
+    };
+
+    print('================================');
+    print('API Request - POST DECENTRO');
+    print('Base URL: $newProtocol');
+    print('Path: $path');
+    print('Full URL: $newProtocol$path');
+    print('Request Headers: $headers');
+    print('Request Body: ${jsonEncode(parameters)}');
+    print('================================');
+
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: newProtocol,
+        headers: headers,
+        responseType: ResponseType.json,
+        contentType: 'application/json',
+      ),
+    );
+
+    try {
+      final response = await dio.post(path, data: parameters);
+
+      print('================================');
+      print('API Response - Status: ${response.statusCode}');
+      print('Response Data: ${response.data}');
+      print('================================');
+
+      if (response.data != null) {
+        return response.data;
+      }
+
+      return {};
+    } on DioError catch (e) {
+      print('================================');
+      print('API Error - ${e.type}');
+      print('Error Message: ${e.message}');
+      print('Error Response: ${e.response?.data}');
+      print('Status Code: ${e.response?.statusCode}');
+      print('================================');
+
+      if (e.response?.data != null) return e.response?.data;
+      return {'error': true, 'message': e.message};
+    }
+  }
+
+
+
 }
