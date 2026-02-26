@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:invoicediscounting/src/constant/app_color.dart';
+import 'package:invoicediscounting/src/modules/kyc/kyc_digi/pan_verification.dart';
+import 'package:invoicediscounting/src/modules/kyc/kyc_opt.dart';
+import 'package:invoicediscounting/src/modules/signUp/create_mobile.dart';
 import 'package:invoicediscounting/src/modules/signUp/create_profile.dart';
 import 'package:invoicediscounting/src/modules/signUp/sign_up.dart';
 import 'package:invoicediscounting/src/services/google_auth_service.dart';
@@ -37,6 +40,24 @@ class LoginWith extends StatelessWidget {
               ),
 
               const Spacer(flex: 2),
+               ElevatedButton(
+                onPressed: () async {
+                 Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const VerifyPanScreen()),
+                  );
+                },
+                child: const Text('PAN KYC'),
+              ),
+                 ElevatedButton(
+                onPressed: () async {
+                 Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const KycOpt()),
+                  );
+                },
+                child: const Text('DIGI KYC'),
+              ),
 
               // ElevatedButton(
               //   onPressed: () async {
@@ -67,10 +88,14 @@ class LoginWith extends StatelessWidget {
 
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                     Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SignUp()),
+                    MaterialPageRoute(builder: (context) => EnterMobileNumber()),
                   );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => SignUp()),
+                  // );
                 },
                 child: Text.rich(
                   TextSpan(

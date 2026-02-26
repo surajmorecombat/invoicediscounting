@@ -132,7 +132,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            
+
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 // validate uploaded files (PAN, Aadhaar front & back)
@@ -181,7 +181,7 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
                 }
               }
             },
-            
+
             // onPressed: () {
             //   Navigator.push(
             //         context,
@@ -228,7 +228,10 @@ class _KycAddressScreenState extends State<KycAddressScreen> {
               SnackBar(
                 backgroundColor: onboardingTitleColor,
                 duration: Duration(milliseconds: 500),
-                content: Text('File uploaded successfully!', style: TextStyle(color: whiteColor)),
+                content: Text(
+                  'File uploaded successfully!',
+                  style: TextStyle(color: whiteColor),
+                ),
               ),
             );
           }
